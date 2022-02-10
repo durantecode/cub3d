@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:35:10 by ldurante          #+#    #+#             */
-/*   Updated: 2021/12/22 19:55:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:43:42 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ void	free_matrix(char **matrix)
 	int	i;
 
 	i = 0;
-	while (matrix[i])
+	if (matrix)
 	{
-		free(matrix[i]);
-		i++;
+		while (matrix[i])
+		{
+			free(matrix[i]);
+			i++;
+		}
+		free(matrix);
 	}
-	free(matrix);
 }
