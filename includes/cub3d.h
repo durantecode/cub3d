@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/10 19:16:44 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/10 21:26:04 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@
 
 typedef struct s_data
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		floor[3];
-	int		ceiling[3];
+	char	**no;
+	char	**so;
+	char	**we;
+	char	**ea;
+	char	**fl;
+	char	**cei;
 	char	**map;
 }	t_data;
 
 #endif
 
 /*
-
 	Cosas a revisar:
 
 	1. Check_error:

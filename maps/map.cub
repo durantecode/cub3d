@@ -1,11 +1,19 @@
+EA ./textures/grey.xpm
 NO ./textures/brick.xpm
 SO ./textures/blue.xpm
-WE ./textures/wood.xpm
-EA ./textures/grey.xpm
 
 F 100,0,100
+WE ./textures/wood.xpm
 C 0,0,0
 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 2 2 2 2 2 2 2 2 2 2 2 2 W 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+
+           
+
+
+
+111111
+100101
+101001
+1100N1
+111111
