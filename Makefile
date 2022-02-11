@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/10 17:01:56 by dpavon-g         ###   ########.fr        #
+#    Updated: 2022/02/10 23:57:12 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = gcc
 RM = rm -f
 MAKE = make
 CFLAGS = -Wall -Werror -Wextra
+MLX_LINK = -lmlx -framework OpenGL -framework AppKit
 DEBUG = -g3 -fsanitize=address
 
 # COLORS #
@@ -43,6 +44,11 @@ $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
 	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
 	@echo "$(GREY) cub3d compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
+
+test: all
+	@echo "$(YELLOW) **** RUN TEST CUB3D **** $(NO_COLOR)"
+	@read -p "Select map number: " map; \
+	./cub3d maps/map0$${map}.cub
 
 clean:
 	@clear

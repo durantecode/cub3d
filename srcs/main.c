@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/10 21:28:41 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/11 01:35:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 char	**ft_realloc(char **info, char **line)
 {
@@ -50,6 +50,8 @@ char	**get_info(char **argv)
 	line = NULL;
 	info = NULL;
 	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		printf("Error\n%s\n", ERR_FILE);
 	ret = get_next_line(fd, &line);
 	while (ret >= 0)
 	{
@@ -58,14 +60,14 @@ char	**get_info(char **argv)
 		info = matrix_dup(aux);
 		free_matrix(aux);
 		if (ret == 0)
-			break;
+			break ;
 		ret = get_next_line(fd, &line);
 	}
 	close(fd);
 	return (info);
 }
 
-int		parse_data_aux(t_data *data, char ***aux)
+int	parse_data_aux(t_data *data, char ***aux)
 {
 	if ((*aux)[0])
 	{
@@ -83,7 +85,7 @@ int		parse_data_aux(t_data *data, char ***aux)
 			data->cei = matrix_dup((*aux));
 		else
 		{
-			printf("Error: invalid map identifier\n");
+			printf("Error\n%s\n", ERR_ID);
 			free_matrix ((*aux));
 			return (1);
 		}
@@ -97,7 +99,7 @@ void	get_map(char **info, t_data *data)
 {
 	int		i;
 	char	**aux;
-	
+
 	i = 0;
 	while (info[i])
 	{
@@ -107,13 +109,13 @@ void	get_map(char **info, t_data *data)
 			if (aux[0])
 			{
 				free_matrix(aux);
-				break;
+				break ;
 			}
+			free_matrix(aux);
 		}
 		i++;
 	}
 	data->map = info + i;
-	(void)data;
 }
 
 void	parse_data(char **info, t_data *data)
@@ -128,21 +130,38 @@ void	parse_data(char **info, t_data *data)
 	while (info[++i])
 	{
 		if (data->no && data->so && data->we && data->ea && data->fl
-		&& data->cei)
-			break;
+			&& data->cei)
+			break ;
 		if (info[i][0])
 		{
 			aux = ft_split(info[i], ' ');
 			if (parse_data_aux(data, &aux))
 			{
 				err = 1;
-				break;
+				break ;
 			}
 			free_matrix(aux);
 		}
 	}
-	if (err == 0)
+	if (!err)
 		get_map(info + i, data);
+}
+
+int	check_file_extension(char *argv)
+{
+	int		len;
+	char	*aux;
+
+	len = ft_strlen(argv);
+	aux = ft_substr(argv, len - 4, len);
+	if (ft_strcmp(aux, ".cub"))
+	{
+		printf("Error\n%s\n", ERR_EXT);
+		free(aux);
+		exit (0);
+	}
+	free(aux);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -151,14 +170,17 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	ft_bzero(&data, sizeof(t_data));
-	if (argc != 2)
+	if (argc == 2 && !check_file_extension(argv[1]))
 	{
-		printf("Error\n");
-		return (1);
+		info = get_info(argv);
+		if (!info)
+			return (0);
+		parse_data(info, &data);
+		// print_matrix(data.map);
+		free_matrix(info);
 	}
-	info = get_info(argv);
-	parse_data(info, &data);
-	free_matrix(info);
+	else
+		printf("Error\n%s\n", ERR_ARG);
 	// system("leaks -q cub3d");
 	return (0);
 }

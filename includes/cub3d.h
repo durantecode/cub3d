@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/10 21:26:04 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/11 00:51:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -22,6 +23,11 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <errno.h>
+
+# define ERR_ARG "usage: ./cub3d [path_to_map]"
+# define ERR_FILE "could not open map file"
+# define ERR_ID "invalid map identifier"
+# define ERR_EXT "map file must be have .cub extension"
 
 typedef struct s_data
 {
