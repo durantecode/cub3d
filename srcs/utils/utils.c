@@ -6,13 +6,13 @@
 /*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/11 12:23:17 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/11 13:56:08 by pavon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	check_file_extension(char *argv, char *ext)
+int	check_file_extension(char *argv, char *ext, char *err)
 {
 	int		len;
 	char	*aux;
@@ -21,9 +21,9 @@ int	check_file_extension(char *argv, char *ext)
 	aux = ft_substr(argv, len - 4, len);
 	if (ft_strcmp(aux, ext))
 	{
-		printf("Error\n%s\n", ERR_EXT);
+		printf("Error\n%s %s extension\n", err, ext);
 		free(aux);
-		exit (0);
+		return (1);
 	}
 	free(aux);
 	return (0);

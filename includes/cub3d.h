@@ -6,7 +6,7 @@
 /*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/11 12:52:42 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/11 16:33:51 by pavon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
 # define ERR_ID "invalid map identifier"
-# define ERR_EXT "map file must be have .cub extension"
+# define ERR_EXT_FILE "map file must have"
+# define ERR_EXT_ID "texture file must have"
 
 typedef struct s_data
 {
@@ -41,9 +42,15 @@ typedef struct s_data
 	char	**map;
 }	t_data;
 
+typedef struct s_cube
+{
+	int	fl_dec;
+	int	cei_dec;
+}	t_cube;
+
 char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
-int		check_file_extension(char *argv, char *ext);
+int		check_file_extension(char *argv, char *ext, char *err);
 
 #endif
 
@@ -62,4 +69,5 @@ int		check_file_extension(char *argv, char *ext);
 	3.	Probablemente necesitemos una estructura para almacenar datos especificos
 		del mapa.
 	4.	Separar el char_info.
+
 */
