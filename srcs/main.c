@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/11 16:35:25 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/11 17:13:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_colors(char *str, int *cub)
 	split_comma = ft_split(str, ',');
 	if (matrix_len(split_comma) != 3)
 	{
-		print_matrix(split_comma);
+		printf("Error ID too many args?\n"); // y si tiene una coma al final.... ?
 		free_matrix(split_comma);
 		return (1);
 	}
@@ -54,7 +54,7 @@ int	check_colors(char *str, int *cub)
 	{
 		if (!str_is_digit(split_comma[i]))
 		{
-			printf("Error\n");
+			printf("Error not digit?\n");
 			free_matrix(split_comma);
 			return (1);
 		}
