@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/11 00:51:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/11 12:52:42 by pavon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+//# include "mlx.h"
+
 # include "../libft/libft.h"
-# include "mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -31,14 +32,18 @@
 
 typedef struct s_data
 {
-	char	**no;
-	char	**so;
-	char	**we;
-	char	**ea;
-	char	**fl;
-	char	**cei;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*fl;
+	char	*cei;
 	char	**map;
 }	t_data;
+
+char	**get_info(char **argv);
+int		parse_data(char **info, t_data *data);
+int		check_file_extension(char *argv, char *ext);
 
 #endif
 
