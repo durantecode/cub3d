@@ -6,7 +6,7 @@
 /*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:18:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/11 13:02:41 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/11 13:05:21 by pavon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,17 @@ static void	get_map(char **info, t_data *data)
 	i = 0;
 	while (info[i])
 	{
-		if (info[i][0])
-		{
-			aux = ft_split(info[i], ' ');
-			if (aux[0])
-			{
-				free_matrix(aux);
-				break ;
-			}
-			free_matrix(aux);
-		}
+        aux = ft_split(info[i], ' ');
+        if (aux[0])
+        {
+            free_matrix(aux);
+            break ;
+        }
+        free_matrix(aux);
 		i++;
 	}
 	data->map = matrix_dup(info + i);
+    print_matrix(data->map);
 }
 
 static int	parse_data_aux(t_data *data, char ***aux)
