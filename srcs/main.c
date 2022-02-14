@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/14 20:55:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 00:21:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static void	free_data(t_data *data)
 	free(data->fl);
 	free(data->so);
 	free_matrix(data->map);
+}
+
+int	check_map_errors(char **map)
+{
+	return (0);
 }
 
 int	main(int argc, char **argv)

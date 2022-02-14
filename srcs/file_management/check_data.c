@@ -6,17 +6,17 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/14 20:55:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 00:21:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	parse_floor_ceiling(char **split_comma, int *cub)
+static int	parse_floor_ceiling(char **split_comma, int *var)
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 
 	r = ft_atoi(split_comma[0]);
 	g = ft_atoi(split_comma[1]);
@@ -26,7 +26,7 @@ static int	parse_floor_ceiling(char **split_comma, int *cub)
 		printf("Error\n%s\n", ERR_ID_INT);
 		return (1);
 	}
-	(*cub) = r + g + b;  // Convertir a hex con las fórmulas del fdf de dani.
+	(*var) = r + g + b;// Convertir a hex con las fórmulas del fdf de dani.
 	return (0);
 }
 
@@ -39,7 +39,7 @@ static int	check_floor_ceiling(char *str, int *cub)
 	split_comma = ft_split(str, ',');
 	if (matrix_len(split_comma) != 3)
 	{
-		printf("Error\n%s\n", ERR_FL_CEI); // y si tiene una coma al final... ?
+		printf("Error\n%s\n", ERR_FL_CEI); // y si tiene una coma al principio o final... ?
 		free_matrix(split_comma);
 		return (1);
 	}
@@ -72,6 +72,8 @@ int	check_data(t_data *data, t_cube *cub)
 	if (check_floor_ceiling(data->fl, &(cub->fl_dec)))
 		return (1);
 	if (check_floor_ceiling(data->cei, &(cub->cei_dec)))
+		return (1);
+	if (check_map_errors(data->map))
 		return (1);
 	return (0);
 }
