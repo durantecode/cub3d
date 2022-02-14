@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pavon <pavon@student.42.fr>                +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/11 12:21:55 by pavon            ###   ########.fr        #
+#    Updated: 2022/02/14 20:56:30 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,9 @@ NO_COLOR = \033[0m
 # SOURCES & OBJECTS #
 
 SRCS =	srcs/main.c \
-		srcs/file_management/parse_data.c\
-		srcs/file_management/read_file.c\
+		srcs/file_management/read_file.c \
+		srcs/file_management/parse_data.c \
+		srcs/file_management/check_data.c \
 		srcs/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)

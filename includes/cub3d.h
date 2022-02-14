@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/11 16:33:51 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/14 20:56:07 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <errno.h>
+# include <math.h>
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
 # define ERR_ID "invalid map identifier"
+# define ERR_FL_CEI "too many arguments in floor or ceiling id"
+# define ERR_ID_INT "floor or ceiling arguments must be numbers between 0-255"
 # define ERR_EXT_FILE "map file must have"
 # define ERR_EXT_ID "texture file must have"
 
@@ -50,7 +53,10 @@ typedef struct s_cube
 
 char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
+int		check_data(t_data *data, t_cube *cub);
+
 int		check_file_extension(char *argv, char *ext, char *err);
+int		str_is_digit(char *str);
 
 #endif
 
