@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 00:21:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 12:54:42 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	free_data(t_data *data)
 
 int	check_map_errors(char **map)
 {
+	
+	(void)map;
 	return (0);
 }
 
@@ -50,6 +52,6 @@ int	main(int argc, char **argv)
 	}
 	else if (argc != 2)
 		printf("Error\n%s\n", ERR_ARG);
-	// system("leaks -q cub3d");
+	system("leaks -q cub3d");
 	return (0);
 }

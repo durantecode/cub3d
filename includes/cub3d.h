@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/14 20:56:07 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 12:04:48 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		check_data(t_data *data, t_cube *cub);
 
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
+int		check_map_errors(char **map);
 
 #endif
 

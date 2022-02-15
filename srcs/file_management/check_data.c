@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 00:21:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 12:44:46 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,27 @@ static int	check_floor_ceiling(char *str, int *cub)
 {
 	int		i;
 	char	**split_comma;
+	int		err;
 
-	i = 0;
+	err = 0;
+	i = -1;
+	if (str[0] == ',' || str[ft_strlen(str) - 1] == ',')
+		err++;
 	split_comma = ft_split(str, ',');
-	if (matrix_len(split_comma) != 3)
+	if (err || ((matrix_len(split_comma) != 3) && ++err))
+		printf("Error\n%s\n", ERR_FL_CEI);
+	while (!err && split_comma[++i])
 	{
-		printf("Error\n%s\n", ERR_FL_CEI); // y si tiene una coma al principio o final... ?
+		if (!str_is_digit(split_comma[i]) && ++err)
+			printf("Error\n%s\n", ERR_ID_INT);
+		if (!str_is_digit(split_comma[i]))
+			break; 
+	}
+	if (err || parse_floor_ceiling(split_comma, cub))
+	{
 		free_matrix(split_comma);
 		return (1);
 	}
-	while (split_comma[i])
-	{
-		if (!str_is_digit(split_comma[i]))
-		{
-			printf("Error\n%s\n", ERR_ID_INT);
-			free_matrix(split_comma);
-			return (1);
-		}
-		i++;
-	}
-	if (parse_floor_ceiling(split_comma, cub))
-		return (1);
 	free_matrix(split_comma);
 	return (0);
 }

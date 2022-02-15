@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:18:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/11 16:36:50 by pavon            ###   ########.fr       */
+/*   Updated: 2022/02/15 12:43:16 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,7 @@ static int	parse_data_aux(t_data *data, char ***aux)
 		else if (!ft_strncmp((*aux)[0], "C", 2) && !data->cei)
 			data->cei = ft_strdup((*aux)[1]);
 		else
-		{
-			printf("Error\n%s\n", ERR_ID);
-			free_matrix ((*aux));
 			return (1);
-		}
 		free_matrix((*aux));
 		(*aux) = NULL;
 	}
