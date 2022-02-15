@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:18:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/15 12:43:16 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/15 17:07:36 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-static void	get_map(char **info, t_data *data, int err)
-{
-	int		i;
-	char	**aux;
-
-	i = 0;
-	if (err)
-	{
-		printf("Error\n%s\n", ERR_ID);
-		return ;
-	}
-	while (info[i])
-	{
-		if (info[i][0])
-		{
-			aux = ft_split(info[i], ' ');
-			if (aux[0])
-			{
-				free_matrix(aux);
-				break ;
-			}
-			free_matrix(aux);
-		}
-		i++;
-	}
-	data->map = matrix_dup(info + i);
-}
 
 static int	parse_data_aux(t_data *data, char ***aux)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/15 12:21:23 by dpavon-g         ###   ########.fr        #
+#    Updated: 2022/02/15 17:18:49 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRCS =	srcs/main.c \
 		srcs/file_management/read_file.c \
 		srcs/file_management/parse_data.c \
 		srcs/file_management/check_data.c \
+		srcs/file_management/get_map.c \
+		srcs/file_management/check_map_errors.c \
 		srcs/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)

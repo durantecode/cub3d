@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 12:44:46 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/15 17:20:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	parse_floor_ceiling(char **split_comma, int *var)
 		printf("Error\n%s\n", ERR_ID_INT);
 		return (1);
 	}
-	(*var) = r + g + b;// Convertir a hex con las fórmulas del fdf de dani.
+	(*var) = r + g + b; // Convertir a hex con las fórmulas del fdf de dani.
 	return (0);
 }
 

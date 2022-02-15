@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 20:09:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/10 15:43:36 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/15 13:30:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_matrix(char **matrix)
 	{
 		while (matrix[i])
 		{
-			ft_printf("%s\n", matrix[i]);
+			ft_printf("|%s|\n", matrix[i]);
 			i++;
 		}
 	}

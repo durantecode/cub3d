@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 12:04:48 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/15 18:26:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <errno.h>
 # include <math.h>
 
+# define MAP_CHAR "10NSEW"
+# define MAP_SRND "1 "
+
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
 # define ERR_ID "invalid map identifier"
@@ -33,6 +36,9 @@
 # define ERR_ID_INT "floor or ceiling arguments must be numbers between 0-255"
 # define ERR_EXT_FILE "map file must have"
 # define ERR_EXT_ID "texture file must have"
+
+/* MAP ERRORS */
+# define ERR_MAP_SRND "map must be surrounded by walls"
 
 typedef struct s_data
 {
@@ -54,6 +60,8 @@ typedef struct s_cube
 char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
 int		check_data(t_data *data, t_cube *cub);
+void	get_map(char **info, t_data *data, int err);
+int		check_map_errors(char **map);
 
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
