@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:53:25 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 17:13:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 22:11:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,33 @@ static char **add_spaces(char **first_map, char **resized_map, int max_len, int 
 	int j;
 
 	i = -1;
-	while(++i < map_len)
+	printf("%d | %d\n", max_len, map_len);
+	while(resized_map[++i])
 	{
-		j = -1;
+		j = 0;
 		resized_map[i] = malloc(sizeof(char *) * max_len + 1);
 		if (!resized_map[i])
 			return (NULL);
-		while(++j < max_len)
+		while(j < max_len)
 		{
 			if (first_map[i][j] != '\0')
 				resized_map[i][j] = first_map[i][j];
 			else
 			{
-				while(j < max_len)
-					resized_map[i][j++] = ' ';
+				while(j - 1 < max_len)
+				{	
+					resized_map[i][j] = ' ';
+					j++;
+				}
+				j--;
 			}
+			j++;
 		}
-		resized_map[i][j] = '\0';
+		printf("%d\n", j);
+		// if (j == max_len)
+		// 	resized_map[i][j + 1] = '\0';
+		// else
+			resized_map[i][j] = '\0';
 	}
 	return (resized_map);
 }
@@ -50,7 +60,7 @@ static int max_row(char **first_map)
 	while(first_map[i])
 	{
 		if (first_map[i][0])
-				len = i;
+			len = i;
 		i++;
 	}
 	return (len + 1);

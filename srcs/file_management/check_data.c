@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 17:20:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:07:57 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	check_floor_ceiling(char *str, int *cub)
 
 int	check_data(t_data *data, t_cube *cub)
 {
+	int map_status;
+	
 	if (check_file_extension(data->no, ".xpm", ERR_EXT_ID))
 		return (1);
 	if (check_file_extension(data->so, ".xpm", ERR_EXT_ID))
@@ -73,7 +75,12 @@ int	check_data(t_data *data, t_cube *cub)
 		return (1);
 	if (check_floor_ceiling(data->cei, &(cub->cei_dec)))
 		return (1);
-	if (check_map_errors(data->map))
-		return (1);
-	return (0);
+	map_status = check_map_errors(data->map, cub);
+	if (map_status == 1)
+		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);
+	else if (map_status == 2)
+		printf("Error\n%s\n", ERR_MAP_SRND);
+	else if (map_status == 3)
+		printf("Error\n%s\n", ERR_MAP_POS);
+	return (map_status);
 }

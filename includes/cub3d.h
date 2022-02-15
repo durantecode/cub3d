@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 18:26:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:16:12 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <math.h>
 
 # define MAP_CHAR "10NSEW"
-# define MAP_SRND "1 "
+# define MAP_SR "1 "
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
@@ -38,7 +38,9 @@
 # define ERR_EXT_ID "texture file must have"
 
 /* MAP ERRORS */
+# define ERR_MAP_CHAR "map must contain only valid characters:"
 # define ERR_MAP_SRND "map must be surrounded by walls"
+# define ERR_MAP_POS "there must be only one start position"
 
 typedef struct s_data
 {
@@ -53,6 +55,8 @@ typedef struct s_data
 
 typedef struct s_cube
 {
+	int	map_x;
+	int map_y;
 	int	fl_dec;
 	int	cei_dec;
 }	t_cube;
@@ -61,11 +65,10 @@ char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
 int		check_data(t_data *data, t_cube *cub);
 void	get_map(char **info, t_data *data, int err);
-int		check_map_errors(char **map);
+int		check_map_errors(char **map, t_cube *cub);
 
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
-int		check_map_errors(char **map);
 
 #endif
 
