@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_errors.c                                 :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 01:42:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 12:33:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,24 +119,22 @@ int	check_map_surrounding(char **map, t_cube *cub)
 	int	j;
 	int	pos;
 
-	i = -1;
+	i = 0;
 	pos = 0;
-	while (map[++i])
+	while (map[i])
 	{
-		j = -1;
-		while (map[i][++j])
+		j = 0;
+		while (map[i][j])
 		{
 			if (!ft_strchr(MAP_CHAR, map[i][j]) && map[i][j] != ' ')
 				return (1);
 			if (map[i][j] == ' ' && check_space_surrounding(map, i, j, cub))
 				return (2);
-			if (ft_strchr(MAP_POS, map[i][j]))
-			{
-				if (pos)
-					return (3);
-				pos++;
-			}
+			if (ft_strchr(MAP_POS, map[i][j]) && pos++)
+				return (3);
+			j++;
 		}
+		i++;
 	}
 	return (0);
 }
