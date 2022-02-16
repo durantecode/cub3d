@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/16 01:44:00 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/16 14:57:28 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s all -C libft
-	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX_LINK) libft/libft.a -o $(NAME)
 	@echo "$(GREY) cub3d compiled $(GREEN) ✔✔✔ $(NO_COLOR)"
 
 test: all

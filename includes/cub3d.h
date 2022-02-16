@@ -6,15 +6,14 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 01:34:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:55:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-//# include "mlx.h"
-
+# include "mlx.h"
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
@@ -61,6 +60,14 @@ typedef struct s_cube
 	int	fl_dec;
 	int	cei_dec;
 }	t_cube;
+
+typedef struct s_game
+{
+	void	*ptr;
+	void	*win;
+	int		size_x;
+	int		size_y;
+}	t_game;
 
 char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
