@@ -12,13 +12,12 @@
 
 #include "../../includes/cub3d.h"
 
-static char	**add_spaces(char **first_map, char **resized_map, int max_len)
+static char	**add_spaces(char **first_map, char **resized_map, int max_len, int map_len)
 {
 	int	i;
 	int	j;
-
 	i = -1;
-	while (resized_map[++i])
+	while (++i < map_len)
 	{
 		j = 0;
 		resized_map[i] = malloc(sizeof(char *) * max_len + 1);
@@ -43,10 +42,8 @@ static int	max_row(char **first_map)
 {
 	int	i;
 	int	len;
-	int	prev_len;
 
 	i = 0;
-	prev_len = 0;
 	while (first_map[i])
 	{
 		if (first_map[i][0])
@@ -93,7 +90,7 @@ static char	**format_map(char **first_map, char ***map)
 	if (!resized_map)
 		return (NULL);
 	resized_map[map_len] = NULL;
-	*map = add_spaces(first_map, resized_map, max_len);
+	*map = add_spaces(first_map, resized_map, max_len, map_len);
 	return ((*map));
 }
 

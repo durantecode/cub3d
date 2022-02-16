@@ -132,6 +132,9 @@ int	check_map_surrounding(char **map, t_cube *cub)
 				return (2);
 			if (ft_strchr(MAP_POS, map[i][j]) && pos++)
 				return (3);
+			if ((i == 0 || i == cub->map_y - 1 || j == 0
+				|| j == cub->map_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
+				return (2);
 			j++;
 		}
 		i++;

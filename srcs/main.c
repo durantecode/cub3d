@@ -45,6 +45,6 @@ int	main(int argc, char **argv)
 	}
 	else if (argc != 2)
 		printf("Error\n%s\n", ERR_ARG);
-	system("leaks -q cub3d");
+	// system("leaks -q cub3d");
 	return (0);
 }
