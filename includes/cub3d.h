@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 14:55:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 17:44:51 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_data
 
 typedef struct s_cube
 {
+	int	player_x;
+	int	player_y;
 	int	map_x;
 	int	map_y;
 	int	fl_dec;
@@ -65,6 +67,10 @@ typedef struct s_game
 {
 	void	*ptr;
 	void	*win;
+	void	*img;
+	char	*addr;
+	int		line_length;
+	int		bits_per_pixel;
 	int		size_x;
 	int		size_y;
 }	t_game;
@@ -81,19 +87,9 @@ int		str_is_digit(char *str);
 #endif
 
 /*
-	Cosas a revisar:
+	Cosas a tener en cuenta:
 
-	1. Check_error:
-		- Extension del .cub
-		- Extension de las texturas.
-		- Nombre de la variable correcto en el fichero.
-		- RGB de suelo y de Cielo deben ser entre 0 y 255.
-		- Dentro del mapa:
-			· Mirar que los bordes del mapa estén correctamente posicionados.
-			· Que no haya mas de una W.
-	2.	Reescribir atoi.
-	3.	Probablemente necesitemos una estructura para almacenar datos especificos
-		del mapa.
-	4.	Separar el char_info.
-
+	1. En el parseo debemos sacar la coordenada donde va a empezar
+	nuestro personaje.
+	
 */

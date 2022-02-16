@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 13:18:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 17:44:43 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ int	check_map_surrounding(char **map, t_cube *cub)
 			if ((i == 0 || i == cub->map_y - 1 || j == 0
 					|| j == cub->map_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
 				return (2);
+			if (ft_strchr(MAP_POS, map[i][j]))
+				cub->player_x = j;
+			if (ft_strchr(MAP_POS, map[i][j]))
+				cub->player_y = i;
 			j++;
 		}
 		i++;
