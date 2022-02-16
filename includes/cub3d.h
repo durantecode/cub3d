@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 20:16:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 01:34:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <math.h>
 
 # define MAP_CHAR "10NSEW"
+# define MAP_POS "NSEW"
 # define MAP_SR "1 "
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
@@ -56,7 +57,7 @@ typedef struct s_data
 typedef struct s_cube
 {
 	int	map_x;
-	int map_y;
+	int	map_y;
 	int	fl_dec;
 	int	cei_dec;
 }	t_cube;
@@ -65,7 +66,7 @@ char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
 int		check_data(t_data *data, t_cube *cub);
 void	get_map(char **info, t_data *data, int err);
-int		check_map_errors(char **map, t_cube *cub);
+int		check_map_surrounding(char **map, t_cube *cub);
 
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);

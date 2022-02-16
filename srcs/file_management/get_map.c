@@ -6,58 +6,48 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:53:25 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 22:11:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 01:42:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static char **add_spaces(char **first_map, char **resized_map, int max_len, int map_len)
+static char	**add_spaces(char **first_map, char **resized_map, int max_len)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
-	printf("%d | %d\n", max_len, map_len);
-	while(resized_map[++i])
+	while (resized_map[++i])
 	{
 		j = 0;
 		resized_map[i] = malloc(sizeof(char *) * max_len + 1);
 		if (!resized_map[i])
 			return (NULL);
-		while(j < max_len)
+		while (first_map[i][j] != '\0')
 		{
-			if (first_map[i][j] != '\0')
-				resized_map[i][j] = first_map[i][j];
-			else
-			{
-				while(j - 1 < max_len)
-				{	
-					resized_map[i][j] = ' ';
-					j++;
-				}
-				j--;
-			}
+			resized_map[i][j] = first_map[i][j];
 			j++;
 		}
-		printf("%d\n", j);
-		// if (j == max_len)
-		// 	resized_map[i][j + 1] = '\0';
-		// else
-			resized_map[i][j] = '\0';
+		while (j < max_len)
+		{	
+			resized_map[i][j] = ' ';
+			j++;
+		}
+		resized_map[i][j] = '\0';
 	}
 	return (resized_map);
 }
 
-static int max_row(char **first_map)
+static int	max_row(char **first_map)
 {
-	int i;
-	int len;
-	int prev_len;
+	int	i;
+	int	len;
+	int	prev_len;
 
 	i = 0;
 	prev_len = 0;
-	while(first_map[i])
+	while (first_map[i])
 	{
 		if (first_map[i][0])
 			len = i;
@@ -66,16 +56,16 @@ static int max_row(char **first_map)
 	return (len + 1);
 }
 
-static int longest_row(char **first_map)
+static int	longest_row(char **first_map)
 {
-	int i;
-	int j;
-	int len;
-	int prev_len;
+	int	i;
+	int	j;
+	int	len;
+	int	prev_len;
 
 	i = 0;
 	prev_len = 0;
-	while(first_map[i])
+	while (first_map[i])
 	{
 		j = 0;
 		while (first_map[i][j])
@@ -103,7 +93,7 @@ static char	**format_map(char **first_map, char ***map)
 	if (!resized_map)
 		return (NULL);
 	resized_map[map_len] = NULL;
-	*map = add_spaces(first_map, resized_map, max_len, map_len);
+	*map = add_spaces(first_map, resized_map, max_len);
 	return ((*map));
 }
 

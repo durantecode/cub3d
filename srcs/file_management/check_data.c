@@ -6,11 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/15 20:07:57 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 01:38:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+/* Convertir a hex con las fórmulas del fdf de dani */
 
 static int	parse_floor_ceiling(char **split_comma, int *var)
 {
@@ -26,7 +28,7 @@ static int	parse_floor_ceiling(char **split_comma, int *var)
 		printf("Error\n%s\n", ERR_ID_INT);
 		return (1);
 	}
-	(*var) = r + g + b; // Convertir a hex con las fórmulas del fdf de dani.
+	(*var) = r + g + b;
 	return (0);
 }
 
@@ -48,7 +50,7 @@ static int	check_floor_ceiling(char *str, int *cub)
 		if (!str_is_digit(split_comma[i]) && ++err)
 			printf("Error\n%s\n", ERR_ID_INT);
 		if (!str_is_digit(split_comma[i]))
-			break; 
+			break ;
 	}
 	if (err || parse_floor_ceiling(split_comma, cub))
 	{
@@ -61,8 +63,8 @@ static int	check_floor_ceiling(char *str, int *cub)
 
 int	check_data(t_data *data, t_cube *cub)
 {
-	int map_status;
-	
+	int	map_status;
+
 	if (check_file_extension(data->no, ".xpm", ERR_EXT_ID))
 		return (1);
 	if (check_file_extension(data->so, ".xpm", ERR_EXT_ID))
@@ -75,7 +77,9 @@ int	check_data(t_data *data, t_cube *cub)
 		return (1);
 	if (check_floor_ceiling(data->cei, &(cub->cei_dec)))
 		return (1);
-	map_status = check_map_errors(data->map, cub);
+	cub->map_x = ft_strlen(data->map[0]);
+	cub->map_y = matrix_len(data->map);
+	map_status = check_map_surrounding(data->map, cub);
 	if (map_status == 1)
 		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);
 	else if (map_status == 2)
