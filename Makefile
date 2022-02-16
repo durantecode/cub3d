@@ -24,7 +24,7 @@ UNAME = $(shell uname -s)
 MLX_LINK = -lmlx -framework OpenGL -framework AppKit
 ifeq ($(UNAME), Linux)
 # Propierties for Linux
-MLX_LINK = -lmlx -lXext -lX11
+MLX_LINK = -lmlx -lXext -lX11 -lm
 endif
 # COLORS #
 

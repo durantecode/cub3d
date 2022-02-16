@@ -71,6 +71,7 @@ typedef struct s_game
 	char	*addr;
 	int		line_length;
 	int		bits_per_pixel;
+	int		endian;
 	int		size_x;
 	int		size_y;
 }	t_game;

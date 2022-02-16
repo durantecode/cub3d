@@ -30,17 +30,18 @@ int	ft_close(t_game *g)
 	return (0);
 }
 
-// void	my_mlx_pixel_put(t_game *data, int x, int y, int color)
-// {
-// 	char	*dst;
+void	my_mlx_pixel_put(t_game *data, int x, int y, int color)
+{
+	char	*dst;
 
-// 	if (x > 0 && x < 1500 && y > 0 && y < 1500)
-// 	{
-// 		dst = data->addr + (y * data->line_length
-// 				+ x * (data->bits_per_pixel / 8));
-// 		*(unsigned int *)dst = color;
-// 	}
-// }
+	printf("coords %d, %d\n", x, y);
+	if (x > 0 && x < 1080 && y > 0 && y < 720)
+	{
+		dst = data->addr + (y * data->line_length
+				+ x * (data->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
+	}
+}
 
 void	write_line(t_game mlx)
 {
@@ -52,31 +53,41 @@ void	write_line(t_game mlx)
 	float	step_y;
 	float	dist;
 	int		i;
-	
+
 	dist = sqrt(pow(start_x - end_x, 2) + pow(start_y - end_y, 2));
 	step_x = (end_x - start_x) / dist;
 	step_y = (end_y - start_y) / dist;
 	i = 0;
 	while (i < dist)
 	{
-		// my_mlx_pixel_put(&mlx, (start_x + step_x * i)
-		// 	+ 0, (start_y + step_y * i)
-		// 	+ 0, 65439);
+		printf("%d\n", i);
+		my_mlx_pixel_put(&mlx, (start_x + step_x * i)
+			+ 0, (start_y + step_y * i)
+			+ 0, 65439);
 		i++;
 	}
+	printf("%d\n", i);
 	(void)mlx;
 
 }
+
+
 
 void	init_cube(t_data *data, t_cube *cub)
 {
 	t_game g;
 
+
 	g.ptr = mlx_init();
 	g.win = mlx_new_window(g.ptr, 1080, 720, "cub3D");
 	g.img = mlx_new_image(g.ptr, 1080, 720);
 	mlx_hook(g.win, 17, 0, ft_close, (void *) &g);
+	g.addr = mlx_get_data_addr(g.img, &g.bits_per_pixel,
+			&g.line_length, &g.endian);
+	// my_mlx_pixel_put(&g, 100, 100, 65439);
+	
 	write_line(g);
+	mlx_put_image_to_window(g.ptr, g.win, g.img, 0, 0);
 	mlx_loop(g.ptr);
 	(void)data;
 	(void)cub;
