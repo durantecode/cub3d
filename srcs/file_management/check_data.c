@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 01:38:40 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:34:28 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	parse_floor_ceiling(char **split_comma, int *var)
 		printf("Error\n%s\n", ERR_ID_INT);
 		return (1);
 	}
-	(*var) = r + g + b;
+	(*var) = 0 << 24 | r << 16 | g << 8 | b;
 	return (0);
 }
 
