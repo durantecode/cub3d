@@ -17,9 +17,15 @@ CC = gcc
 RM = rm -f
 MAKE = make
 CFLAGS = -Wall -Werror -Wextra
-MLX_LINK = -lmlx -lXext -lX11
 DEBUG = -g3 -fsanitize=address
 
+UNAME = $(shell uname -s)
+# Propierties for MacOS
+MLX_LINK = -lmlx -framework OpenGL -framework AppKit
+ifeq ($(UNAME), Linux)
+# Propierties for Linux
+MLX_LINK = -lmlx -lXext -lX11
+endif
 # COLORS #
 
 RED = \033[0;31m
