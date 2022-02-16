@@ -6,15 +6,15 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 14:55:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:29:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <mlx.h>
 # include "../libft/libft.h"
+# include <mlx.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -25,12 +25,19 @@
 # include <errno.h>
 # include <math.h>
 
+# define KEY_UP 13
+# define KEY_DOWN 1
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
+# define KEY_ESC 53
+
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
 # define MAP_SR "1 "
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
+# define ERR_XPM "could not open xpm file"
 # define ERR_ID "invalid map identifier"
 # define ERR_FL_CEI "too many arguments in floor or ceiling id"
 # define ERR_ID_INT "floor or ceiling arguments must be numbers between 0-255"
@@ -46,8 +53,8 @@ typedef struct s_data
 {
 	char	*no;
 	char	*so;
-	char	*we;
 	char	*ea;
+	char	*we;
 	char	*fl;
 	char	*cei;
 	char	**map;
@@ -61,12 +68,35 @@ typedef struct s_cube
 	int	cei_dec;
 }	t_cube;
 
+typedef struct s_img
+{
+	void	*img;
+	int		width;
+	int		heigth;
+	int		bpp;
+	char	*addr;
+	int		line_len;
+	int		endian;
+}	t_img;
+
+typedef struct s_text
+{
+	t_img	no;
+	t_img	so;
+	t_img	ea;
+	t_img	we;
+	int		fl_text;
+	int		cei_text;
+}	t_text;
+
 typedef struct s_game
 {
 	void	*ptr;
 	void	*win;
 	int		size_x;
 	int		size_y;
+	t_img	mini_map;
+	t_text	text;
 }	t_game;
 
 char	**get_info(char **argv);
@@ -75,25 +105,8 @@ int		check_data(t_data *data, t_cube *cub);
 void	get_map(char **info, t_data *data, int err);
 int		check_map_surrounding(char **map, t_cube *cub);
 
+int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
 
 #endif
-
-/*
-	Cosas a revisar:
-
-	1. Check_error:
-		- Extension del .cub
-		- Extension de las texturas.
-		- Nombre de la variable correcto en el fichero.
-		- RGB de suelo y de Cielo deben ser entre 0 y 255.
-		- Dentro del mapa:
-			· Mirar que los bordes del mapa estén correctamente posicionados.
-			· Que no haya mas de una W.
-	2.	Reescribir atoi.
-	3.	Probablemente necesitemos una estructura para almacenar datos especificos
-		del mapa.
-	4.	Separar el char_info.
-
-*/

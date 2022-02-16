@@ -6,13 +6,13 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/16 14:57:28 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/16 17:47:26 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # VARIABLE DECLARATIONS #
 
-NAME = cub3d
+NAME = cub3D
 CC = gcc
 RM = rm -f
 MAKE = make
@@ -20,14 +20,16 @@ CFLAGS = -Wall -Werror -Wextra
 DEBUG = -g3 -fsanitize=address
 
 UNAME = $(shell uname -s)
-# Propierties for MacOS
+
+# Properties for MacOS
 MLX_LINK = -lmlx -framework OpenGL -framework AppKit
 ifeq ($(UNAME), Linux)
-# Propierties for Linux
+
+# Properties for Linux
 MLX_LINK = -lmlx -lXext -lX11
 endif
-# COLORS #
 
+# COLORS #
 RED = \033[0;31m
 GREEN = \033[0;32m
 YELLOW = \033[0;33m
@@ -37,19 +39,18 @@ CURSIVE = \033[3m
 NO_COLOR = \033[0m
 
 # SOURCES & OBJECTS #
-
 SRCS =	srcs/main.c \
 		srcs/file_management/read_file.c \
 		srcs/file_management/parse_data.c \
 		srcs/file_management/check_data.c \
 		srcs/file_management/get_map.c \
 		srcs/file_management/check_map.c \
+		srcs/file_management/load_files.c \
 		srcs/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)
 
 # RULES #
-
 all: $(NAME)
 
 $(NAME): $(OBJS)

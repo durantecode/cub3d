@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 15:36:02 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:32:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,36 @@ static void	free_data(t_data *data)
 	free_matrix(data->map);
 }
 
-int	ft_close(t_game *g)
+int	close_game(t_game *g)
 {
 	exit (0);
 	(void)g;
 	return (0);
 }
 
+int	game_status(t_game *g)
+{
+	// mlx_clear_window(g->ptr, g->win);
+	
+	// draw_mini_map(g);
+	(void)g;
+	return (0);
+}
+
 void	init_cube(t_data *data, t_cube *cub)
 {
-	t_game g;
+	t_game	g;
 
+	if (load_files(&g, data))
+	{
+		printf("Error\n%s\n", ERR_XPM);
+		return ;
+	}
 	g.ptr = mlx_init();
 	g.win = mlx_new_window(g.ptr, 1080, 720, "cub3D");
-	mlx_hook(g.win, 17, 0, ft_close, (void *) &g);
+	mlx_loop_hook(g.ptr, game_status, (void *) &g);
+	mlx_hook(g.win, 17, 0, close_game, (void *) &g);
+	// mlx_key_hook(g.win, key_input, (void *) &g);
 	mlx_loop(g.ptr);
 	(void)data;
 	(void)cub;
@@ -57,9 +73,8 @@ int	main(int argc, char **argv)
 			return (0);
 		if (!parse_data(info, &data) && !check_data(&data, &cub))
 		{
-			printf("Map okay... Init cube\n");
+			// printf("Map okay... Init cube\n");
 			init_cube(&data, &cub);
-			// print_matrix(data.map);
 		}
 		free_data(&data);
 	}
