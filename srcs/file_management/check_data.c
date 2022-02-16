@@ -6,13 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 13:34:28 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:37:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-/* Convertir a hex con las fórmulas del fdf de dani */
 
 static int	parse_floor_ceiling(char **split_comma, int *var)
 {
