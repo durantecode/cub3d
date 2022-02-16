@@ -17,7 +17,7 @@ CC = gcc
 RM = rm -f
 MAKE = make
 CFLAGS = -Wall -Werror -Wextra
-MLX_LINK = -lmlx -framework OpenGL -framework AppKit
+MLX_LINK = -lmlx -lXext -lX11
 DEBUG = -g3 -fsanitize=address
 
 # COLORS #
