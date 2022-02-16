@@ -6,36 +6,37 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:53:25 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 12:34:36 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:19:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static char	**add_spaces(char **first_map, char **resized_map, int max_len, int map_len)
+static char	**add_spaces(char **m, char **resized_m, int max_len, int map_len)
 {
 	int	i;
 	int	j;
+
 	i = -1;
 	while (++i < map_len)
 	{
 		j = 0;
-		resized_map[i] = malloc(sizeof(char *) * max_len + 1);
-		if (!resized_map[i])
+		resized_m[i] = malloc(sizeof(char *) * max_len + 1);
+		if (!resized_m[i])
 			return (NULL);
-		while (first_map[i][j] != '\0')
+		while (m[i][j] != '\0')
 		{
-			resized_map[i][j] = first_map[i][j];
+			resized_m[i][j] = m[i][j];
 			j++;
 		}
 		while (j < max_len)
 		{	
-			resized_map[i][j] = ' ';
+			resized_m[i][j] = ' ';
 			j++;
 		}
-		resized_map[i][j] = '\0';
+		resized_m[i][j] = '\0';
 	}
-	return (resized_map);
+	return (resized_m);
 }
 
 static int	max_row(char **first_map)

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 12:33:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:18:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	check_map_surrounding(char **map, t_cube *cub)
 			if (ft_strchr(MAP_POS, map[i][j]) && pos++)
 				return (3);
 			if ((i == 0 || i == cub->map_y - 1 || j == 0
-				|| j == cub->map_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
+					|| j == cub->map_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
 				return (2);
 			j++;
 		}
