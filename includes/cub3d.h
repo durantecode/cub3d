@@ -6,15 +6,15 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 17:44:51 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:33:27 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <mlx.h>
 # include "../libft/libft.h"
+# include <mlx.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -25,12 +25,19 @@
 # include <errno.h>
 # include <math.h>
 
+# define KEY_UP 13
+# define KEY_DOWN 1
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
+# define KEY_ESC 53
+
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
 # define MAP_SR "1 "
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
+# define ERR_XPM "could not open xpm file"
 # define ERR_ID "invalid map identifier"
 # define ERR_FL_CEI "too many arguments in floor or ceiling id"
 # define ERR_ID_INT "floor or ceiling arguments must be numbers between 0-255"
@@ -46,42 +53,56 @@ typedef struct s_data
 {
 	char	*no;
 	char	*so;
-	char	*we;
 	char	*ea;
+	char	*we;
 	char	*fl;
 	char	*cei;
 	char	**map;
 }	t_data;
 
-typedef struct s_cube
+typedef struct s_img
 {
-	int	player_x;
-	int	player_y;
-	int	map_x;
-	int	map_y;
-	int	fl_dec;
-	int	cei_dec;
-}	t_cube;
+	void	*img;
+	int		width;
+	int		heigth;
+	int		bpp;
+	char	*addr;
+	int		line_len;
+	int		endian;
+}	t_img;
+
+typedef struct s_textures
+{
+	t_img	no;
+	t_img	so;
+	t_img	ea;
+	t_img	we;
+	int		floor;
+	int		ceiling;
+}	t_textures;
 
 typedef struct s_game
 {
-	void	*ptr;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		line_length;
-	int		bits_per_pixel;
-	int		endian;
-	int		size_x;
-	int		size_y;
+	void		*ptr;
+	void		*win;
+	int			size_x;
+	int			size_y;
+	int			player_x;
+	int			player_y;
+	int			map_x;
+	int			map_y;
+	char		**map;
+	t_img		mini_map;
+	t_textures	tex;
 }	t_game;
 
 char	**get_info(char **argv);
 int		parse_data(char **info, t_data *data);
-int		check_data(t_data *data, t_cube *cub);
+int		check_data(t_data *data, t_game *g);
 void	get_map(char **info, t_data *data, int err);
-int		check_map_surrounding(char **map, t_cube *cub);
+int		check_map_surrounding(char **map, t_game *g);
 
+int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
 

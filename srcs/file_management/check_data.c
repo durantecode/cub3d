@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 17:48:32 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:24:51 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	parse_floor_ceiling(char **split_comma, int *var)
 	return (0);
 }
 
-static int	check_floor_ceiling(char *str, int *cub)
+static int	check_floor_ceiling(char *str, int *g)
 {
 	int		i;
 	char	**split_comma;
@@ -50,7 +50,7 @@ static int	check_floor_ceiling(char *str, int *cub)
 		if (!str_is_digit(split_comma[i]))
 			break ;
 	}
-	if (err || parse_floor_ceiling(split_comma, cub))
+	if (err || parse_floor_ceiling(split_comma, g))
 	{
 		free_matrix(split_comma);
 		return (1);
@@ -59,7 +59,7 @@ static int	check_floor_ceiling(char *str, int *cub)
 	return (0);
 }
 
-int	check_data(t_data *data, t_cube *cub)
+int	check_data(t_data *data, t_game *g)
 {
 	int	map_status;
 
@@ -71,13 +71,13 @@ int	check_data(t_data *data, t_cube *cub)
 		return (1);
 	if (check_file_extension(data->ea, ".xpm", ERR_EXT_ID))
 		return (1);
-	if (check_floor_ceiling(data->fl, &(cub->fl_dec)))
+	if (check_floor_ceiling(data->fl, &(g->tex.floor)))
 		return (1);
-	if (check_floor_ceiling(data->cei, &(cub->cei_dec)))
+	if (check_floor_ceiling(data->cei, &(g->tex.ceiling)))
 		return (1);
-	cub->map_x = ft_strlen(data->map[0]);
-	cub->map_y = matrix_len(data->map);
-	map_status = check_map_surrounding(data->map, cub);
+	g->map_x = ft_strlen(data->map[0]);
+	g->map_y = matrix_len(data->map);
+	map_status = check_map_surrounding(data->map, g);
 	if (map_status == 1)
 		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);
 	else if (map_status == 2)
