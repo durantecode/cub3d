@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 13:57:16 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 23:18:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,7 @@ int	check_map_surrounding(char **map, t_game *g)
 		}
 		i++;
 	}
+	if (!pos)
+		return (4);
 	return (0);
 }

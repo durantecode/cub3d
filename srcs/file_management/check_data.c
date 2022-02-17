@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 15:00:54 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 23:15:29 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int	check_data(t_data *data, t_game *g)
 		printf("Error\n%s\n", ERR_MAP_SRND);
 	else if (map_status == 3)
 		printf("Error\n%s\n", ERR_MAP_POS);
+	else if (map_status == 4)
+		printf("Error\n%s\n", ERR_MAP_NO_POS);
 	return (map_status);
 }

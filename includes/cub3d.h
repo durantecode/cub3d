@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 21:21:00 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 23:16:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define ERR_MAP_CHAR "map must contain only valid characters:"
 # define ERR_MAP_SRND "map must be surrounded by walls"
 # define ERR_MAP_POS "there must be only one start position"
+# define ERR_MAP_NO_POS "there is no start position"
 
 typedef struct s_data
 {
