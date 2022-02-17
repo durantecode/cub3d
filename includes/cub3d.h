@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 17:11:30 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 20:42:29 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGTH 720
-# define MINI_MAP_WIDTH 240
-# define MINI_MAP_HEIGTH 160
+# define MINI_MAP_WIDTH 200
+# define MINI_MAP_HEIGTH 200
 
 /*COLOR DEFINE*/
 # define WALL_PURPLE 11027942
 # define FLOOR_BEIGE 15912380
-# define TRANSPARENT 4278190080
+# define TRANSPARENT 3358535222
 
 # define KEY_UP 13
 # define KEY_DOWN 1

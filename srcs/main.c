@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 17:11:51 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 20:49:08 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,18 @@ void	draw_square(t_img mini_map, t_bres bres, long color)
 	}
 }
 
-void	draw_circle(t_img mini_map, t_bres bres)
+void	draw_circle(t_img mini_map)
 {
 	int	r;
 	int i;
-
+	t_bres bres;
+	
+	bres.x = 100;
+	bres.y = 100;
 	i = 0;
 	r = 4;
-	bres.x += 6;
-	bres.y += 6;
+	bres.x += 5;
+	bres.y += 5;
 	while (i < 360)
 	{
 		bres.end_x = bres.x + r * cos(i);
@@ -88,43 +91,70 @@ void	draw_circle(t_img mini_map, t_bres bres)
 		write_line_bres(mini_map, bres, 16531322);
 		i++;
 	}
-	bres.x -= 6;
-	bres.y -= 6;
 }
 
 void	draw_mini_map(t_img mini_map, t_game *g)
 {
 	int		x;
+	int		x1;
 	int		y;
+	int		y1;
 	t_bres	bres;
 	int		tile_size;
 
-	y = 0;
-	// if (g->size_x < MINI_MAP_WIDTH && g->size_y < MINI_MAP_HEIGTH)
-		// tile_size = 
-	tile_size = 12;
+	tile_size = 10;
 	ft_bzero(&bres, sizeof(t_bres));
-	while (y < g->size_y)
+	y = g->player_y * tile_size - 100;
+	x = g->player_x * tile_size - 100;
+	printf("%d, %d\n", y, x);
+	y1 = 0;
+	while (y < MINI_MAP_HEIGTH * tile_size)
 	{
-		x = 0;
-		while (x < g->size_x)
+		x = g->player_x * tile_size - 100;
+		x1 = 0;
+		while (x < MINI_MAP_WIDTH * tile_size)
 		{
-				bres.x = x * tile_size;
-				bres.y = y * tile_size;
-				bres.end_x = bres.x + tile_size;
-				bres.end_y = bres.y + tile_size;
-			if (g->map[y][x] == '1')
-				draw_square(mini_map, bres, WALL_PURPLE);
-			else if (g->map[y][x] != '1' && ft_strchr(MAP_CHAR, g->map[y][x]))
-				draw_square(mini_map, bres, FLOOR_BEIGE);
+			if (y / tile_size < g->size_y && x / tile_size < g->size_x
+				&& y / tile_size >= 0 && x / tile_size >= 0)
+			{
+				if (g->map[y / tile_size][x / tile_size] == '1')
+					my_mlx_pixel_put(&mini_map, x1, y1, WALL_PURPLE);
+				else if (g->map[y / tile_size][x / tile_size] == ' ')
+					my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
+				else 
+					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_BEIGE);
+			}
 			else
-				draw_square(mini_map, bres, TRANSPARENT);
-			if (x == g->player_x && y == g->player_y)
-				draw_circle(mini_map, bres);
+				my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
+			x1++;
 			x++;
 		}
 		y++;
+		y1++;
 	}
+	
+	draw_circle(mini_map);
+	// while (y < g->size_y)
+	// {
+	// 	x = 0;
+	// 	while (x < g->size_x)
+	// 	{
+	// 		bres.x = x * tile_size;
+	// 		bres.y = y * tile_size;
+	// 		bres.end_x = bres.x + tile_size;
+	// 		bres.end_y = bres.y + tile_size;
+	// 		if (g->map[y][x] == '1')
+	// 			draw_square(mini_map, bres, WALL_PURPLE);
+	// 		else if (g->map[y][x] != '1' && ft_strchr(MAP_CHAR, g->map[y][x]))
+	// 			draw_square(mini_map, bres, FLOOR_BEIGE);
+	// 		else
+	// 			draw_square(mini_map, bres, TRANSPARENT);
+	// 		if (x == g->player_x && y == g->player_y)
+	// 			draw_circle(mini_map, bres);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 	(void)x;
 }
 
@@ -161,7 +191,7 @@ void	init_cube(t_data *data, t_game *g)
 	bg.img = mlx_xpm_file_to_image(g->ptr, "./textures/background.xpm", &bg.width, &bg.heigth);
 	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
 	draw_mini_map(mini_map, g);
-	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 530);
+	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 490);
 	mlx_loop(g->ptr);
 	(void)data;
 }
