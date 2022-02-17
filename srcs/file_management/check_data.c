@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 12:24:51 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 15:00:54 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	check_data(t_data *data, t_game *g)
 		return (1);
 	if (check_floor_ceiling(data->cei, &(g->tex.ceiling)))
 		return (1);
-	g->map_x = ft_strlen(data->map[0]);
-	g->map_y = matrix_len(data->map);
+	g->size_x = ft_strlen(data->map[0]);
+	g->size_y = matrix_len(data->map);
 	map_status = check_map_surrounding(data->map, g);
 	if (map_status == 1)
 		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);

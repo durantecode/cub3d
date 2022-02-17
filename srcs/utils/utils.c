@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/14 20:46:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:12:28 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	write_line_bres(t_img mini_map, t_bres bres, int color)
+{
+	float	step_x;
+	float	step_y;
+	float	dist;
+	int		i;
+
+	dist = sqrt(pow(bres.x - bres.end_x, 2)
+		+ pow(bres.y - bres.end_y, 2));
+	step_x = (bres.end_x - bres.x) / dist;
+	step_y = (bres.end_y - bres.y) / dist;
+	i = 0;
+	while (i < dist)
+	{
+		my_mlx_pixel_put(&mini_map, (bres.x + step_x * i)
+			+ 0, (bres.y + step_y * i)
+			+ 0, color);
+		i++;
+	}
+}
 
 int	check_file_extension(char *argv, char *ext, char *err)
 {

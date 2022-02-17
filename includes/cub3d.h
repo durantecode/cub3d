@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 12:33:27 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:11:30 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@
 # include <sys/stat.h>
 # include <errno.h>
 # include <math.h>
+
+# define WIN_WIDTH 1080
+# define WIN_HEIGTH 720
+# define MINI_MAP_WIDTH 240
+# define MINI_MAP_HEIGTH 160
+
+/*COLOR DEFINE*/
+# define WALL_PURPLE 11027942
+# define FLOOR_BEIGE 15912380
+# define TRANSPARENT 4278190080
 
 # define KEY_UP 13
 # define KEY_DOWN 1
@@ -81,16 +91,22 @@ typedef struct s_textures
 	int		ceiling;
 }	t_textures;
 
+typedef	struct s_bres
+{
+	int	x;
+	int	y;
+	int	end_x;
+	int	end_y;
+}	t_bres;
+
 typedef struct s_game
 {
 	void		*ptr;
 	void		*win;
-	int			size_x;
-	int			size_y;
 	int			player_x;
 	int			player_y;
-	int			map_x;
-	int			map_y;
+	int			size_x;
+	int			size_y;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;
@@ -105,6 +121,9 @@ int		check_map_surrounding(char **map, t_game *g);
 int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
+
+void	my_mlx_pixel_put(t_img *mini_map, int x, int y, long color);
+void	write_line_bres(t_img mini_map, t_bres bres, int color);
 
 #endif
 

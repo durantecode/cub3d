@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 12:14:19 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:57:16 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static int	check_corners(char **m, int i, int j, t_game *g)
 			|| !ft_strchr(MAP_SR, m[i + 1][j + 1]))
 			return (1);
 	}
-	if (j == g->map_x - 1 && i == 0)
+	if (j == g->size_x - 1 && i == 0)
 	{
 		if (!ft_strchr(MAP_SR, m[i][j - 1]) || !ft_strchr(MAP_SR, m[i + 1][j])
 			|| !ft_strchr(MAP_SR, m[i + 1][j - 1]))
 			return (1);
 	}
-	if (j == 0 && i == g->map_y - 1)
+	if (j == 0 && i == g->size_y - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i - 1][j]) || !ft_strchr(MAP_SR, m[i][j + 1])
 			|| !ft_strchr(MAP_SR, m[i - 1][j + 1]))
 			return (1);
 	}
-	if (j == g->map_x - 1 && i == g->map_y - 1)
+	if (j == g->size_x - 1 && i == g->size_y - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i - 1][j]) || !ft_strchr(MAP_SR, m[i][j - 1])
 			|| !ft_strchr(MAP_SR, m[i - 1][j - 1]))
@@ -43,7 +43,7 @@ static int	check_corners(char **m, int i, int j, t_game *g)
 
 static int	check_border_y(char **m, int i, int j, t_game *g)
 {
-	if (j == 0 && i > 0 && i < g->map_y - 1)
+	if (j == 0 && i > 0 && i < g->size_y - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i][j + 1])
 			|| !ft_strchr(MAP_SR, m[i + 1][j])
@@ -52,7 +52,7 @@ static int	check_border_y(char **m, int i, int j, t_game *g)
 			|| !ft_strchr(MAP_SR, m[i + 1][j + 1]))
 			return (1);
 	}
-	if (j == g->map_x - 1 && i > 0 && i < g->map_y - 1)
+	if (j == g->size_x - 1 && i > 0 && i < g->size_y - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i][j - 1])
 			|| !ft_strchr(MAP_SR, m[i + 1][j - 1])
@@ -66,7 +66,7 @@ static int	check_border_y(char **m, int i, int j, t_game *g)
 
 static int	check_border_x(char **m, int i, int j, t_game *g)
 {
-	if (i == 0 && j > 0 && j < g->map_x - 1)
+	if (i == 0 && j > 0 && j < g->size_x - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i][j + 1])
 			|| !ft_strchr(MAP_SR, m[i][j - 1])
@@ -75,7 +75,7 @@ static int	check_border_x(char **m, int i, int j, t_game *g)
 			|| !ft_strchr(MAP_SR, m[i + 1][j - 1]))
 			return (1);
 	}
-	if (i == g->map_y - 1 && j > 0 && j < g->map_x - 1)
+	if (i == g->size_y - 1 && j > 0 && j < g->size_x - 1)
 	{
 		if (!ft_strchr(MAP_SR, m[i][j + 1])
 			|| !ft_strchr(MAP_SR, m[i][j - 1])
@@ -89,7 +89,7 @@ static int	check_border_x(char **m, int i, int j, t_game *g)
 
 static int	check_space_surrounding(char **map, int i, int j, t_game *g)
 {
-	if (j > 0 && j < g->map_x - 1 && i > 0 && i < g->map_y - 1)
+	if (j > 0 && j < g->size_x - 1 && i > 0 && i < g->size_y - 1)
 	{
 		if (!ft_strchr(MAP_SR, map[i][j - 1])
 			|| !ft_strchr(MAP_SR, map[i][j + 1]))
@@ -137,8 +137,8 @@ int	check_map_surrounding(char **map, t_game *g)
 				g->player_x = j;
 				g->player_y = i;
 			}
-			if ((i == 0 || i == g->map_y - 1 || j == 0
-					|| j == g->map_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
+			if ((i == 0 || i == g->size_y - 1 || j == 0
+					|| j == g->size_x - 1) && !ft_strchr(MAP_SR, map[i][j]))
 				return (2);
 			j++;
 		}
