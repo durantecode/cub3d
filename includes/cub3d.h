@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 20:42:29 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 21:21:00 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_game
 	int			player_y;
 	int			size_x;
 	int			size_y;
+	int			move_pos_x;
+	int			move_pos_y;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;

@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 20:49:08 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/17 21:36:43 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,11 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 
 	tile_size = 10;
 	ft_bzero(&bres, sizeof(t_bres));
-	y = g->player_y * tile_size - 100;
-	x = g->player_x * tile_size - 100;
-	printf("%d, %d\n", y, x);
+	y = (g->player_y * tile_size - 100) + g->move_pos_y;
 	y1 = 0;
 	while (y < MINI_MAP_HEIGTH * tile_size)
 	{
-		x = g->player_x * tile_size - 100;
+		x = (g->player_x * tile_size - 100) + g->move_pos_x;
 		x1 = 0;
 		while (x < MINI_MAP_WIDTH * tile_size)
 		{
@@ -132,30 +130,7 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		y++;
 		y1++;
 	}
-	
 	draw_circle(mini_map);
-	// while (y < g->size_y)
-	// {
-	// 	x = 0;
-	// 	while (x < g->size_x)
-	// 	{
-	// 		bres.x = x * tile_size;
-	// 		bres.y = y * tile_size;
-	// 		bres.end_x = bres.x + tile_size;
-	// 		bres.end_y = bres.y + tile_size;
-	// 		if (g->map[y][x] == '1')
-	// 			draw_square(mini_map, bres, WALL_PURPLE);
-	// 		else if (g->map[y][x] != '1' && ft_strchr(MAP_CHAR, g->map[y][x]))
-	// 			draw_square(mini_map, bres, FLOOR_BEIGE);
-	// 		else
-	// 			draw_square(mini_map, bres, TRANSPARENT);
-	// 		if (x == g->player_x && y == g->player_y)
-	// 			draw_circle(mini_map, bres);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
-	(void)x;
 }
 
 int	key_input(int key, t_game *g)
@@ -168,8 +143,18 @@ int	key_input(int key, t_game *g)
 			close_game(g);
 			return (0);
 		}
+		if (key == KEY_UP)
+			g->move_pos_y -= 4;
+		if (key == KEY_DOWN)
+			g->move_pos_y += 4;
+		if (key == KEY_LEFT)
+			g->move_pos_x -= 4;
+		if (key == KEY_RIGHT)
+			g->move_pos_x -= 4;
+		return (1);
 	}
-	return (0);
+	else
+		return (0);
 }
 
 void	init_cube(t_data *data, t_game *g)
@@ -177,6 +162,8 @@ void	init_cube(t_data *data, t_game *g)
 	t_img	mini_map;
 	t_img	bg;
 
+	ft_bzero(&mini_map, sizeof(t_img));
+	g->mini_map = mini_map;
 	printf("Map okay... Init cube\n");
 	g->map = matrix_dup(data->map);
 	free_data(data);
@@ -193,7 +180,6 @@ void	init_cube(t_data *data, t_game *g)
 	draw_mini_map(mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 490);
 	mlx_loop(g->ptr);
-	(void)data;
 }
 
 int	main(int argc, char **argv)
