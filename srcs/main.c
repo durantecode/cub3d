@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 23:23:06 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/18 19:28:16 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,14 @@ void	paint_line(t_img mini_map, t_bres bres, long color)
 	}
 }
 
-int	game_status(t_game *g)
-{
-	// mlx_clear_window(g->ptr, g->win);
+// int	game_status(t_game *g)
+// {
+// 	// mlx_clear_window(g->ptr, g->win);
 
-	// draw_mini_map(g);
-	(void)g;
-	return (0);
-}
-
-
-void	draw_square(t_img mini_map, t_bres bres, long color)
-{
-	while (bres.y < bres.end_y)
-	{
-		paint_line(mini_map, bres, color);
-		bres.y++;
-	}
-}
+// 	// draw_mini_map(g);
+// 	(void)g;
+// 	return (0);
+// }
 
 void	draw_circle(t_img mini_map)
 {
@@ -133,6 +123,56 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 	draw_circle(mini_map);
 }
 
+void	re_write(t_game *g)
+{
+	t_img	mini_map;
+	
+	// printf("Move up!\n");
+	
+	// printf("Value %p\n", g->win);
+	mlx_clear_window(g->ptr, g->win);
+	
+	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGTH);
+	
+	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
+			&mini_map.line_len, &mini_map.endian);
+			
+	
+	draw_mini_map(mini_map, g);
+		
+	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 490);
+	
+	
+	mlx_loop(g->ptr);
+}
+
+void	check_pos(t_game *g, int key)
+{
+	int	y = ((g->player_y * 10)) + g->move_pos_y;
+	int	x = ((g->player_x * 10)) + g->move_pos_x;
+	if (key == KEY_UP)
+	{
+		g->move_pos_y -= 3;
+	}
+	if (key == KEY_DOWN)
+	{
+		g->move_pos_y += 3;
+	}
+	if (key == KEY_LEFT)
+	{
+		g->move_pos_x -= 3;
+	}
+	if (key == KEY_RIGHT)
+	{
+		g->move_pos_x += 3;
+	}
+	// printf("%d, %d\n", y, x);
+	// printf("%d, %d\n\n", y/10, x/10);
+	if (g->map[y/10][x/10] == '1')
+		printf("toca %d\n", g->move_pos_x + g->move_pos_y);
+	re_write(g);
+}
+
 int	key_input(int key, t_game *g)
 {
 	if (key == KEY_ESC || key == KEY_RIGHT || key == KEY_LEFT
@@ -143,14 +183,17 @@ int	key_input(int key, t_game *g)
 			close_game(g);
 			return (0);
 		}
-		if (key == KEY_UP)
-			g->move_pos_y -= 4;
-		if (key == KEY_DOWN)
-			g->move_pos_y += 4;
-		if (key == KEY_LEFT)
-			g->move_pos_x -= 4;
-		if (key == KEY_RIGHT)
-			g->move_pos_x -= 4;
+		else
+			check_pos(g, key);
+		// if (key == KEY_UP)
+		// 	g->move_pos_y -= 3;
+		// if (key == KEY_DOWN)
+		// 	g->move_pos_y += 3;
+		// if (key == KEY_LEFT)
+		// 	g->move_pos_x -= 3;
+		// if (key == KEY_RIGHT)
+		// 	g->move_pos_x += 3;
+		// re_write(g);
 		return (1);
 	}
 	else
@@ -160,7 +203,7 @@ int	key_input(int key, t_game *g)
 void	init_cube(t_data *data, t_game *g)
 {
 	t_img	mini_map;
-	t_img	bg;
+	// t_img	bg;
 
 	ft_bzero(&mini_map, sizeof(t_img));
 	g->mini_map = mini_map;
@@ -168,17 +211,29 @@ void	init_cube(t_data *data, t_game *g)
 	g->map = matrix_dup(data->map);
 	free_data(data);
 	g->ptr = mlx_init();
+	
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGTH, "cub3D");
-	mlx_loop_hook(g->ptr, game_status, (void *) &g);
-	mlx_hook(g->win, 17, 0, close_game, (void *) &g);
-	mlx_key_hook(g->win, key_input, (void *) &g);
+	
+	// mlx_loop_hook(g->ptr, game_status, (void *) &g);
+
+	mlx_hook(g->win, 17, 0, close_game, (void *) g);
+	
+	mlx_key_hook(g->win, key_input, (void *) g);
+
+	
 	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGTH);
+	
 	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
 			&mini_map.line_len, &mini_map.endian);
-	bg.img = mlx_xpm_file_to_image(g->ptr, "./textures/background.xpm", &bg.width, &bg.heigth);
-	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
+	// bg.img = mlx_xpm_file_to_image(g->ptr, "./textures/background.xpm", &bg.width, &bg.heigth);
+	// mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
+	
 	draw_mini_map(mini_map, g);
+
 	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 490);
+	
+	// printf("Value %p\n", g->win);
+	
 	mlx_loop(g->ptr);
 }
 

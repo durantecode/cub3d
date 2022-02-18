@@ -6,7 +6,7 @@
 #    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/17 11:47:12 by dpavon-g         ###   ########.fr        #
+#    Updated: 2022/02/18 14:50:08 by dpavon-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = cub3D
 CC = gcc
 RM = rm -f
 MAKE = make
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g3 -Wall -Werror -Wextra
 DEBUG = -g3 -fsanitize=address
 
 UNAME = $(shell uname -s)
