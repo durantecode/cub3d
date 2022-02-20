@@ -16,16 +16,42 @@ NAME = cub3D
 CC = gcc
 RM = rm -f
 MAKE = make
-CFLAGS = -g3 -Wall -Werror -Wextra
 DEBUG = -g3 -fsanitize=address
 
 UNAME = $(shell uname -s)
 
-# Properties for MacOS
+# Properties for compile in MacOS
 MLX_LINK = -lmlx -framework OpenGL -framework AppKit
+
+# Keycode for MacOs
+ESC = KEY_ESC=53
+W = KEY_W=13
+A = KEY_A=0
+S = KEY_S=1
+D = KEY_D=2
+UP = KEY_UP=126
+DOWN = KEY_DOWN=125
+LEFT = KEY_LEFT=123
+RIGHT = KEY_RIGHT=124
+R = KEY_R=15
+Q = KEY_Q=12
+
 ifeq ($(UNAME), Linux)
-# Propierties for Linux
-MLX_LINK = -lmlx -lXext -lX11 -lm
+	# Propierties for compile in Linux
+	MLX_LINK = -lmlx -lXext -lX11 -lm
+
+	# Keycode for Linux
+	ESC = KEY_ESC=65307
+	W = KEY_W=119
+	A = KEY_A=97
+	S = KEY_S=115
+	D = KEY_D=100
+	UP = KEY_UP=65362
+	DOWN = KEY_DOWN=65364
+	LEFT = KEY_LEFT=65361
+	RIGHT = KEY_RIGHT=65363
+	R = KEY_R=114
+	Q = KEY_Q=113
 endif
 
 # COLORS #
@@ -48,6 +74,12 @@ SRCS =	srcs/main.c \
 		srcs/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)
+
+# Keycodes to compile with
+KEYCODES =  -D $(ESC) -D $(Q) -D $(R) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
+
+
+CFLAGS = -g3 -Wall -Werror -Wextra $(KEYCODES)
 
 # RULES #
 all: $(NAME)

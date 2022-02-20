@@ -35,13 +35,11 @@
 # define FLOOR_BEIGE 15912380
 # define TRANSPARENT 3358535222
 
-/*
-# define KEY_UP 13
-# define KEY_DOWN 1
-# define KEY_LEFT 0
-# define KEY_RIGHT 2
-# define KEY_ESC 53
-*/
+# define KEY_UP 119
+# define KEY_DOWN 115
+# define KEY_LEFT 97
+# define KEY_RIGHT 100
+# define KEY_ESC 65307
 
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"

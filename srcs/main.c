@@ -131,7 +131,10 @@ void	re_write(t_game *g)
 	
 	// printf("Value %p\n", g->win);
 	mlx_clear_window(g->ptr, g->win);
-	
+
+
+
+
 	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGTH);
 	
 	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
@@ -150,33 +153,46 @@ void	check_pos(t_game *g, int key)
 {
 	int	y = ((g->player_y * 10)) + g->move_pos_y;
 	int	x = ((g->player_x * 10)) + g->move_pos_x;
-	if (key == KEY_UP)
+	if (key == KEY_W)
 	{
-		g->move_pos_y -= 3;
+		g->move_pos_y -= 2;
+		if (g->map[y/10][x/10] == '1')
+	   		g->move_pos_y += 2;
 	}
-	if (key == KEY_DOWN)
+	if (key == KEY_S)
 	{
-		g->move_pos_y += 3;
+		g->move_pos_y += 2;
+		if (g->map[y/10][x/10] == '1')
+   			g->move_pos_y -= 2;
+
 	}
-	if (key == KEY_LEFT)
+	if (key == KEY_A)
 	{
-		g->move_pos_x -= 3;
+		g->move_pos_x -= 2;
+		if (g->map[y/10][x/10] == '1')
+        	g->move_pos_x += 2;
+
 	}
-	if (key == KEY_RIGHT)
+	if (key == KEY_D)
 	{
-		g->move_pos_x += 3;
+		g->move_pos_x += 2;
+		if (g->map[y/10][x/10] == '1')
+			g->move_pos_x -= 2;
+
 	}
 	// printf("%d, %d\n", y, x);
 	// printf("%d, %d\n\n", y/10, x/10);
-	if (g->map[y/10][x/10] == '1')
-		printf("toca %d\n", g->move_pos_x + g->move_pos_y);
+	
+	//if (g->map[y/10][x/10] == '1')
+		printf("toca %d, %d\n", y/10, x/10);
+	
 	re_write(g);
 }
 
 int	key_input(int key, t_game *g)
 {
-	if (key == KEY_ESC || key == KEY_RIGHT || key == KEY_LEFT
-		|| key == KEY_UP || key == KEY_DOWN)
+	if (key == KEY_ESC || key == KEY_D || key == KEY_A
+		|| key == KEY_W || key == KEY_S)
 	{		
 		if (key == KEY_ESC)
 		{
