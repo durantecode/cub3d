@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 18:33:55 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:09:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ void	my_mlx_pixel_put(t_img *mini_map, int x, int y, long color)
 	}
 }
 
-void	paint_line(t_img mini_map, t_bres bres, long color)
+void	draw_line(t_bres bres, t_img mini_map)
 {
-	while (bres.x < bres.end_x)
-	{
-		my_mlx_pixel_put(&mini_map, (bres.x)
-			+ 0, (bres.y + 0)
-			+ 0, color);
-		bres.x++;
-	}
+	bres.x = 150;
+	bres.y = 105;
+	write_line_bres(mini_map, bres, WALL_PURPLE);
+	// while (bres.x < bres.end_x)
+	// {
+	// 	my_mlx_pixel_put(&mini_map, (bres.x)
+	// 		+ 0, (bres.y + 0)
+	// 		+ 0, WALL_PURPLE);
+	// 	bres.x++;
+	// }
 }
 
 void	draw_circle(t_img mini_map)
@@ -71,6 +74,7 @@ void	draw_circle(t_img mini_map)
 		write_line_bres(mini_map, bres, PLAYER_RED);
 		i++;
 	}
+	draw_line(bres, mini_map);
 }
 
 void	draw_mini_map(t_img mini_map, t_game *g)
@@ -95,7 +99,6 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 			if (y / tile_size < g->size_y && x / tile_size < g->size_x
 				&& y / tile_size >= 0 && x / tile_size >= 0)
 			{
-				// printf("%d, %d\n", y /tile_size, x/ tile_size);
 				if (g->map[(int)y / tile_size][(int)x / tile_size] == '1')
 					my_mlx_pixel_put(&mini_map, x1, y1, WALL_PURPLE);
 				else if (g->map[(int)y / tile_size][(int)x / tile_size] == ' ')
