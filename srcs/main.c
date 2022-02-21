@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 15:23:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:29:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void	draw_circle(t_img mini_map)
 
 void	draw_mini_map(t_img mini_map, t_game *g)
 {
-	int		x;
-	int		x1;
-	int		y;
-	int		y1;
+	float	x;
+	float	x1;
+	float	y;
+	float	y1;
 	t_bres	bres;
 	int		tile_size;
 
@@ -95,9 +95,10 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 			if (y / tile_size < g->size_y && x / tile_size < g->size_x
 				&& y / tile_size >= 0 && x / tile_size >= 0)
 			{
-				if (g->map[y / tile_size][x / tile_size] == '1')
+				// printf("%d, %d\n", y /tile_size, x/ tile_size);
+				if (g->map[(int)y / tile_size][(int)x / tile_size] == '1')
 					my_mlx_pixel_put(&mini_map, x1, y1, WALL_PURPLE);
-				else if (g->map[y / tile_size][x / tile_size] == ' ')
+				else if (g->map[(int)y / tile_size][(int)x / tile_size] == ' ')
 					my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
 				else 
 					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_BEIGE);
@@ -120,28 +121,28 @@ void	check_pos(t_game *g, int key)
 	if (key == KEY_W)
 	{
 		g->move_pos_y -= 2;
-		if (g->map[y/10][x/10] == '1')
-	   		g->move_pos_y += 2;
+		// if (g->map[y/10][x/10] == '1')
+	   	// 	g->move_pos_y += 2;
 	}
 	if (key == KEY_S)
 	{
 		g->move_pos_y += 2;
-		if (g->map[y/10][x/10] == '1')
-   			g->move_pos_y -= 2;
+		// if (g->map[y/10][x/10] == '1')
+   		// 	g->move_pos_y -= 2;
 
 	}
 	if (key == KEY_A)
 	{
 		g->move_pos_x -= 2;
-		if (g->map[y/10][x/10] == '1')
-        	g->move_pos_x += 2;
+		// if (g->map[y/10][x/10] == '1')
+        // 	g->move_pos_x += 2;
 
 	}
 	if (key == KEY_D)
 	{
 		g->move_pos_x += 2;
-		if (g->map[y/10][x/10] == '1')
-			g->move_pos_x -= 2;
+		// if (g->map[y/10][x/10] == '1')
+		// 	g->move_pos_x -= 2;
 
 	}
 	// printf("%d, %d\n", y, x);
@@ -191,7 +192,7 @@ int	game_status(t_game *g)
 	
 	// printf("Move up!\n");
 	// printf("Value %p\n", g->win);
-	// mlx_clear_window(g->ptr, g->win);
+	mlx_clear_window(g->ptr, g->win);
 	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGTH);
 	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
 			&mini_map.line_len, &mini_map.endian);

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 14:16:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:59:02 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ typedef struct s_game
 	int			size_y;
 	int			move_pos_x;
 	int			move_pos_y;
-	int			time;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;

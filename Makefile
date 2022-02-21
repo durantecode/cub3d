@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/18 14:50:08 by dpavon-g         ###   ########.fr        #
+#    Updated: 2022/02/21 16:42:38 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,6 @@ UP = KEY_UP=126
 DOWN = KEY_DOWN=125
 LEFT = KEY_LEFT=123
 RIGHT = KEY_RIGHT=124
-R = KEY_R=15
-Q = KEY_Q=12
 
 ifeq ($(UNAME), Linux)
 	# Propierties for compile in Linux
@@ -50,8 +48,6 @@ ifeq ($(UNAME), Linux)
 	DOWN = KEY_DOWN=65364
 	LEFT = KEY_LEFT=65361
 	RIGHT = KEY_RIGHT=65363
-	R = KEY_R=114
-	Q = KEY_Q=113
 endif
 
 # COLORS #
@@ -76,8 +72,7 @@ SRCS =	srcs/main.c \
 OBJS = $(SRCS:.c=.o)
 
 # Keycodes to compile with
-KEYCODES =  -D $(ESC) -D $(Q) -D $(R) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
-
+KEYCODES =  -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
 
 CFLAGS = -g3 -Wall -Werror -Wextra $(KEYCODES)
 
