@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/02/21 19:09:20 by ldurante         ###   ########.fr       */
-=======
-/*   Updated: 2022/02/21 20:40:23 by dpavon-g         ###   ########.fr       */
->>>>>>> dpavon
+/*   Updated: 2022/02/21 21:02:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +61,12 @@ void	draw_circle(t_img mini_map)
 	float	r;
 	t_bres	bres;
 	
-	bres.x = 150;
-	bres.y = 150;
+	bres.x = 90;
+	bres.y = 90;
 	i = 0;
-	r = 5;
-	bres.x += 7;
-	bres.y += 7;
+	r = 3.5;
+	bres.x += 4;
+	bres.y += 4;
 	while (i < 360)
 	{
 		bres.end_x = bres.x + r * cos(i);
@@ -78,7 +74,7 @@ void	draw_circle(t_img mini_map)
 		write_line_bres(mini_map, bres, PLAYER_RED);
 		i++;
 	}
-	draw_line(bres, mini_map);
+	// draw_line(bres, mini_map);
 }
 
 void	draw_mini_map(t_img mini_map, t_game *g)
@@ -90,13 +86,13 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 	t_bres	bres;
 	int		tile_size;
 
-	tile_size = 15;
+	tile_size = 9;
 	ft_bzero(&bres, sizeof(t_bres));
-	y = (g->player_y * tile_size - 149) + g->move_pos_y;
+	y = (g->player_y * tile_size - 89) + g->move_pos_y;
 	y1 = 0;
 	while (y < MINI_MAP_HEIGTH * tile_size)
 	{
-		x = (g->player_x * tile_size - 149) + g->move_pos_x;
+		x = (g->player_x * tile_size - 89) + g->move_pos_x;
 		x1 = 0;
 		while (x < MINI_MAP_WIDTH * tile_size)
 		{
@@ -125,42 +121,42 @@ void	check_pos(t_game *g, int key)
 {
 	float	y;
 	float	x;
-	y = ((g->player_y * 15)) + g->move_pos_y;
-	x = ((g->player_x * 15)) + g->move_pos_x;
-	printf("%f, %f\n\n", y/15, x/15);
+	y = ((g->player_y * 9)) + g->move_pos_y;
+	x = ((g->player_x * 9)) + g->move_pos_x;
+	printf("%f, %f\n\n", y/9, x/9);
 	if (key == KEY_W)
 	{
-		g->move_pos_y -= 5;
-		y = ((g->player_y * 15)) + g->move_pos_y + 7;
-		x = ((g->player_x * 15)) + g->move_pos_x + 7;
-		if (g->map[(int)(y/15)][(int)(x/15)] == '1')
-	   		g->move_pos_y += 5;
+		g->move_pos_y -= 3;
+		y = ((g->player_y * 9)) + g->move_pos_y + 3.5;
+		x = ((g->player_x * 9)) + g->move_pos_x + 3.5;
+		if (g->map[(int)(y/9)][(int)(x/9)] == '1')
+	   		g->move_pos_y += 3;
 	}
 	else if (key == KEY_S)
 	{
-		g->move_pos_y += 5;
-		y = ((g->player_y * 15)) + g->move_pos_y + 7;
-		x = ((g->player_x * 15)) + g->move_pos_x + 7;
-		if (g->map[(int)(y/15)][(int)(x/15)] == '1')
-   			g->move_pos_y -= 5;
+		g->move_pos_y += 3;
+		y = ((g->player_y * 9)) + g->move_pos_y + 3.5;
+		x = ((g->player_x * 9)) + g->move_pos_x + 3.5;
+		if (g->map[(int)(y/9)][(int)(x/9)] == '1')
+   			g->move_pos_y -= 3;
 	}
 	else if (key == KEY_A)
 	{
-		g->move_pos_x -= 5;
-		y = ((g->player_y * 15)) + g->move_pos_y + 7;
-		x = ((g->player_x * 15)) + g->move_pos_x + 7;
-		if (g->map[(int)(y/15)][(int)(x/15)] == '1')
-        	g->move_pos_x += 5;
+		g->move_pos_x -= 3;
+		y = ((g->player_y * 9)) + g->move_pos_y + 3.5;
+		x = ((g->player_x * 9)) + g->move_pos_x + 3.5;
+		if (g->map[(int)(y/9)][(int)(x/9)] == '1')
+        	g->move_pos_x += 3;
 	}
 	else if (key == KEY_D)
 	{
-		g->move_pos_x += 5;
-		y = ((g->player_y * 15)) + g->move_pos_y + 7;
-		x = ((g->player_x * 15)) + g->move_pos_x + 7;
-		if (g->map[(int)(y/15)][(int)(x/15)] == '1')
-			g->move_pos_x -= 5;
+		g->move_pos_x += 3;
+		y = ((g->player_y * 9)) + g->move_pos_y + 3.5;
+		x = ((g->player_x * 9)) + g->move_pos_x + 3.5;
+		if (g->map[(int)(y/9)][(int)(x/9)] == '1')
+			g->move_pos_x -= 3;
 	}
-		printf("%f, %f\n\n", y/15, x/15);
+		printf("%f, %f\n\n", y/9, x/9);
 	// printf("%d, %d\n", y, x);
 	// printf("%d, %d\n\n", y/10, x/10);
 	
