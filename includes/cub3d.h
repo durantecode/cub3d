@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/21 17:59:02 by ldurante         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/21 20:37:35 by dpavon-g         ###   ########.fr       */
+>>>>>>> dpavon
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +31,8 @@
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGTH 720
-# define MINI_MAP_WIDTH 200
-# define MINI_MAP_HEIGTH 200
+# define MINI_MAP_WIDTH 300
+# define MINI_MAP_HEIGTH 300
 
 /*COLOR DEFINE*/
 # define WALL_PURPLE 11027942
