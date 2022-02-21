@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 18:29:21 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:33:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,40 +116,48 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 
 void	check_pos(t_game *g, int key)
 {
-	int	y = ((g->player_y * 10)) + g->move_pos_y;
-	int	x = ((g->player_x * 10)) + g->move_pos_x;
+	float	y;
+	float	x;
 	if (key == KEY_W)
 	{
 		g->move_pos_y -= 2;
-		// if (g->map[y/10][x/10] == '1')
-	   	// 	g->move_pos_y += 2;
+		y = ((g->player_y * 10)) + g->move_pos_y;
+		x = ((g->player_x * 10)) + g->move_pos_x;
+		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
+	   		g->move_pos_y += 2;
 	}
 	if (key == KEY_S)
 	{
 		g->move_pos_y += 2;
-		// if (g->map[y/10][x/10] == '1')
-   		// 	g->move_pos_y -= 2;
+		y = ((g->player_y * 10)) + g->move_pos_y;
+		x = ((g->player_x * 10)) + g->move_pos_x;
+		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
+   			g->move_pos_y -= 2;
 
 	}
 	if (key == KEY_A)
 	{
 		g->move_pos_x -= 2;
-		// if (g->map[y/10][x/10] == '1')
-        // 	g->move_pos_x += 2;
+		y = ((g->player_y * 10)) + g->move_pos_y;
+		x = ((g->player_x * 10)) + g->move_pos_x;
+		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
+        	g->move_pos_x += 2;
 
 	}
 	if (key == KEY_D)
 	{
 		g->move_pos_x += 2;
-		// if (g->map[y/10][x/10] == '1')
-		// 	g->move_pos_x -= 2;
+		y = ((g->player_y * 10)) + g->move_pos_y;
+		x = ((g->player_x * 10)) + g->move_pos_x;
+		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
+			g->move_pos_x -= 2;
 
 	}
 	// printf("%d, %d\n", y, x);
 	// printf("%d, %d\n\n", y/10, x/10);
 	
 	//if (g->map[y/10][x/10] == '1')
-		printf("toca %d, %d\n", y/10, x/10);
+		// printf("toca %d, %d\n", y/10, x/10);
 }
 
 int	mouse_input(int mouse, t_game *g)
