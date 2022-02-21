@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 15:23:23 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/21 20:19:56 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	paint_line(t_img mini_map, t_bres bres, long color)
 
 void	draw_circle(t_img mini_map)
 {
-	int		i;
+	float	i;
 	float	r;
 	t_bres	bres;
 	
 	bres.x = 100;
 	bres.y = 100;
 	i = 0;
-	r = 3.5;
+	r = 5;
 	bres.x += 5;
 	bres.y += 5;
 	while (i < 360)
@@ -84,11 +84,11 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 
 	tile_size = 10;
 	ft_bzero(&bres, sizeof(t_bres));
-	y = (g->player_y * tile_size - 100) + g->move_pos_y;
+	y = (g->player_y * tile_size - 100);
 	y1 = 0;
 	while (y < MINI_MAP_HEIGTH * tile_size)
 	{
-		x = (g->player_x * tile_size - 100) + g->move_pos_x;
+		x = (g->player_x * tile_size - 100);
 		x1 = 0;
 		while (x < MINI_MAP_WIDTH * tile_size)
 		{
@@ -99,6 +99,8 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 					my_mlx_pixel_put(&mini_map, x1, y1, WALL_PURPLE);
 				else if (g->map[(int)y / tile_size][(int)x / tile_size] == ' ')
 					my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
+				else if ((int)y / tile_size == g->player_y && (int)x / tile_size == g->player_x)
+					my_mlx_pixel_put(&mini_map, x1, y1, PLAYER_RED);
 				else 
 					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_BEIGE);
 			}
@@ -110,48 +112,69 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		y++;
 		y1++;
 	}
-	draw_circle(mini_map);
+	// draw_circle(mini_map);
 }
 
 void	check_pos(t_game *g, int key)
 {
 	float	y;
 	float	x;
+	y = ((g->player_y * 10)) + g->move_pos_y;
+	x = ((g->player_x * 10)) + g->move_pos_x;
+	printf("%f, %f\n\n", y/10, x/10);
 	if (key == KEY_W)
 	{
 		g->move_pos_y -= 2;
+		if (g->move_pos_y <= -4)
+		{
+			g->player_y -= 1;
+			g->move_pos_y = 0;
+		}
 		y = ((g->player_y * 10)) + g->move_pos_y;
 		x = ((g->player_x * 10)) + g->move_pos_x;
 		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
 	   		g->move_pos_y += 2;
 	}
-	if (key == KEY_S)
+	else if (key == KEY_S)
 	{
-		g->move_pos_y += 2;
+		g->move_pos_y += 1;
+		if (g->move_pos_y >= 4)
+		{
+			g->player_y += 1;
+			g->move_pos_y = 0;
+		}
 		y = ((g->player_y * 10)) + g->move_pos_y;
 		x = ((g->player_x * 10)) + g->move_pos_x;
 		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
-   			g->move_pos_y -= 2;
-
+   			g->move_pos_y -= 1;
 	}
-	if (key == KEY_A)
+	else if (key == KEY_A)
 	{
-		g->move_pos_x -= 2;
+		g->move_pos_x -= 1;
+		if (g->move_pos_x <= -4)
+		{
+			g->player_x -= 1;
+			g->move_pos_x = 0;
+		}
 		y = ((g->player_y * 10)) + g->move_pos_y;
 		x = ((g->player_x * 10)) + g->move_pos_x;
 		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
-        	g->move_pos_x += 2;
-
+        	g->move_pos_x += 1;
 	}
-	if (key == KEY_D)
+	else if (key == KEY_D)
 	{
-		g->move_pos_x += 2;
+		g->move_pos_x += 1;
+		if (g->move_pos_x >= 4)
+		{
+			g->player_x += 1;
+			g->move_pos_x = 0;
+		}
 		y = ((g->player_y * 10)) + g->move_pos_y;
 		x = ((g->player_x * 10)) + g->move_pos_x;
 		if (g->map[(int)(y/10)][(int)(x/10)] == '1')
-			g->move_pos_x -= 2;
-
+			g->move_pos_x -= 1;
 	}
+		printf("%f, %f\n\n", y/10, x/10);
 	// printf("%d, %d\n", y, x);
 	// printf("%d, %d\n\n", y/10, x/10);
 	
