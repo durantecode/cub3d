@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/18 19:19:03 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:16:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,24 @@
 
 /*COLOR DEFINE*/
 # define WALL_PURPLE 11027942
+# define PLAYER_RED 16531322
 # define FLOOR_BEIGE 15912380
 # define TRANSPARENT 3358535222
 
-/*
-# define KEY_UP 13
-# define KEY_DOWN 1
-# define KEY_LEFT 0
-# define KEY_RIGHT 2
+#ifndef KEYCODES
+# define KEYCODES
+
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
 # define KEY_ESC 53
-*/
+#endif
+
 
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
@@ -112,6 +120,7 @@ typedef struct s_game
 	int			size_y;
 	int			move_pos_x;
 	int			move_pos_y;
+	int			time;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;
