@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 17:55:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:16:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	close_game(t_game *g)
 int	ft_colorcmp(int y, int x, int color, t_img *img)
 {
 	char	*dst;
-	
-	if (x > 180 || x < 0 || y > 180 || y < 0)
+
+	printf("Value: %d, %d\n", y, x);
+	if (x > 180 || y > 180 || x < 0 || y < 0)
 		return (1);
 	dst = img->addr + (y * img->line_len
 				+ x * (img->bpp / 8));
@@ -45,21 +46,32 @@ int	ft_colorcmp(int y, int x, int color, t_img *img)
 
 void	draw_line(t_game *g, t_img img)
 {
+	float	x;
+	float	y;
 	float	r;
 	t_bres	bres;
+	float	dir;
 
+	y = (g->player_y * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_y;
+	x = (g->player_x * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_x;
+	dir = 3;
+	(void)g;
 	ft_bzero(&bres, sizeof(t_bres));
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
 	r = 0;
-	bres.end_x = bres.x + r * cos(g->rotate);
-	bres.end_y = bres.y + r * sin(g->rotate);
+	printf("Start pos %d, %d\n", bres.y / TILE_SIZE, bres.x / TILE_SIZE);
+	bres.end_x = bres.x + r * cos(dir + g->rotate);
+	bres.end_y = bres.y + r * sin(dir + g->rotate);
+	printf("first pos %d, %d\n", bres.end_y / TILE_SIZE, bres.end_x / TILE_SIZE);
+
 	while (!ft_colorcmp(bres.end_y, bres.end_x, WALL_PURPLE, &img))
 	{
-		bres.end_x = bres.x + r * cos(g->rotate);
-		bres.end_y = bres.y + r * sin(g->rotate);
+		bres.end_x = bres.x + r * cos(dir + g->rotate);
+		bres.end_y = bres.y + r * sin(dir + g->rotate);
 		r++;
 	}
+	// printf("%f\n", r)
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
@@ -180,11 +192,11 @@ int	key_input(int key, t_game *g)
 			check_pos(g, key);
 		if (key == KEY_LEFT)
 		{
-			g->rotate -= 0.08;
+			g->rotate -= 0.15;
 		}
 		if (key == KEY_RIGHT)
 		{
-			g->rotate += 0.08;
+			g->rotate += 0.15;
 		}
 		return (1);
 	}
