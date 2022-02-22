@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 15:56:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 19:47:34 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,16 @@ void	write_line_bres(t_img img, t_bres bres, int texture);
 	1. En el parseo debemos sacar la coordenada donde va a empezar
 	nuestro personaje.
 	
+
+
+	Luis echa un vistazo a esto:
+
+	Cuando dejamos el boton de mover el rayo pulsado un rato el rayo empieza a descentrarse,
+	no se si será algo problemático pero si podemos echarle un vistazo mejor :)
+
+	A tener en cuenta:
+
+	He puesto lo que pasabamos en grados directamente a radianes para trabajar en la misma unidad 
+	de medida.
+	Y el rayo ahora mismo se mueve solo de 90 grados en 90 grados.	
 */
