@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 17:03:09 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:26:34 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,16 @@ int	ft_colorcmp(int y, int x, int color, t_img *img)
 
 void	draw_line(t_game *g, t_img img)
 {
+	float	x;
+	float	y;
 	float	r;
 	t_bres	bres;
 
+	y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+	x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+	
+	printf("center: %d, %d\n", (int)y/TILE_SIZE, (int)x/TILE_SIZE);
+	
 	ft_bzero(&bres, sizeof(t_bres));
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
