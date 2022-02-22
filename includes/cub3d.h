@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 02:06:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 15:56:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 # include "../libft/libft.h"
 # include <mlx.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/wait.h>
+# include <stdio.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include <stdio.h>
-# include <sys/stat.h>
-# include <errno.h>
 # include <math.h>
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
+# define WIN_HALF 360
 # define MINI_MAP_WIDTH 180
 # define MINI_MAP_HEIGHT 180
+# define MINI_MAP_CENTER 90
+# define MINI_MAP_HALF 89
+# define TILE_SIZE 9
+# define PLAYER_RADIUS 3.5
 
 /*COLOR DEFINE*/
 
@@ -87,7 +87,7 @@ typedef struct s_img
 {
 	void	*img;
 	int		width;
-	int		heigth;
+	int		height;
 	int		bpp;
 	char	*addr;
 	int		line_len;
@@ -120,8 +120,7 @@ typedef struct s_game
 	int			player_y;
 	int			size_x;
 	int			size_y;
-	int			rotate_x;
-	int			rotate_y;
+	float		rotate;
 	int			move_pos_x;
 	int			move_pos_y;
 	char		**map;
@@ -139,8 +138,8 @@ int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
 
-void	my_mlx_pixel_put(t_img *mini_map, int x, int y, long color);
-void	write_line_bres(t_img mini_map, t_bres bres, int color);
+void	my_mlx_pixel_put(t_img *img, int x, int y, long texture);
+void	write_line_bres(t_img img, t_bres bres, int texture);
 
 #endif
 

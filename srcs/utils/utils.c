@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/17 16:12:28 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:54:55 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	write_line_bres(t_img mini_map, t_bres bres, int color)
+void	my_mlx_pixel_put(t_img *img, int x, int y, long texture)
+{
+	char	*dst;
+	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
+	{
+		dst = img->addr + (y * img->line_len
+				+ x * (img->bpp / 8));
+		*(unsigned int *)dst = texture;
+	}
+}
+
+void	write_line_bres(t_img img, t_bres bres, int texture)
 {
 	float	step_x;
 	float	step_y;
@@ -26,9 +37,9 @@ void	write_line_bres(t_img mini_map, t_bres bres, int color)
 	i = 0;
 	while (i < dist)
 	{
-		my_mlx_pixel_put(&mini_map, (bres.x + step_x * i)
+		my_mlx_pixel_put(&img, (bres.x + step_x * i)
 			+ 0, (bres.y + step_y * i)
-			+ 0, color);
+			+ 0, texture);
 		i++;
 	}
 }
