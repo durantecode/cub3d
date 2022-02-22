@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 16:31:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 17:55:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,18 @@ int	close_game(t_game *g)
 	return (0);
 }
 
-// int		distance_to_wall(t_game *g, t_img img)
-// {
-
-// }
+int	ft_colorcmp(int y, int x, int color, t_img *img)
+{
+	char	*dst;
+	
+	if (x > 180 || x < 0 || y > 180 || y < 0)
+		return (1);
+	dst = img->addr + (y * img->line_len
+				+ x * (img->bpp / 8));
+	if (*(int *)dst == color)
+		return (1);
+	return (0);
+}
 
 void	draw_line(t_game *g, t_img img)
 {
@@ -43,19 +51,16 @@ void	draw_line(t_game *g, t_img img)
 	ft_bzero(&bres, sizeof(t_bres));
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
-	r = 77;
+	r = 0;
 	bres.end_x = bres.x + r * cos(g->rotate);
 	bres.end_y = bres.y + r * sin(g->rotate);
+	while (!ft_colorcmp(bres.end_y, bres.end_x, WALL_PURPLE, &img))
+	{
+		bres.end_x = bres.x + r * cos(g->rotate);
+		bres.end_y = bres.y + r * sin(g->rotate);
+		r++;
+	}
 	write_line_bres(img, bres, PLAYER_RED);
-	// while (g->map[bres.end_y / TILE_SIZE][bres.end_x / TILE_SIZE] != '1')
-	// {
-	// 	bres.end_x = bres.x + r * cos(g->rotate);
-	// 	bres.end_y = bres.y + r * sin(g->rotate);
-	// 	r++;
-	// }
-	// printf("%f\n", r);
-	// printf("%d, %d\n", bres.end_y, bres.end_x);
-	// write_line_bres(img, bres, PLAYER_RED);
 }
 
 void	draw_circle(t_img img)
