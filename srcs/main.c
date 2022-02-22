@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 21:02:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 02:43:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	close_game(t_game *g)
 void	my_mlx_pixel_put(t_img *mini_map, int x, int y, long color)
 {
 	char	*dst;
-	if (x >= 0 && x < MINI_MAP_WIDTH && y >= 0 && y < MINI_MAP_HEIGTH)
+	if (x >= 0 && x < MINI_MAP_WIDTH && y >= 0 && y < MINI_MAP_HEIGHT)
 	{
 		dst = mini_map->addr + (y * mini_map->line_len
 				+ x * (mini_map->bpp / 8));
@@ -41,18 +41,22 @@ void	my_mlx_pixel_put(t_img *mini_map, int x, int y, long color)
 	}
 }
 
-void	draw_line(t_bres bres, t_img mini_map)
+void	draw_line(t_game *g, t_bres bres, t_img mini_map)
 {
-	bres.x = 150;
-	bres.y = 105;
-	write_line_bres(mini_map, bres, WALL_PURPLE);
+	bres.x = 93;
+	bres.y = 90;
+	bres.end_x = g->rotate_x;
+	bres.end_y = g->rotate_y;
+	write_line_bres(mini_map, bres, RAY_GREY);
+
 	// while (bres.x < bres.end_x)
 	// {
 	// 	my_mlx_pixel_put(&mini_map, (bres.x)
-	// 		+ 0, (bres.y + 0)
-	// 		+ 0, WALL_PURPLE);
+	// 		+ g->rotate, (bres.y)
+	// 		+ g->rotate, RAY_GREY);
 	// 	bres.x++;
 	// }
+	(void)g;
 }
 
 void	draw_circle(t_img mini_map)
@@ -74,7 +78,6 @@ void	draw_circle(t_img mini_map)
 		write_line_bres(mini_map, bres, PLAYER_RED);
 		i++;
 	}
-	// draw_line(bres, mini_map);
 }
 
 void	draw_mini_map(t_img mini_map, t_game *g)
@@ -90,7 +93,7 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 	ft_bzero(&bres, sizeof(t_bres));
 	y = (g->player_y * tile_size - 89) + g->move_pos_y;
 	y1 = 0;
-	while (y < MINI_MAP_HEIGTH * tile_size)
+	while (y < MINI_MAP_HEIGHT * tile_size)
 	{
 		x = (g->player_x * tile_size - 89) + g->move_pos_x;
 		x1 = 0;
@@ -115,6 +118,7 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		y1++;
 	}
 	draw_circle(mini_map);
+	draw_line(g, bres, mini_map);
 }
 
 void	check_pos(t_game *g, int key)
@@ -157,11 +161,6 @@ void	check_pos(t_game *g, int key)
 			g->move_pos_x -= 3;
 	}
 		printf("%f, %f\n\n", y/9, x/9);
-	// printf("%d, %d\n", y, x);
-	// printf("%d, %d\n\n", y/10, x/10);
-	
-	//if (g->map[y/10][x/10] == '1')
-		// printf("toca %d, %d\n", y/10, x/10);
 }
 
 int	mouse_input(int mouse, t_game *g)
@@ -174,7 +173,8 @@ int	mouse_input(int mouse, t_game *g)
 int	key_input(int key, t_game *g)
 {
 	if (key == KEY_ESC || key == KEY_D || key == KEY_A
-		|| key == KEY_W || key == KEY_S)
+		|| key == KEY_W || key == KEY_S
+		|| key == KEY_LEFT || key == KEY_RIGHT)
 	{		
 		if (key == KEY_ESC)
 		{
@@ -187,8 +187,16 @@ int	key_input(int key, t_game *g)
 		// 	g->move_pos_y -= 3;
 		// if (key == KEY_DOWN)
 		// 	g->move_pos_y += 3;
-		// if (key == KEY_LEFT)
-		// 	g->move_pos_x -= 3;
+		if (key == KEY_LEFT)
+		{
+			g->rotate_x--;
+			g->rotate_y++;
+		}
+		if (key == KEY_RIGHT)
+		{
+			g->rotate_x++;
+			g->rotate_y--;
+		}
 		// if (key == KEY_RIGHT)
 		// 	g->move_pos_x += 3;
 		// re_write(g);
@@ -201,11 +209,9 @@ int	key_input(int key, t_game *g)
 int	game_status(t_game *g)
 {
 	t_img	mini_map;
-	
-	// printf("Move up!\n");
-	// printf("Value %p\n", g->win);
+
 	mlx_clear_window(g->ptr, g->win);
-	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGTH);
+	mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
 	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
 			&mini_map.line_len, &mini_map.endian);
 	draw_mini_map(mini_map, g);
@@ -223,7 +229,9 @@ void	init_cube(t_data *data, t_game *g)
 	g->map = matrix_dup(data->map);
 	free_data(data);
 	g->ptr = mlx_init();
-	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGTH, "cub3D");
+	g->rotate_x = 90;
+	g->rotate_x = 93;
+	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
 	mlx_hook(g->win, 2, 1L<<0, key_input, g);

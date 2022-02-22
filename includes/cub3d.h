@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/21 20:52:15 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/22 02:06:38 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@
 # include <math.h>
 
 # define WIN_WIDTH 1080
-# define WIN_HEIGTH 720
+# define WIN_HEIGHT 720
 # define MINI_MAP_WIDTH 180
-# define MINI_MAP_HEIGTH 180
+# define MINI_MAP_HEIGHT 180
 
 /*COLOR DEFINE*/
 
 # define WALL_PURPLE 11027942
 # define PLAYER_RED 16531322
+# define RAY_GREY 8553090
 # define FLOOR_BEIGE 15912380
 # define TRANSPARENT 3358535222
 
@@ -119,6 +120,8 @@ typedef struct s_game
 	int			player_y;
 	int			size_x;
 	int			size_y;
+	int			rotate_x;
+	int			rotate_y;
 	int			move_pos_x;
 	int			move_pos_y;
 	char		**map;
