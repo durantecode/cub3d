@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 01:05:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:26:11 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,10 @@ typedef struct s_game
 	float		rotate;
 	float		step_x;
 	float		step_y;
-	int			move_pos_x;
-	int			move_pos_y;
+	float		step_left_x;
+	float		step_right_y;
+	float		move_pos_x;
+	float		move_pos_y;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;

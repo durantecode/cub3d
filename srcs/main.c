@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 02:14:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/23 13:33:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,18 @@ void	draw_line(t_game *g, t_img img)
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
 	r = 0;
-	// printf("Start pos %d, %d\n", bres.y / TILE_SIZE, bres.x / TILE_SIZE);
-	bres.end_x = bres.x + r * cos(dir + g->rotate);
-	bres.end_y = bres.y + r * sin(dir + g->rotate);
-	// printf("End pos %d, %d\n", bres.end_y / TILE_SIZE, bres.end_x / TILE_SIZE);
-
+	bres.end_x = round(bres.x + r * cos(dir + g->rotate));
+	bres.end_y = round(bres.y + r * sin(dir + g->rotate));
 	while (!ft_colorcmp(bres.end_y, bres.end_x, WALL_PURPLE, &img))
 	{
-		bres.end_x = bres.x + r * cos(dir + g->rotate);
-		bres.end_y = bres.y + r * sin(dir + g->rotate);
+		bres.end_x = round(bres.x + r * cos(dir + g->rotate));
+		bres.end_y = round(bres.y + r * sin(dir + g->rotate));
 		r++;
 	}
-
-	g->step_x = 3 * cos(dir + g->rotate);
-	g->step_y = 3 * sin(dir + g->rotate);
-	// g->step_y = bres.end_y - bres.y - 3;
-	// g->step_x = bres.end_x - bres.x - 3; 
-	printf("WALL: %f, %f\n", g->step_y, g->step_x);
+	g->step_x = cos(dir + g->rotate) * 3;
+	g->step_y = sin(dir + g->rotate) * 3;
+	g->step_left_x = cos((dir + 1.5708) + g->rotate) * 3;
+	g->step_right_y = sin((dir + 1.5708) + g->rotate) * 3;
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
@@ -108,11 +103,11 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 	float	y;
 	float	y1;
 
-	y = (g->player_y * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_y;
+	y = round((g->player_y * TILE_SIZE - MINI_MAP_CENTER) + g->move_pos_y);
 	y1 = 0;
 	while (y < MINI_MAP_HEIGHT * TILE_SIZE)
 	{
-		x = (g->player_x * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_x;
+		x = round((g->player_x * TILE_SIZE - MINI_MAP_CENTER) + g->move_pos_x);
 		x1 = 0;
 		while (x < MINI_MAP_WIDTH * TILE_SIZE)
 		{
@@ -144,38 +139,55 @@ void	check_pos(t_game *g, int key)
 	float	x;
 	if (key == KEY_W)
 	{
-		g->move_pos_y = g->step_y;
-		g->move_pos_x = g->step_x;
+		g->move_pos_x += g->step_x;
 		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
 		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		printf("POSSS_ %f\n", y);
-		printf("POSSS_ %f\n", x);
 		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-	   		g->move_pos_y += 3;
+			g->move_pos_x -= g->step_x;
+		g->move_pos_y += g->step_y;
+		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
+			g->move_pos_y -= g->step_y;
 	}
 	else if (key == KEY_S)
 	{
-		g->move_pos_y += 3;
+		g->move_pos_x -= g->step_x;
 		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
 		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
 		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-   			g->move_pos_y -= 3;
+			g->move_pos_x += g->step_x;
+		g->move_pos_y -= g->step_y;
+		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
+			g->move_pos_y += g->step_y;
 	}
 	else if (key == KEY_A)
 	{
-		g->move_pos_x -= 3;
+		g->move_pos_x -= g->step_left_x;
 		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
 		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
 		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-        	g->move_pos_x += 3;
+			g->move_pos_x += g->step_left_x;
+		g->move_pos_y -= g->step_right_y;
+		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
+			g->move_pos_y += g->step_right_y;
 	}
 	else if (key == KEY_D)
 	{
-		g->move_pos_x += 3;
+		g->move_pos_x += g->step_left_x;
 		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
 		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
 		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_x -= 3;
+			g->move_pos_x -= g->step_left_x;
+		g->move_pos_y += g->step_right_y;
+		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
+			g->move_pos_y -= g->step_right_y;
 	}
 }
 
@@ -256,7 +268,7 @@ int	game_status(t_game *g)
 			&mini_map.line_len, &mini_map.endian);
 	draw_mini_map(mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
-	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 30, 490);
+	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 40, 505);
 	return (0);
 }
 
@@ -270,7 +282,6 @@ void	init_cube(t_data *data, t_game *g)
 	g->map = matrix_dup(data->map);
 	free_data(data);
 	g->ptr = mlx_init();
-	// g->rotate = 90;
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
