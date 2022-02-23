@@ -72,7 +72,7 @@ void	draw_fov(t_game *g, t_img img)
 			r++;
 		}
 		write_line_bres(img, bres, RAY_GREY);
-		i += 0.015;
+		i += 0.0009;
 	}
 }
 
@@ -288,43 +288,48 @@ void	draw_bg(t_img bg, int ceiling, int floor)
 
 int	game_status(t_game *g)
 {
-	t_img	mini_map;
+	// t_img	mini_map;
 	t_img	bg;
 
-	mlx_clear_window(g->ptr, g->win);
+	// mlx_clear_window(g->ptr, g->win);
+	// mini_map = g->mini_map;
 	bg.width = WIN_WIDTH;
 	bg.height = WIN_HEIGHT;
 	bg.img = mlx_new_image(g->ptr, bg.width, bg.height);
 	bg.addr = mlx_get_data_addr(bg.img, &bg.bpp,
 			&bg.line_len, &bg.endian);
 	draw_bg(bg, g->tex.ceiling, g->tex.floor);
-	mini_map.width = MINI_MAP_WIDTH;
-	mini_map.height = MINI_MAP_HEIGHT;
-	mini_map.img = mlx_new_image(g->ptr, mini_map.width, mini_map.height);
-	mini_map.addr = mlx_get_data_addr(mini_map.img, &mini_map.bpp,
-			&mini_map.line_len, &mini_map.endian);
-	draw_mini_map(mini_map, g);
+	draw_mini_map(g->mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
-	mlx_put_image_to_window(g->ptr, g->win, mini_map.img, 40, 505);
+	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
 	return (0);
 }
 
 void	init_cube(t_data *data, t_game *g)
 {
-	t_img	mini_map;
+	// t_img	mini_map;
 
-	ft_bzero(&mini_map, sizeof(t_img));
-	g->mini_map = mini_map;
+	// ft_bzero(&mini_map, sizeof(t_img));
+	// mini_map = g->mini_map;
 	printf("Map okay... Init cube\n");
 	g->map = matrix_dup(data->map);
 	free_data(data);
 	g->ptr = mlx_init();
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+	g->mini_map.width = MINI_MAP_WIDTH;
+	g->mini_map.height = MINI_MAP_HEIGHT;
+	g->mini_map.img = mlx_new_image(g->ptr, g->mini_map.width,
+			g->mini_map.height);
+	g->mini_map.addr = mlx_get_data_addr(g->mini_map.img, &g->mini_map.bpp,
+			&g->mini_map.line_len, &g->mini_map.endian);
+	draw_mini_map(g->mini_map, g);
+	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
+
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
 	mlx_hook(g->win, 2, 1L<<0, key_input, g);
 	mlx_hook(g->win, 6, 1L<<6, mouse_input, g);
-	// mlx_key_hook(g->win, key_input, g);
+	mlx_key_hook(g->win, key_input, g);
 	mlx_loop(g->ptr);
 }
 
