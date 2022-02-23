@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 19:47:34 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/23 01:05:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct s_game
 	int			size_x;
 	int			size_y;
 	float		rotate;
+	float		step_x;
+	float		step_y;
 	int			move_pos_x;
 	int			move_pos_y;
 	char		**map;
@@ -146,9 +148,8 @@ void	write_line_bres(t_img img, t_bres bres, int texture);
 /*
 	Cosas a tener en cuenta:
 
-	1. En el parseo debemos sacar la coordenada donde va a empezar
-	nuestro personaje.
-	
+	En el mapa, si hay 1 justo despues del color C no parsea esa lína,
+	debería dar un error o parsearla.
 
 
 	Luis echa un vistazo a esto:

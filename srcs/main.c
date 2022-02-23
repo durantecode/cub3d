@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 21:07:38 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/23 02:14:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_colorcmp(int y, int x, int color, t_img *img)
 {
 	char	*dst;
 
-	printf("Value: %d, %d\n", y, x);
 	if (x > 180 || y > 180 || x < 0 || y < 0)
 		return (1);
 	dst = img->addr + (y * img->line_len
@@ -46,24 +45,26 @@ int	ft_colorcmp(int y, int x, int color, t_img *img)
 
 void	draw_line(t_game *g, t_img img)
 {
-	float	x;
-	float	y;
 	float	r;
-	t_bres	bres;
 	float	dir;
+	t_bres	bres;
 
-	y = (g->player_y * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_y;
-	x = (g->player_x * TILE_SIZE - MINI_MAP_HALF) + g->move_pos_x;
-	dir = 1.5708;
-	(void)g;
 	ft_bzero(&bres, sizeof(t_bres));
+	if (g->map[g->player_y][g->player_x] == 'N')
+		dir = -1.5708;
+	if (g->map[g->player_y][g->player_x] == 'S')
+		dir = 1.5708;
+	if (g->map[g->player_y][g->player_x] == 'E')
+		dir = 0;
+	if (g->map[g->player_y][g->player_x] == 'W')
+		dir = 3.14159;
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
 	r = 0;
-	printf("Start pos %d, %d\n", bres.y / TILE_SIZE, bres.x / TILE_SIZE);
+	// printf("Start pos %d, %d\n", bres.y / TILE_SIZE, bres.x / TILE_SIZE);
 	bres.end_x = bres.x + r * cos(dir + g->rotate);
 	bres.end_y = bres.y + r * sin(dir + g->rotate);
-	printf("first pos %d, %d\n", bres.end_y / TILE_SIZE, bres.end_x / TILE_SIZE);
+	// printf("End pos %d, %d\n", bres.end_y / TILE_SIZE, bres.end_x / TILE_SIZE);
 
 	while (!ft_colorcmp(bres.end_y, bres.end_x, WALL_PURPLE, &img))
 	{
@@ -71,7 +72,12 @@ void	draw_line(t_game *g, t_img img)
 		bres.end_y = bres.y + r * sin(dir + g->rotate);
 		r++;
 	}
-	// printf("%f\n", r)
+
+	g->step_x = 3 * cos(dir + g->rotate);
+	g->step_y = 3 * sin(dir + g->rotate);
+	// g->step_y = bres.end_y - bres.y - 3;
+	// g->step_x = bres.end_x - bres.x - 3; 
+	printf("WALL: %f, %f\n", g->step_y, g->step_x);
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
@@ -138,9 +144,12 @@ void	check_pos(t_game *g, int key)
 	float	x;
 	if (key == KEY_W)
 	{
-		g->move_pos_y -= 3;
+		g->move_pos_y = g->step_y;
+		g->move_pos_x = g->step_x;
 		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
 		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+		printf("POSSS_ %f\n", y);
+		printf("POSSS_ %f\n", x);
 		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
 	   		g->move_pos_y += 3;
 	}
@@ -192,11 +201,11 @@ int	key_input(int key, t_game *g)
 			check_pos(g, key);
 		if (key == KEY_LEFT)
 		{
-			g->rotate -= 1.5708;
+			g->rotate -= 0.064;
 		}
 		if (key == KEY_RIGHT)
 		{
-			g->rotate += 1.5708;
+			g->rotate += 0.064;
 		}
 		return (1);
 	}
@@ -219,6 +228,8 @@ void	draw_bg(t_img bg, int ceiling, int floor)
 		x = 0;
 		while (x < bg.width)
 		{
+			// if (x % 200 == 0)
+			// 	texture -= 5;
 			my_mlx_pixel_put(&bg, x, y, texture);
 			x++;
 		}
