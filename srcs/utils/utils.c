@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/22 16:57:34 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:00:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,9 @@ int	str_is_digit(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int		get_decimal_color(int r, int g, int b)
+{
+	return(0 << 24 | r << 16 | g << 8 | b);
 }

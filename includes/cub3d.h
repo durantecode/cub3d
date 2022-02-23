@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 13:26:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:56:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_game
 	int			size_x;
 	int			size_y;
 	float		rotate;
+	float		dir;
 	float		step_x;
 	float		step_y;
 	float		step_left_x;

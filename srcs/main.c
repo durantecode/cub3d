@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 13:33:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/23 15:04:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,40 +39,76 @@ int	ft_colorcmp(int y, int x, int color, t_img *img)
 	dst = img->addr + (y * img->line_len
 				+ x * (img->bpp / 8));
 	if (*(int *)dst == color)
+	{
+		*(int *)dst = PLAYER_RED;
 		return (1);
+	}
 	return (0);
+}
+
+void	draw_fov(t_game *g, t_img img)
+{
+	t_bres	bres;
+	float	i;
+	float	r;
+	int		x;
+	int		y;
+
+	y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+	x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
+	i = -0.523599;
+	ft_bzero(&bres, sizeof(t_bres));
+	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
+	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
+	while (i < 0.523599)
+	{
+		r = 0;
+		bres.end_x = round(bres.x + r * cos(g->dir + i + g->rotate));
+		bres.end_y = round(bres.y + r * sin(g->dir + i + g->rotate));
+		while (g->map[(y + bres.end_y - bres.y) / TILE_SIZE][(x + bres.end_x - bres.x) / TILE_SIZE] != '1')
+		{
+			bres.end_x = round(bres.x + r * cos(g->dir + i + g->rotate));
+			bres.end_y = round(bres.y + r * sin(g->dir + i + g->rotate));
+			r++;
+		}
+		write_line_bres(img, bres, RAY_GREY);
+		i += 0.015;
+	}
 }
 
 void	draw_line(t_game *g, t_img img)
 {
 	float	r;
-	float	dir;
 	t_bres	bres;
+	int		x;
+	int		y;
 
 	ft_bzero(&bres, sizeof(t_bres));
+	y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
+	x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
 	if (g->map[g->player_y][g->player_x] == 'N')
-		dir = -1.5708;
+		g->dir = -1.5708;
 	if (g->map[g->player_y][g->player_x] == 'S')
-		dir = 1.5708;
+		g->dir = 1.5708;
 	if (g->map[g->player_y][g->player_x] == 'E')
-		dir = 0;
+		g->dir = 0;
 	if (g->map[g->player_y][g->player_x] == 'W')
-		dir = 3.14159;
+		g->dir = 3.14159;
 	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
 	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
 	r = 0;
-	bres.end_x = round(bres.x + r * cos(dir + g->rotate));
-	bres.end_y = round(bres.y + r * sin(dir + g->rotate));
-	while (!ft_colorcmp(bres.end_y, bres.end_x, WALL_PURPLE, &img))
+	bres.end_x = round(bres.x + r * cos(g->dir + g->rotate));
+	bres.end_y = round(bres.y + r * sin(g->dir + g->rotate));
+	while (g->map[(y + bres.end_y - bres.y) / TILE_SIZE][(x + bres.end_x - bres.x) / TILE_SIZE] != '1')
 	{
-		bres.end_x = round(bres.x + r * cos(dir + g->rotate));
-		bres.end_y = round(bres.y + r * sin(dir + g->rotate));
+		bres.end_x = round(bres.x + r * cos(g->dir + g->rotate));
+		bres.end_y = round(bres.y + r * sin(g->dir + g->rotate));
 		r++;
 	}
-	g->step_x = cos(dir + g->rotate) * 3;
-	g->step_y = sin(dir + g->rotate) * 3;
-	g->step_left_x = cos((dir + 1.5708) + g->rotate) * 3;
-	g->step_right_y = sin((dir + 1.5708) + g->rotate) * 3;
+	g->step_x = cos(g->dir + g->rotate) * 3;
+	g->step_y = sin(g->dir + g->rotate) * 3;
+	g->step_left_x = cos((g->dir + 1.5708) + g->rotate) * 3;
+	g->step_right_y = sin((g->dir + 1.5708) + g->rotate) * 3;
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
@@ -130,6 +166,7 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		y1++;
 	}
 	draw_circle(mini_map);
+	draw_fov(g, mini_map);
 	draw_line(g, mini_map);
 }
 
@@ -240,8 +277,8 @@ void	draw_bg(t_img bg, int ceiling, int floor)
 		x = 0;
 		while (x < bg.width)
 		{
-			// if (x % 200 == 0)
-			// 	texture -= 5;
+			// if (x % 500 == 0)
+				// texture -= 10;
 			my_mlx_pixel_put(&bg, x, y, texture);
 			x++;
 		}
