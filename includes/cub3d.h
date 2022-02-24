@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 14:56:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 01:04:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@
 
 /*COLOR DEFINE*/
 
-# define WALL_PURPLE 11027942
+// # define WALL_PURPLE 11027942
+# define WALL_GREEN 6373251
 # define PLAYER_RED 16531322
-# define RAY_GREY 8553090
-# define FLOOR_BEIGE 15912380
+# define FOV_BEIGE 16777058
+# define FLOOR_GREY 8230298
 # define TRANSPARENT 3358535222
 
 // #ifndef KEYCODES

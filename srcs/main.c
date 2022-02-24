@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/23 15:04:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 01:47:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_fov(t_game *g, t_img img)
 			bres.end_y = round(bres.y + r * sin(g->dir + i + g->rotate));
 			r++;
 		}
-		write_line_bres(img, bres, RAY_GREY);
+		write_line_bres(img, bres, FOV_BEIGE);
 		i += 0.0009;
 	}
 }
@@ -151,11 +151,11 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 				&& y / TILE_SIZE >= 0 && x / TILE_SIZE >= 0)
 			{
 				if (g->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == '1')
-					my_mlx_pixel_put(&mini_map, x1, y1, WALL_PURPLE);
+					my_mlx_pixel_put(&mini_map, x1, y1, WALL_GREEN);
 				else if (g->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == ' ')
 					my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
 				else 
-					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_BEIGE);
+					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_GREY);
 			}
 			else
 				my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
@@ -237,29 +237,18 @@ int	mouse_input(int mouse, t_game *g)
 
 int	key_input(int key, t_game *g)
 {
-	if (key == KEY_ESC || key == KEY_D || key == KEY_A
-		|| key == KEY_W || key == KEY_S
-		|| key == KEY_LEFT || key == KEY_RIGHT)
-	{		
-		if (key == KEY_ESC)
-		{
-			close_game(g);
-			return (0);
-		}
-		else
-			check_pos(g, key);
-		if (key == KEY_LEFT)
-		{
-			g->rotate -= 0.064;
-		}
-		if (key == KEY_RIGHT)
-		{
-			g->rotate += 0.064;
-		}
-		return (1);
+	if (key == KEY_ESC)
+	{
+		close_game(g);
+		return (0);
 	}
 	else
-		return (0);
+		check_pos(g, key);
+	if (key == KEY_LEFT)
+		g->rotate -= 0.064;
+	if (key == KEY_RIGHT)
+		g->rotate += 0.064;
+	return (0);
 }
 
 void	draw_bg(t_img bg, int ceiling, int floor)
@@ -291,7 +280,7 @@ int	game_status(t_game *g)
 	// t_img	mini_map;
 	t_img	bg;
 
-	// mlx_clear_window(g->ptr, g->win);
+	mlx_clear_window(g->ptr, g->win);
 	// mini_map = g->mini_map;
 	bg.width = WIN_WIDTH;
 	bg.height = WIN_HEIGHT;
@@ -328,6 +317,7 @@ void	init_cube(t_data *data, t_game *g)
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
 	mlx_hook(g->win, 2, 1L<<0, key_input, g);
+	mlx_hook(g->win, 2, 1L<<1, key_input, g);
 	mlx_hook(g->win, 6, 1L<<6, mouse_input, g);
 	mlx_key_hook(g->win, key_input, g);
 	mlx_loop(g->ptr);
