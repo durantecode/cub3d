@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 17:17:45 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 23:18:11 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 16:52:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ int	check_map_surrounding(char **map, t_game *g)
 			{
 				if (pos++)
 					return (3);
-				g->player_x = j;
-				g->player_y = i;
+				g->player.x = j;
+				g->player.y = i;
 			}
 			if ((i == 0 || i == g->size_y - 1 || j == 0
 					|| j == g->size_x - 1) && !ft_strchr(MAP_SR, map[i][j]))

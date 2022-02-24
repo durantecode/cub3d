@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 15:00:03 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:29:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <math.h>
 
+/* MINIMAP DEFINES */
+
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
 # define WIN_HALF 360
@@ -27,16 +29,26 @@
 # define MINI_MAP_HEIGHT 180
 # define MINI_MAP_CENTER 90
 # define MINI_MAP_HALF 89
+
+/* CONSTANT DEFINES */
+
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 3.5
+# define PLAYER_SPEED 1.3
+# define PLAYER_ROTATE 0.05
+# define FOV_ANGLE 0.523599
+# define DEGREES_0 0
+# define DEGREES_90 1.5708
+# define DEGREES_180 3.14159
+# define DEGREES_270 4.71239
+# define DEGREES_360 6.28319
 
 /*COLOR DEFINE*/
 
-// # define WALL_PURPLE 11027942
-# define WALL_GREEN 6373251
+# define WALL_PURPLE 6373251
+# define FLOOR_GREY 8230298
 # define PLAYER_RED 16531322
 # define FOV_BEIGE 16777058
-# define FLOOR_GREY 8230298
 # define TRANSPARENT 3358535222
 
 #ifndef KEYCODES
@@ -53,10 +65,11 @@
 # define KEY_ESC 53
 #endif
 
-
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
 # define MAP_SR "1 "
+
+/* ERROR MESSAGES */
 
 # define ERR_ARG "usage: ./cub3d [path_to_map]"
 # define ERR_FILE "could not open map file"
@@ -66,8 +79,6 @@
 # define ERR_ID_INT "floor or ceiling arguments must be numbers between 0-255"
 # define ERR_EXT_FILE "map file must have"
 # define ERR_EXT_ID "texture file must have"
-
-/* MAP ERRORS */
 # define ERR_MAP_CHAR "map must contain only valid characters:"
 # define ERR_MAP_SRND "map must be surrounded by walls"
 # define ERR_MAP_POS "there must be only one start position"
@@ -131,6 +142,16 @@ typedef struct s_keys
 
 typedef struct s_player
 {
+	int			x;
+	int			y;
+	float		dir;
+	float		rotate;
+	float		move_x;
+	float		move_y;
+	float		step_vx;
+	float		step_vy;
+	float		step_hx;
+	float		step_hy;
 	t_keys	key;
 }	t_player;
 
@@ -138,21 +159,12 @@ typedef struct s_game
 {
 	void		*ptr;
 	void		*win;
-	int			player_x;
-	int			player_y;
 	int			size_x;
 	int			size_y;
-	float		rotate;
-	float		dir;
-	float		step_x;
-	float		step_y;
-	float		step_left_x;
-	float		step_right_y;
-	float		move_pos_x;
-	float		move_pos_y;
 	char		**map;
 	t_player	player;
 	t_img		mini_map;
+	t_img		bg;
 	t_textures	tex;
 }	t_game;
 
@@ -166,6 +178,9 @@ int			load_files(t_game *g, t_data *data);
 int			check_file_extension(char *argv, char *ext, char *err);
 int			str_is_digit(char *str);
 t_vector	get_map_vector(t_game *g);
+
+void		draw_background(t_img bg, int ceiling, int floor);
+void		draw_mini_map(t_img mini_map, t_game *g);
 
 void		my_mlx_pixel_put(t_img *img, int x, int y, long texture);
 void		write_line_bres(t_img img, t_bres bres, int texture);

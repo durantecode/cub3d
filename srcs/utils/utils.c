@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/23 15:00:19 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:26:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	my_mlx_pixel_put(t_img *img, int x, int y, long texture)
 {
 	char	*dst;
+
 	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
 	{
 		dst = img->addr + (y * img->line_len
@@ -31,7 +32,7 @@ void	write_line_bres(t_img img, t_bres bres, int texture)
 	int		i;
 
 	dist = sqrt(pow(bres.x - bres.end_x, 2)
-		+ pow(bres.y - bres.end_y, 2));
+			+ pow(bres.y - bres.end_y, 2));
 	step_x = (bres.end_x - bres.x) / dist;
 	step_y = (bres.end_y - bres.y) / dist;
 	i = 0;
@@ -77,7 +78,7 @@ int	str_is_digit(char *str)
 	return (1);
 }
 
-int		get_decimal_color(int r, int g, int b)
+int	get_decimal_color(int r, int g, int b)
 {
-	return(0 << 24 | r << 16 | g << 8 | b);
+	return (0 << 24 | r << 16 | g << 8 | b);
 }

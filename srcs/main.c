@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 14:58:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:23:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,198 +30,46 @@ int	close_game(t_game *g)
 	return (0);
 }
 
-void	draw_fov(t_game *g, t_img img)
-{
-	t_bres	bres;
-	float	i;
-	float	r;
-	int		x;
-	int		y;
-
-	y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-	x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-	i = -0.523599;
-	ft_bzero(&bres, sizeof(t_bres));
-	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
-	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
-	while (i < 0.523599)
-	{
-		r = 0;
-		bres.end_x = round(bres.x + r * cos(g->dir + i + g->rotate));
-		bres.end_y = round(bres.y + r * sin(g->dir + i + g->rotate));
-		while (g->map[(y + bres.end_y - bres.y) / TILE_SIZE][(x + bres.end_x - bres.x) / TILE_SIZE] != '1')
-		{
-			bres.end_x = round(bres.x + r * cos(g->dir + i + g->rotate));
-			bres.end_y = round(bres.y + r * sin(g->dir + i + g->rotate));
-			r++;
-		}
-		write_line_bres(img, bres, FOV_BEIGE);
-		i += 0.0009999;
-	}
-}
-
-void	draw_line(t_game *g, t_img img)
-{
-	float	r;
-	t_bres	bres;
-	int		x;
-	int		y;
-
-	ft_bzero(&bres, sizeof(t_bres));
-	y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-	x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-	if (g->map[g->player_y][g->player_x] == 'N')
-		g->dir = -1.5708;
-	if (g->map[g->player_y][g->player_x] == 'S')
-		g->dir = 1.5708;
-	if (g->map[g->player_y][g->player_x] == 'E')
-		g->dir = 0;
-	if (g->map[g->player_y][g->player_x] == 'W')
-		g->dir = 3.14159;
-	bres.x = MINI_MAP_HALF + TILE_SIZE / 2;
-	bres.y = MINI_MAP_HALF + TILE_SIZE / 2;
-	r = 0;
-	bres.end_x = round(bres.x + r * cos(g->dir + g->rotate));
-	bres.end_y = round(bres.y + r * sin(g->dir + g->rotate));
-	while (g->map[(y + bres.end_y - bres.y) / TILE_SIZE][(x + bres.end_x - bres.x) / TILE_SIZE] != '1')
-	{
-		bres.end_x = round(bres.x + r * cos(g->dir + g->rotate));
-		bres.end_y = round(bres.y + r * sin(g->dir + g->rotate));
-		r++;
-	}
-	g->step_x = cos(g->dir + g->rotate) * 3;
-	g->step_y = sin(g->dir + g->rotate) * 3;
-	g->step_left_x = cos((g->dir + 1.5708) + g->rotate) * 3;
-	g->step_right_y = sin((g->dir + 1.5708) + g->rotate) * 3;
-	write_line_bres(img, bres, PLAYER_RED);
-}
-
-void	draw_circle(t_img img)
-{
-	float	i;
-	float	r;
-	t_bres	bres;
-	
-	ft_bzero(&bres, sizeof(t_bres));
-	bres.x = MINI_MAP_CENTER + TILE_SIZE / 2;
-	bres.y = MINI_MAP_CENTER + TILE_SIZE / 2;
-	i = 0;
-	r = PLAYER_RADIUS;
-	while (i < 6.28319)
-	{
-		bres.end_x = bres.x + r * cos(i);
-		bres.end_y = bres.y + r * sin(i);
-		write_line_bres(img, bres, PLAYER_RED);
-		i += 0.1;
-	}
-}
-
-void	draw_mini_map(t_img mini_map, t_game *g)
-{
-	float	x;
-	float	x1;
-	float	y;
-	float	y1;
-
-	y = round((g->player_y * TILE_SIZE - MINI_MAP_CENTER) + g->move_pos_y);
-	y1 = 0;
-	while (y < MINI_MAP_HEIGHT * TILE_SIZE)
-	{
-		x = round((g->player_x * TILE_SIZE - MINI_MAP_CENTER) + g->move_pos_x);
-		x1 = 0;
-		while (x < MINI_MAP_WIDTH * TILE_SIZE)
-		{
-			if (y / TILE_SIZE < g->size_y && x / TILE_SIZE < g->size_x
-				&& y / TILE_SIZE >= 0 && x / TILE_SIZE >= 0)
-			{
-				if (g->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == '1')
-					my_mlx_pixel_put(&mini_map, x1, y1, WALL_GREEN);
-				else if (g->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == ' ')
-					my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
-				else 
-					my_mlx_pixel_put(&mini_map, x1, y1, FLOOR_GREY);
-			}
-			else
-				my_mlx_pixel_put(&mini_map, x1, y1, TRANSPARENT);
-			x1++;
-			x++;
-		}
-		y++;
-		y1++;
-	}
-	draw_circle(mini_map);
-	draw_fov(g, mini_map);
-	draw_line(g, mini_map);
-}
-
-void	draw_bg(t_img bg, int ceiling, int floor)
-{
-	int x;
-	int y;
-	int texture;
-
-	y = 0;
-	texture = ceiling;
-	while (y < bg.height)
-	{
-		if (y == WIN_HALF)
-			texture = floor;
-		x = 0;
-		while (x < bg.width)
-		{
-			// if (x % 500 == 0)
-				// texture -= 10;
-			my_mlx_pixel_put(&bg, x, y, texture);
-			x++;
-		}
-		y++;
-	}
-}
-
 int	game_status(t_game *g)
 {
-	// t_img	mini_map;
-	t_img	bg;
-
 	mlx_clear_window(g->ptr, g->win);
-	// mini_map = g->mini_map;
-	bg.width = WIN_WIDTH;
-	bg.height = WIN_HEIGHT;
-	bg.img = mlx_new_image(g->ptr, bg.width, bg.height);
-	bg.addr = mlx_get_data_addr(bg.img, &bg.bpp,
-			&bg.line_len, &bg.endian);
-	draw_bg(bg, g->tex.ceiling, g->tex.floor);
 	check_movement(g);
+	draw_background(g->bg, g->tex.ceiling, g->tex.floor);
 	draw_mini_map(g->mini_map, g);
-	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
+	mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
 	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
 	return (0);
 }
 
+void	init_images(t_game *g)
+{
+	g->bg.width = WIN_WIDTH;
+	g->bg.height = WIN_HEIGHT;
+	g->bg.img = mlx_new_image(g->ptr, WIN_WIDTH, WIN_WIDTH);
+	g->bg.addr = mlx_get_data_addr(g->bg.img, &g->bg.bpp,
+			&g->bg.line_len, &g->bg.endian);
+	g->mini_map.width = MINI_MAP_WIDTH;
+	g->mini_map.height = MINI_MAP_HEIGHT;
+	g->mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
+	g->mini_map.addr = mlx_get_data_addr(g->mini_map.img, &g->mini_map.bpp,
+			&g->mini_map.line_len, &g->mini_map.endian);
+}
+
 void	init_cube(t_data *data, t_game *g)
 {
-	// t_img	mini_map;
-
-	// ft_bzero(&mini_map, sizeof(t_img));
-	// mini_map = g->mini_map;
 	printf("Map okay... Init cube\n");
 	g->map = matrix_dup(data->map);
 	free_data(data);
 	g->ptr = mlx_init();
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
-	g->mini_map.width = MINI_MAP_WIDTH;
-	g->mini_map.height = MINI_MAP_HEIGHT;
-	g->mini_map.img = mlx_new_image(g->ptr, g->mini_map.width,
-			g->mini_map.height);
-	g->mini_map.addr = mlx_get_data_addr(g->mini_map.img, &g->mini_map.bpp,
-			&g->mini_map.line_len, &g->mini_map.endian);
-	draw_mini_map(g->mini_map, g);
-	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
+	init_images(g);
+	// draw_mini_map(g->mini_map, g);
+	// mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
-	mlx_hook(g->win, 2, 1L<<0, key_pressed, g);
-	mlx_hook(g->win, 3, 1L<<1, key_released, g);
-	mlx_hook(g->win, 6, 1L<<6, mouse_input, g);
+	mlx_hook(g->win, 2, 1L << 0, key_pressed, g);
+	mlx_hook(g->win, 3, 1L << 1, key_released, g);
+	mlx_hook(g->win, 6, 1L << 6, mouse_input, g);
 	mlx_loop(g->ptr);
 }
 

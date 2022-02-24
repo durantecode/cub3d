@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/22 11:14:12 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:14:14 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ typedef struct s_game
 {
 	void		*ptr;
 	void		*win;
-	int			player_x;
-	int			player_y;
+	int			x;
+	int			y;
 	int			size_x;
 	int			size_y;
-	int			move_pos_x;
-	int			move_pos_y;
+	int			move_x;
+	int			move_y;
 	char		**map;
 	t_img		mini_map;
 	t_textures	tex;

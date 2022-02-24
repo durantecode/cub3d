@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 14:56:06 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:27:10 by ldurante         ###   ########.fr       */
+/*   Created: 2022/02/24 17:17:17 by ldurante          #+#    #+#             */
+/*   Updated: 2022/02/24 17:24:39 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
-t_vector	get_map_vector(t_game *g)
+void	draw_background(t_img bg, int ceiling, int floor)
 {
-	t_vector	vector;
+	int	x;
+	int	y;
+	int	texture;
 
-	vector.y = (g->player.y * TILE_SIZE) + g->player.move_y + PLAYER_RADIUS;
-	vector.x = (g->player.x * TILE_SIZE) + g->player.move_x + PLAYER_RADIUS;
-	return (vector);
+	y = 0;
+	texture = ceiling;
+	while (y < bg.height)
+	{
+		if (y == WIN_HALF)
+			texture = floor;
+		x = 0;
+		while (x < bg.width)
+		{
+			my_mlx_pixel_put(&bg, x, y, texture);
+			x++;
+		}
+		y++;
+	}
 }
