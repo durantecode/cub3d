@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 01:04:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 15:00:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@
 # define FLOOR_GREY 8230298
 # define TRANSPARENT 3358535222
 
-// #ifndef KEYCODES
-// # define KEYCODES
+#ifndef KEYCODES
+# define KEYCODES
 
-// # define KEY_UP 126
-// # define KEY_DOWN 125
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-// # define KEY_W 13
-// # define KEY_S 1
-// # define KEY_A 0
-// # define KEY_D 2
-// # define KEY_ESC 53
-// #endif
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
+# define KEY_ESC 53
+#endif
 
 
 # define MAP_CHAR "10NSEW"
@@ -84,6 +84,12 @@ typedef struct s_data
 	char	**map;
 }	t_data;
 
+typedef struct s_vector
+{
+	int		x;
+	int		y;
+}	t_vector;
+
 typedef struct s_img
 {
 	void	*img;
@@ -113,6 +119,21 @@ typedef	struct s_bres
 	int	end_y;
 }	t_bres;
 
+typedef struct s_keys
+{
+	int		w;
+	int		a;
+	int		s;
+	int		d;
+	int		left;
+	int		right;
+}	t_keys;
+
+typedef struct s_player
+{
+	t_keys	key;
+}	t_player;
+
 typedef struct s_game
 {
 	void		*ptr;
@@ -130,22 +151,31 @@ typedef struct s_game
 	float		move_pos_x;
 	float		move_pos_y;
 	char		**map;
+	t_player	player;
 	t_img		mini_map;
 	t_textures	tex;
 }	t_game;
 
-char	**get_info(char **argv);
-int		parse_data(char **info, t_data *data);
-int		check_data(t_data *data, t_game *g);
-void	get_map(char **info, t_data *data, int err);
-int		check_map_surrounding(char **map, t_game *g);
+char		**get_info(char **argv);
+int			parse_data(char **info, t_data *data);
+int			check_data(t_data *data, t_game *g);
+void		get_map(char **info, t_data *data, int err);
+int			check_map_surrounding(char **map, t_game *g);
 
-int		load_files(t_game *g, t_data *data);
-int		check_file_extension(char *argv, char *ext, char *err);
-int		str_is_digit(char *str);
+int			load_files(t_game *g, t_data *data);
+int			check_file_extension(char *argv, char *ext, char *err);
+int			str_is_digit(char *str);
+t_vector	get_map_vector(t_game *g);
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, long texture);
-void	write_line_bres(t_img img, t_bres bres, int texture);
+void		my_mlx_pixel_put(t_img *img, int x, int y, long texture);
+void		write_line_bres(t_img img, t_bres bres, int texture);
+
+int			key_released(int key, t_game *g);
+int			key_pressed(int key, t_game *g);
+int			mouse_input(int mouse, t_game *g);
+void		check_movement(t_game *g);
+
+int			close_game(t_game *g);
 
 #endif
 

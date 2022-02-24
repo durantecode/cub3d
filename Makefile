@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/21 16:42:38 by ldurante         ###   ########.fr        #
+#    Updated: 2022/02/24 15:02:06 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,10 @@ SRCS =	srcs/main.c \
 		srcs/file_management/get_map.c \
 		srcs/file_management/check_map.c \
 		srcs/file_management/load_files.c \
-		srcs/utils/utils.c
+		srcs/utils/utils.c \
+		srcs/utils/utils2.c \
+		srcs/player.c \
+		srcs/input.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 01:47:27 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 14:58:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ int	close_game(t_game *g)
 {
 	exit (0);
 	(void)g;
-	return (0);
-}
-
-int	ft_colorcmp(int y, int x, int color, t_img *img)
-{
-	char	*dst;
-
-	if (x > 180 || y > 180 || x < 0 || y < 0)
-		return (1);
-	dst = img->addr + (y * img->line_len
-				+ x * (img->bpp / 8));
-	if (*(int *)dst == color)
-	{
-		*(int *)dst = PLAYER_RED;
-		return (1);
-	}
 	return (0);
 }
 
@@ -72,7 +56,7 @@ void	draw_fov(t_game *g, t_img img)
 			r++;
 		}
 		write_line_bres(img, bres, FOV_BEIGE);
-		i += 0.0009;
+		i += 0.0009999;
 	}
 }
 
@@ -170,87 +154,6 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 	draw_line(g, mini_map);
 }
 
-void	check_pos(t_game *g, int key)
-{
-	float	y;
-	float	x;
-	if (key == KEY_W)
-	{
-		g->move_pos_x += g->step_x;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_x -= g->step_x;
-		g->move_pos_y += g->step_y;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_y -= g->step_y;
-	}
-	else if (key == KEY_S)
-	{
-		g->move_pos_x -= g->step_x;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_x += g->step_x;
-		g->move_pos_y -= g->step_y;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_y += g->step_y;
-	}
-	else if (key == KEY_A)
-	{
-		g->move_pos_x -= g->step_left_x;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_x += g->step_left_x;
-		g->move_pos_y -= g->step_right_y;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_y += g->step_right_y;
-	}
-	else if (key == KEY_D)
-	{
-		g->move_pos_x += g->step_left_x;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_x -= g->step_left_x;
-		g->move_pos_y += g->step_right_y;
-		y = ((g->player_y * TILE_SIZE)) + g->move_pos_y + PLAYER_RADIUS;
-		x = ((g->player_x * TILE_SIZE)) + g->move_pos_x + PLAYER_RADIUS;
-		if (g->map[(int)(y/TILE_SIZE)][(int)(x/TILE_SIZE)] == '1')
-			g->move_pos_y -= g->step_right_y;
-	}
-}
-
-int	mouse_input(int mouse, t_game *g)
-{
-	(void)g;
-	(void)mouse;
-	return (0);
-}
-
-int	key_input(int key, t_game *g)
-{
-	if (key == KEY_ESC)
-	{
-		close_game(g);
-		return (0);
-	}
-	else
-		check_pos(g, key);
-	if (key == KEY_LEFT)
-		g->rotate -= 0.064;
-	if (key == KEY_RIGHT)
-		g->rotate += 0.064;
-	return (0);
-}
-
 void	draw_bg(t_img bg, int ceiling, int floor)
 {
 	int x;
@@ -288,6 +191,7 @@ int	game_status(t_game *g)
 	bg.addr = mlx_get_data_addr(bg.img, &bg.bpp,
 			&bg.line_len, &bg.endian);
 	draw_bg(bg, g->tex.ceiling, g->tex.floor);
+	check_movement(g);
 	draw_mini_map(g->mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, bg.img, 0, 0);
 	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
@@ -313,13 +217,11 @@ void	init_cube(t_data *data, t_game *g)
 			&g->mini_map.line_len, &g->mini_map.endian);
 	draw_mini_map(g->mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
-
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
-	mlx_hook(g->win, 2, 1L<<0, key_input, g);
-	mlx_hook(g->win, 2, 1L<<1, key_input, g);
+	mlx_hook(g->win, 2, 1L<<0, key_pressed, g);
+	mlx_hook(g->win, 3, 1L<<1, key_released, g);
 	mlx_hook(g->win, 6, 1L<<6, mouse_input, g);
-	mlx_key_hook(g->win, key_input, g);
 	mlx_loop(g->ptr);
 }
 
