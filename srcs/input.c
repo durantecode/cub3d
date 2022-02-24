@@ -6,16 +6,27 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 10:55:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 15:02:32 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 18:54:52 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	mouse_input(int mouse, t_game *g)
+int	mouse_input(int x, int y, t_game *g)
 {
+	if (x >= 0 && x <= WIN_WIDTH && y >= 0 && y <= WIN_HEIGHT)
+	{
+		if (g->mouse < g->player.x * TILE_SIZE)
+			g->player.rotate += PLAYER_ROTATE;
+		if (g->mouse > g->player.x * TILE_SIZE)
+			g->player.rotate -= PLAYER_ROTATE;
+		// g->player.rotate += x/g->player.x * TILE_SIZE;
+		// printf("ROT: %f\n", g->player.rotate);
+		// printf("MOUSE X: %d\n", x);
+		// printf("MOUSE Y: %d\n", y);
+	}
+	g->mouse = x;
 	(void)g;
-	(void)mouse;
 	return (0);
 }
 

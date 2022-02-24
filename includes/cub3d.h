@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:29:44 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/24 18:25:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ typedef struct s_game
 	int			size_x;
 	int			size_y;
 	char		**map;
+	int			mouse;
 	t_player	player;
 	t_img		mini_map;
 	t_img		bg;
@@ -187,7 +188,7 @@ void		write_line_bres(t_img img, t_bres bres, int texture);
 
 int			key_released(int key, t_game *g);
 int			key_pressed(int key, t_game *g);
-int			mouse_input(int mouse, t_game *g);
+int			mouse_input(int x, int y, t_game *g);
 void		check_movement(t_game *g);
 
 int			close_game(t_game *g);
