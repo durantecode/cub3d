@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:23:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/25 23:49:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	init_cube(t_data *data, t_game *g)
 	g->ptr = mlx_init();
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	init_images(g);
-	// draw_mini_map(g->mini_map, g);
-	// mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);
 	mlx_hook(g->win, 2, 1L << 0, key_pressed, g);
