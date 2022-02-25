@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 18:54:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:04:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	draw_fov(t_game *g, t_img img)
 			r++;
 		}
 		write_line_bres(img, bres, FOV_BEIGE);
-		i += 0.0005;
+		i += 0.0009696;
 	}
 }
 
