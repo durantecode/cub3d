@@ -47,13 +47,35 @@ void	draw_line(t_game *g, t_img img)
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
+void	draw_walls(float r, int row, t_game *g)
+{
+	float	wall_height;
+	int		i;
+
+	i = 0;
+	wall_height = round(360 / r); 
+	while (i < 720)
+	{
+		// if (i < wall_height)
+		if (i >= wall_height - 360 && i <= wall_height)
+		{
+			printf("%d\n", i);
+			my_mlx_pixel_put(&g->bg, row, i+360, 0);
+		}
+		i++;
+	}
+	// mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
+}
+
 void	draw_fov(t_game *g, t_img img)
 {
 	float		i;
 	float		r;
 	t_bres		bres;
 	t_vector	vector;
+	int			pixel;
 
+	pixel = 0;
 	vector = get_map_vector(g);
 	i = -FOV_ANGLE;
 	ft_bzero(&bres, sizeof(t_bres));
@@ -71,8 +93,10 @@ void	draw_fov(t_game *g, t_img img)
 			bres.end_y = round(bres.y + r * sin(g->player.dir + i + g->player.rotate));
 			r++;
 		}
+		draw_walls(r, pixel, g);
 		write_line_bres(img, bres, FOV_BEIGE);
-		i += 0.0005;
+		i += 0.00096962962;
+		pixel++;
 	}
 }
 

@@ -32,7 +32,7 @@ int	close_game(t_game *g)
 
 int	game_status(t_game *g)
 {
-	mlx_clear_window(g->ptr, g->win);
+	// mlx_clear_window(g->ptr, g->win);
 	check_movement(g);
 	draw_background(g->bg, g->tex.ceiling, g->tex.floor);
 	draw_mini_map(g->mini_map, g);
