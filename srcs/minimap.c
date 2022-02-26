@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/25 13:04:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/26 02:05:10 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,27 @@ void	draw_line(t_game *g, t_img img)
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
-void	draw_walls(float r, int row, t_game *g)
+void	draw_walls(float r, int row, t_game *g, t_bres bres)
 {
 	float	wall_height;
+	float	distance;
 	int		i;
 
 	i = 0;
-	wall_height = round(360 / r); 
-	while (i < 720)
-	{
-		// if (i < wall_height)
-		if (i >= wall_height - 360 && i <= wall_height)
-		{
-			printf("%d\n", i);
-			my_mlx_pixel_put(&g->bg, row, i+360, 0);
-		}
-		i++;
-	}
-	// mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
+	(void)r;
+	// distance = Math.sqrt(Math.pow(data.player.x - ray.x, 2) + Math.pow(data.player.y - ray.y, 2));
+	distance = sqrt(pow(bres.x - bres.end_x, 2) + pow(bres.y - bres.end_y, 2)) / 2;
+	wall_height = 2000 / distance;
+	// drawLine(rayCount, data.screen.halfHeight - wallHeight, rayCount, data.screen.halfHeight + wallHeight, "red");
+	// printf("%f\n", distance);
+	bres.x = row;
+	bres.end_x = row;
+	bres.y = WIN_HALF - wall_height;
+	bres.end_y = WIN_HALF + wall_height;
+	if (distance < 50)
+		write_line_bres(g->bg, bres, WALL_PURPLE);
+	else
+		write_line_bres(g->bg, bres, WALL_PURPLE_DARK);
 }
 
 void	draw_fov(t_game *g, t_img img)
@@ -93,14 +96,10 @@ void	draw_fov(t_game *g, t_img img)
 			bres.end_y = round(bres.y + r * sin(g->player.dir + i + g->player.rotate));
 			r++;
 		}
-		draw_walls(r, pixel, g);
+		draw_walls(r, pixel, g, bres);
 		write_line_bres(img, bres, FOV_BEIGE);
-<<<<<<< HEAD
-		i += 0.0009696;
-=======
 		i += 0.00096962962;
 		pixel++;
->>>>>>> dpavon
 	}
 }
 
