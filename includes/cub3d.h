@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/26 01:53:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:12:47 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 3.5
-# define PLAYER_SPEED 1.3
-# define PLAYER_ROTATE 0.05
+# define PLAYER_SPEED 1.5
+# define PLAYER_ROTATE 0.06
 # define FOV_ANGLE 0.523599
 # define DEGREES_0 0
 # define DEGREES_90 1.5708
@@ -106,7 +106,7 @@ typedef struct s_img
 {
 	void	*img;
 	int		width;
-	int		height;
+	int		heigth;
 	int		bpp;
 	char	*addr;
 	int		line_len;

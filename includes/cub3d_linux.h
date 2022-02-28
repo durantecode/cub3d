@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:14:14 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:25:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_img
 {
 	void	*img;
 	int		width;
-	int		height;
+	int		heigth;
 	int		bpp;
 	char	*addr;
 	int		line_len;

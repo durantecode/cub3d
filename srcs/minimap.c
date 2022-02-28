@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/26 02:05:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:41:03 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,24 @@ void	draw_line(t_game *g, t_img img)
 	write_line_bres(img, bres, PLAYER_RED);
 }
 
-void	draw_walls(float r, int row, t_game *g, t_bres bres)
+void	draw_walls(float r, float i, int column, t_game *g, t_bres bres)
 {
 	float	wall_height;
 	float	distance;
-	int		i;
+	int		texture;
 
-	i = 0;
-	(void)r;
-	// distance = Math.sqrt(Math.pow(data.player.x - ray.x, 2) + Math.pow(data.player.y - ray.y, 2));
-	distance = sqrt(pow(bres.x - bres.end_x, 2) + pow(bres.y - bres.end_y, 2)) / 2;
-	wall_height = 2000 / distance;
-	// drawLine(rayCount, data.screen.halfHeight - wallHeight, rayCount, data.screen.halfHeight + wallHeight, "red");
-	// printf("%f\n", distance);
-	bres.x = row;
-	bres.end_x = row;
+	texture = 0;
+	if (bres.end_x - bres.x)
+		texture = WALL_PURPLE;
+	else if (bres.end_y - bres.y)
+		texture = WALL_PURPLE_DARK;
+	distance = r * cos(i);
+	wall_height = 4000 / distance;
+	bres.x = column;
+	bres.end_x = column;
 	bres.y = WIN_HALF - wall_height;
 	bres.end_y = WIN_HALF + wall_height;
-	if (distance < 50)
-		write_line_bres(g->bg, bres, WALL_PURPLE);
-	else
-		write_line_bres(g->bg, bres, WALL_PURPLE_DARK);
+	write_line_bres(g->bg, bres, texture);
 }
 
 void	draw_fov(t_game *g, t_img img)
@@ -94,11 +91,11 @@ void	draw_fov(t_game *g, t_img img)
 		{
 			bres.end_x = round(bres.x + r * cos(g->player.dir + i + g->player.rotate));
 			bres.end_y = round(bres.y + r * sin(g->player.dir + i + g->player.rotate));
-			r++;
+			r += 0.1;
 		}
-		draw_walls(r, pixel, g, bres);
+		draw_walls(r, i, pixel, g, bres);
 		write_line_bres(img, bres, FOV_BEIGE);
-		i += 0.00096962962;
+		i += FOV_ANGLE * 2 / WIN_WIDTH;
 		pixel++;
 	}
 }

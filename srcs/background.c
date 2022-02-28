@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 17:17:17 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:24:39 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:25:49 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_background(t_img bg, int ceiling, int floor)
 
 	y = 0;
 	texture = ceiling;
-	while (y < bg.height)
+	while (y < bg.heigth)
 	{
 		if (y == WIN_HALF)
 			texture = floor;

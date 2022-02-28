@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/24 17:26:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:25:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, long texture)
 {
 	char	*dst;
 
-	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
+	if (x >= 0 && x < img->width && y >= 0 && y < img->heigth)
 	{
 		dst = img->addr + (y * img->line_len
 				+ x * (img->bpp / 8));
