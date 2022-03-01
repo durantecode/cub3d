@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/28 17:12:47 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/01 03:00:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 /* CONSTANT DEFINES */
 
 # define TILE_SIZE 9
-# define PLAYER_RADIUS 3.5
+# define PLAYER_RADIUS 4
 # define PLAYER_SPEED 1.5
 # define PLAYER_ROTATE 0.06
 # define FOV_ANGLE 0.523599
@@ -125,10 +125,10 @@ typedef struct s_textures
 
 typedef	struct s_bres
 {
-	int	x;
-	int	y;
-	int	end_x;
-	int	end_y;
+	float	x;
+	float	y;
+	float	end_x;
+	float	end_y;
 }	t_bres;
 
 typedef struct s_keys
@@ -153,7 +153,7 @@ typedef struct s_player
 	float		step_vy;
 	float		step_hx;
 	float		step_hy;
-	t_keys	key;
+	t_keys		key;
 }	t_player;
 
 typedef struct s_game

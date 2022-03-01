@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 17:40:48 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/28 13:30:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/01 02:53:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	load_files(t_game *g, t_data *data)
 {
-	printf("%s\n", data->no);
 	g->tex.no.img = mlx_xpm_file_to_image(g->ptr, data->no,
 			&g->tex.no.width, &g->tex.no.heigth);
 	if (!g->tex.no.img)

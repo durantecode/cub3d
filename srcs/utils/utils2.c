@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:56:06 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/24 17:27:10 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/01 01:10:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_vector	get_map_vector(t_game *g)
 {
 	t_vector	vector;
 
-	vector.y = (g->player.y * TILE_SIZE) + g->player.move_y + PLAYER_RADIUS;
-	vector.x = (g->player.x * TILE_SIZE) + g->player.move_x + PLAYER_RADIUS;
+	vector.y = (g->player.y * TILE_SIZE) + round(g->player.move_y + PLAYER_RADIUS);
+	vector.x = (g->player.x * TILE_SIZE) + round(g->player.move_x + PLAYER_RADIUS);
 	return (vector);
 }

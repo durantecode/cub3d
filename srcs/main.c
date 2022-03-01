@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/28 17:09:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/01 02:55:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_images(t_game *g)
 {
 	g->bg.width = WIN_WIDTH;
 	g->bg.heigth = WIN_HEIGHT;
-	g->bg.img = mlx_new_image(g->ptr, WIN_WIDTH, WIN_WIDTH);
+	g->bg.img = mlx_new_image(g->ptr, WIN_WIDTH, WIN_HEIGHT);
 	g->bg.addr = mlx_get_data_addr(g->bg.img, &g->bg.bpp,
 			&g->bg.line_len, &g->bg.endian);
 	g->mini_map.width = MINI_MAP_WIDTH;
@@ -60,7 +60,6 @@ void	init_cube(t_data *data, t_game *g)
 	printf("Map okay... Init cube\n");
 	g->map = matrix_dup(data->map);
 	free_data(data);
-	g->ptr = mlx_init();
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	init_images(g);
 	mlx_loop_hook(g->ptr, game_status, g);
@@ -79,6 +78,7 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&g, sizeof(t_game));
 	ft_bzero(&data, sizeof(t_data));
+	g.ptr = mlx_init();
 	if (argc == 2 && !check_file_extension(argv[1], ".cub", ERR_EXT_FILE))
 	{
 		info = get_info(argv);
@@ -86,9 +86,9 @@ int	main(int argc, char **argv)
 			return (0);
 		if (!parse_data(info, &data) && !check_data(&data, &g))
 		{
-			// if (load_files(&g, &data))
-			// 	printf("Error\n%s\n", ERR_XPM);
-			// else
+			if (load_files(&g, &data))
+				printf("Error\n%s\n", ERR_XPM);
+			else
 				init_cube(&data, &g);
 		}
 		free_data(&data);
