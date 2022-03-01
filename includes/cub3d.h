@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/01 03:00:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:48:46 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,10 @@ typedef struct s_player
 
 typedef struct s_game
 {
+	int			is_n;
+	int			is_s;
+	int			is_e;
+	int			is_w;
 	void		*ptr;
 	void		*win;
 	int			size_x;
