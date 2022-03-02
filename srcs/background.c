@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 17:17:17 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/28 13:25:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:09:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	draw_background(t_img bg, int ceiling, int floor)
 
 	y = 0;
 	texture = ceiling;
-	while (y < bg.heigth)
+	while (y < WIN_HEIGHT)
 	{
 		if (y == WIN_HALF)
 			texture = floor;
 		x = 0;
-		while (x < bg.width)
+		while (x < WIN_WIDTH)
 		{
 			my_mlx_pixel_put(&bg, x, y, texture);
 			x++;

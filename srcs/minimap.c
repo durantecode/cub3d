@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 00:38:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:50:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	get_texture(t_game *g, t_bres ray)
 	float	small;
 	int		texture;
 
-	small = 0.1106666;
+	// small = 0.1106666;
 	// small = 0.0509;
 	// small = 0.00599;
-	// small = 0.05;
+	small = 0.005;
 	texture = 0;
 	(void)g;
 	if (ray.end_y - (int)ray.end_y < small && \
@@ -95,7 +95,7 @@ void	draw_walls(float r, float i, int column, t_game *g, t_bres ray)
 	ray.x = column;
 	ray.end_x = column;
 	distance = r * cos(i);
-	wall_height = 4500 / distance;
+	wall_height = 2000 / distance;
 	ray.y = WIN_HALF - wall_height;
 	ray.end_y = WIN_HALF + wall_height;
 	write_line_bres(g->bg, ray, texture);
@@ -125,7 +125,7 @@ void	draw_fov(t_game *g, t_img img)
 		{
 			ray.end_x = ray.x + r * cos(g->player.dir + i + g->player.rotate);
 			ray.end_y = ray.y + r * sin(g->player.dir + i + g->player.rotate);
-			r += 0.1;
+			r += 0.005;
 		}
 		draw_walls(r, i, ray_count, g, ray);
 		ray.end_y = round(ray.end_y);

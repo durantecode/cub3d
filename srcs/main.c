@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/01 02:55:58 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:03:42 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	game_status(t_game *g)
 	draw_background(g->bg, g->tex.ceiling, g->tex.floor);
 	draw_mini_map(g->mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
-	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 40, 505);
+	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 20, 20);
 	return (0);
 }
 

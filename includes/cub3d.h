@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/01 15:48:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:28:59 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 /* MINIMAP DEFINES */
 
-# define WIN_WIDTH 1080
-# define WIN_HEIGHT 720
-# define WIN_HALF 360
+# define WIN_WIDTH 640
+# define WIN_HEIGHT 480
+# define WIN_HALF 240
 # define MINI_MAP_WIDTH 180
 # define MINI_MAP_HEIGHT 180
 # define MINI_MAP_CENTER 90
