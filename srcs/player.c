@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:44:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/01 21:46:33 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:17:26 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ static void	move_player(t_game *g, int key)
 	else if (key == KEY_A || key == KEY_D)
 		move_left_right(g, key);
 	else if (key == KEY_LEFT)
-		g->player.rotate -= PLAYER_ROTATE;
+		g->player.angle -= PLAYER_ROTATE;
 	else if (key == KEY_RIGHT)
-		g->player.rotate += PLAYER_ROTATE;
+		g->player.angle += PLAYER_ROTATE;
 }
 
 void	check_movement(t_game *g)

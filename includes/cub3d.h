@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 12:22:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:32:22 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
 # define PLAYER_SPEED 1
-# define PLAYER_ROTATE 0.06
+# define PLAYER_ROTATE 0.04
 # define FOV_ANGLE 0.523599
 # define DEGREES_0 0
 # define DEGREES_90 1.5708
@@ -145,8 +145,7 @@ typedef struct s_player
 {
 	int			x;
 	int			y;
-	float		dir;
-	float		rotate;
+	float		angle;
 	float		move_x;
 	float		move_y;
 	float		step_vx;

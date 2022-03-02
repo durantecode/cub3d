@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 01:03:42 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:17:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ void	init_images(t_game *g)
 	g->mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
 	g->mini_map.addr = mlx_get_data_addr(g->mini_map.img, &g->mini_map.bpp,
 			&g->mini_map.line_len, &g->mini_map.endian);
+	if (g->map[g->player.y][g->player.x] == 'N')
+		g->player.angle = -DEGREES_90;
+	if (g->map[g->player.y][g->player.x] == 'S')
+		g->player.angle = -DEGREES_270;
+	if (g->map[g->player.y][g->player.x] == 'E')
+		g->player.angle = DEGREES_0;
+	if (g->map[g->player.y][g->player.x] == 'W')
+		g->player.angle = DEGREES_180;
 }
 
 void	init_cube(t_data *data, t_game *g)
