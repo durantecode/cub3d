@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 01:28:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/02 12:22:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 /* MINIMAP DEFINES */
 
-# define WIN_WIDTH 640
-# define WIN_HEIGHT 480
-# define WIN_HALF 240
-# define MINI_MAP_WIDTH 180
-# define MINI_MAP_HEIGHT 180
+# define WIN_WIDTH 1080
+# define WIN_HEIGHT 720
+# define WIN_HALF 360
+# define MINI_MAP_WIDTH 189
+# define MINI_MAP_HEIGHT 189
 # define MINI_MAP_CENTER 90
 # define MINI_MAP_HALF 89
 
@@ -34,7 +34,7 @@
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 1.5
+# define PLAYER_SPEED 1
 # define PLAYER_ROTATE 0.06
 # define FOV_ANGLE 0.523599
 # define DEGREES_0 0
