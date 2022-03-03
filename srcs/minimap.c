@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 18:24:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/03 02:24:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,24 @@ void	draw_line(t_game *g, t_img img)
 	(void)img;
 }
 
-int	get_texture(t_game *g, t_bres ray)
+int	get_texture(t_game *g, t_bres ray, float ray_cos, float ray_sin)
 {
-	float	small;
-	int		texture;
+	int			texture;
+	t_vector	vector;
 
-	// small = 0.111;
-	// small = 0.0509;
-	// small = 0.00599;
-	small = 0.111;
+	vector = get_map_vector(g);
+	if (ray_cos < 0)
+		ray_cos = -ray_cos;
+	if (ray_sin < 0)
+		ray_sin = -ray_sin;
 	texture = 0;
-	(void)g;
-	if ((int)ray.end_y + 1 - ray.end_y < small && \
-		ray.end_x > (int)ray.end_x + small && ray.end_x < (int)ray.end_x + 1 - small)
+	if (g->map[(int)((vector.y + ray.end_y - ray_sin - ray.y) / TILE_SIZE)][(int)((vector.x + ray.end_x - ray.x) / TILE_SIZE)] != '1')
 		texture = WALL_PURPLE_DARK;
-	else if (ray.end_y - (int)ray.end_y < small && \
-			ray.end_x > (int)ray.end_x + small && ray.end_x < (int)ray.end_x + 1 - small)
+	else if (g->map[(int)((vector.y + ray.end_y + ray_sin - ray.y) / TILE_SIZE)][(int)((vector.x + ray.end_x - ray.x) / TILE_SIZE)] != '1')
 		texture = WALL_PURPLE;
-	else if (ray.end_x - (int)ray.end_x < small && \
-		ray.end_y > (int)ray.end_y + small && ray.end_y < (int)ray.end_y + 1 - small)
+	else if (g->map[(int)((vector.y + ray.end_y - ray.y) / TILE_SIZE)][(int)((vector.x + ray.end_x - ray_cos - ray.x) / TILE_SIZE)] != '1')
 		texture = PLAYER_RED;
-	else if ((int)ray.end_x + 1 - ray.end_x < small && \
-		ray.end_y > (int)ray.end_y + small && ray.end_y < (int)ray.end_y + 1 - small)
+	else if (g->map[(int)((vector.y + ray.end_y - ray.y) / TILE_SIZE)][(int)((vector.x + ray.end_x + ray_cos - ray.x) / TILE_SIZE)] != '1')
 		texture = FOV_BEIGE;
 	return (texture);
 }
@@ -80,7 +76,7 @@ void	draw_walls(float r, float i, int column, t_game *g, t_bres ray)
 	float	distance;
 	int		texture;
 
-	texture = get_texture(g, ray);
+	texture = get_texture(g, ray, (ray.x + (r + 0.08) * cos(g->player.angle + i)) - ray.end_x, (ray.y + (r + 0.08) * sin(g->player.angle + i)) - ray.end_y);
 	ray.x = column;
 	ray.end_x = column;
 	distance = r * cos(i);
