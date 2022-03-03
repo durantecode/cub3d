@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 17:32:22 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/03 13:53:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@
 
 /*COLOR DEFINE*/
 
-# define WALL_PURPLE 6373251
-# define WALL_PURPLE_DARK 6366286
-# define FLOOR_GREY 8230298
-# define PLAYER_RED 16531322
-# define FOV_BEIGE 16777058
+# define PURPLE 6373251
+# define PURPLE_DARK 6366286
+# define GREY 8230298
+# define RED 16531322
+# define GREEN 10865512
+# define YELLOW 16777058
 # define TRANSPARENT 3358535222
 
 // #ifndef KEYCODES
@@ -157,10 +158,6 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	int			is_n;
-	int			is_s;
-	int			is_e;
-	int			is_w;
 	void		*ptr;
 	void		*win;
 	int			size_x;

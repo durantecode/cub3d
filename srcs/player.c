@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:44:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/02 17:17:26 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/03 13:05:41 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,8 @@ void	check_movement(t_game *g)
 		move_player(g, KEY_LEFT);
 	if (g->player.key.right)
 		move_player(g, KEY_RIGHT);
+	g->player.step_vx = cos(g->player.angle) * PLAYER_SPEED;
+	g->player.step_vy = sin(g->player.angle) * PLAYER_SPEED;
+	g->player.step_hx = cos((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
+	g->player.step_hy = sin((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
 }
