@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:44:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/08 18:39:54 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/08 19:59:21 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,23 @@ static void	move_left_right(t_game *g, int key)
 	if (key == KEY_A)
 	{
 		if (player_collision_with_wall(g, 'x', 'a'))
-			g->player.move_x += g->player.step_hx;
+			g->player.move_x += g->player.step_vx;
 		if (player_collision_with_wall(g, 'y', 'a'))
-			g->player.move_y += g->player.step_hy;
+			g->player.move_y += g->player.step_vy;
 	}
 	else if (key == KEY_D)
 	{
 		if (player_collision_with_wall(g, 'x', 'd'))
-			g->player.move_x -= g->player.step_hx;
+			g->player.move_x -= g->player.step_vx;
 		if (player_collision_with_wall(g, 'y', 'd'))
-			g->player.move_y -= g->player.step_hy;
+			g->player.move_y -= g->player.step_vy;
 	}
 }
 
-static void	move_player(t_game *g, int key)
+static void	move_player(t_game *g, int key, float angle)
 {
+	g->player.step_vx = cos(angle) * PLAYER_SPEED;
+	g->player.step_vy = sin(angle) * PLAYER_SPEED;
 	if (key == KEY_W || key == KEY_S)
 		move_forward_back(g, key);
 	else if (key == KEY_A || key == KEY_D)
@@ -88,20 +90,30 @@ static void	move_player(t_game *g, int key)
 
 void	check_movement(t_game *g)
 {
+	float	angle;
+
+	angle = g->player.angle;
+	// g->player.step_hx = cos((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
+	// g->player.step_hy = sin((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
 	if (g->player.key.w)
-		move_player(g, KEY_W);
+		move_player(g, KEY_W, angle);
 	if (g->player.key.s)
-		move_player(g, KEY_S);
+	{
+		g->player.angle = g->player.angle - DEGREES_180;
+		move_player(g, KEY_S, angle);
+	}
 	if (g->player.key.a)
-		move_player(g, KEY_A);
+	{
+		g->player.angle = g->player.angle - DEGREES_90;
+		move_player(g, KEY_A, angle);
+	}
 	if (g->player.key.d)
-		move_player(g, KEY_D);
+	{
+		g->player.angle = g->player.angle + DEGREES_90;
+		move_player(g, KEY_D, angle);
+	}
 	if (g->player.key.left)
-		move_player(g, KEY_LEFT);
+		move_player(g, KEY_LEFT, angle);
 	if (g->player.key.right)
-		move_player(g, KEY_RIGHT);
-	g->player.step_vx = cos(g->player.angle) * PLAYER_SPEED;
-	g->player.step_vy = sin(g->player.angle) * PLAYER_SPEED;
-	g->player.step_hx = cos((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
-	g->player.step_hy = sin((g->player.angle + DEGREES_90)) * PLAYER_SPEED;
+		move_player(g, KEY_RIGHT, angle);
 }
