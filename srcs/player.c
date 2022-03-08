@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:44:30 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/08 18:24:01 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:39:54 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,24 @@
 static int	player_collision_with_wall(t_game *g, int coord, int key)
 {
 	t_vector	vector;
-	float x;
-	float y;
 
-	x = 0;
-	y = 0;
 	if (coord == 'x' && key == 'w')
-		x = g->player.move_x + (2 * g->player.step_vx);
+		g->player.move_x += g->player.step_vx;
 	else if (coord == 'y' && key == 'w')
-		y = g->player.move_y + (2 * g->player.step_vy);
+		g->player.move_y += g->player.step_vy;
 	else if (coord == 'x' && key == 's')
-		x = g->player.move_x - (2 * g->player.step_vx);
+		g->player.move_x -= g->player.step_vx;
 	else if (coord == 'y' && key == 's')
-		y = g->player.move_y - (2 * g->player.step_vy);
+		g->player.move_y -= g->player.step_vy;
 	else if (coord == 'x' && key == 'a')
-		x = g->player.move_x - (2 * g->player.step_hx);
+		g->player.move_x -= g->player.step_hx;
 	else if (coord == 'y' && key == 'a')
-		y = g->player.move_y - (2 * g->player.step_hy);
+		g->player.move_y -= g->player.step_hy;
 	else if (coord == 'x' && key == 'd')
-		x = g->player.move_x + (2 * g->player.step_hx);
+		g->player.move_x += g->player.step_hx;
 	else if (coord == 'y' && key == 'd')
-		y = g->player.move_y + (2 * g->player.step_hy);
-	vector = get_map_vector(g, x, y);
+		g->player.move_y += g->player.step_hy;
+	vector = get_map_vector(g, g->player.move_x, g->player.move_y);
 	if (g->map[vector.y / TILE_SIZE][vector.x / TILE_SIZE] == '1')
 		return (1);
 	return (0);
@@ -46,17 +42,17 @@ static void	move_forward_back(t_game *g, int key)
 {
 	if (key == KEY_W)
 	{
-		if (!player_collision_with_wall(g, 'x', 'w'))
-			g->player.move_x += g->player.step_vx;
-		if (!player_collision_with_wall(g, 'y', 'w'))
-			g->player.move_y += g->player.step_vy;
+		if (player_collision_with_wall(g, 'x', 'w'))
+			g->player.move_x -= g->player.step_vx;
+		if (player_collision_with_wall(g, 'y', 'w'))
+			g->player.move_y -= g->player.step_vy;
 	}
 	else if (key == KEY_S)
 	{
-		if (!player_collision_with_wall(g, 'x', 's'))
-			g->player.move_x -= g->player.step_vx;
-		if (!player_collision_with_wall(g, 'y', 's'))
-			g->player.move_y -= g->player.step_vy;
+		if (player_collision_with_wall(g, 'x', 's'))
+			g->player.move_x += g->player.step_vx;
+		if (player_collision_with_wall(g, 'y', 's'))
+			g->player.move_y += g->player.step_vy;
 	}
 }
 
@@ -64,17 +60,17 @@ static void	move_left_right(t_game *g, int key)
 {
 	if (key == KEY_A)
 	{
-		if (!player_collision_with_wall(g, 'x', 'a'))
-			g->player.move_x -= g->player.step_hx;
-		if (!player_collision_with_wall(g, 'y', 'a'))
-			g->player.move_y -= g->player.step_hy;
+		if (player_collision_with_wall(g, 'x', 'a'))
+			g->player.move_x += g->player.step_hx;
+		if (player_collision_with_wall(g, 'y', 'a'))
+			g->player.move_y += g->player.step_hy;
 	}
 	else if (key == KEY_D)
 	{
-		if (!player_collision_with_wall(g, 'x', 'd'))
-			g->player.move_x += g->player.step_hx;
-		if (!player_collision_with_wall(g, 'y', 'd'))
-			g->player.move_y += g->player.step_hy;
+		if (player_collision_with_wall(g, 'x', 'd'))
+			g->player.move_x -= g->player.step_hx;
+		if (player_collision_with_wall(g, 'y', 'd'))
+			g->player.move_y -= g->player.step_hy;
 	}
 }
 
