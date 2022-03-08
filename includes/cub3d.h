@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/03 13:53:56 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:00:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int			check_map_surrounding(char **map, t_game *g);
 int			load_files(t_game *g, t_data *data);
 int			check_file_extension(char *argv, char *ext, char *err);
 int			str_is_digit(char *str);
-t_vector	get_map_vector(t_game *g);
+t_vector	get_map_vector(t_game *g, float x, float y);
 
 void		draw_background(t_img bg, int ceiling, int floor);
 void		draw_mini_map(t_img mini_map, t_game *g);

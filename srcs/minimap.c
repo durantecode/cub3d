@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/03 14:15:46 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:01:27 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_texture(t_game *g, t_bres ray, float step_x, float step_y)
 	int			texture;
 	t_vector	vector;
 
-	vector = get_map_vector(g);
+	vector = get_map_vector(g, g->player.move_x, g->player.move_y);
 	if (step_x < 0)
 		step_x = -step_x;
 	if (step_y < 0)
@@ -76,7 +76,7 @@ void	draw_fov(t_game *g, t_img img)
 
 	ray_count = 0;
 	i = -FOV_ANGLE;
-	vector = get_map_vector(g);
+	vector = get_map_vector(g, g->player.move_x, g->player.move_y);
 	ft_bzero(&ray, sizeof(t_bres));
 	ray.x = MINI_MAP_CENTER + TILE_SIZE / 2;
 	ray.y = MINI_MAP_CENTER + TILE_SIZE / 2;
