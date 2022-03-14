@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/09 23:27:51 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:46:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	draw_fov(t_game *g, t_img img)
 			ray.end_y = ray.y + r * sin(g->player.angle + i);
 			r += 0.1;
 		}
-		// draw_walls(r, i, ray_count, g, ray);
+		draw_walls(r, i, ray_count, g, ray);
 		ray.end_y = round(ray.end_y);
 		ray.end_x = round(ray.end_x);
 		write_line_bres(img, ray, YELLOW);
