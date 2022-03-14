@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/09 23:59:48 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/14 20:43:20 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 1.5
-# define PLAYER_ROTATE 0.04
-# define FOV_ANGLE 0.523599
+# define PLAYER_SPEED 0.09
+# define PLAYER_ROTATE 0.06
+# define FOV_ANGLE 1.0472
+# define HFOV_ANGLE 0.523599
 # define DEGREES_0 0
 # define DEGREES_90 1.5708
 # define DEGREES_180 3.14159
@@ -99,8 +100,8 @@ typedef struct s_data
 
 typedef struct s_vector
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 }	t_vector;
 
 typedef struct s_img
@@ -144,15 +145,11 @@ typedef struct s_keys
 
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 	float		angle;
-	float		move_x;
-	float		move_y;
-	float		step_vx;
-	float		step_vy;
-	float		step_hx;
-	float		step_hy;
+	float		step_x;
+	float		step_y;
 	t_keys		key;
 }	t_player;
 
@@ -179,8 +176,9 @@ int			check_map_surrounding(char **map, t_game *g);
 int			load_files(t_game *g, t_data *data);
 int			check_file_extension(char *argv, char *ext, char *err);
 int			str_is_digit(char *str);
-t_vector	get_map_vector(t_game *g, float x, float y);
+t_vector	get_map_vector(t_game *g);
 
+void		draw_cube(t_game *g);
 void		draw_background(t_img bg, int ceiling, int floor);
 void		draw_mini_map(t_img mini_map, t_game *g);
 

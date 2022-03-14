@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/14 11:46:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:03:05 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,50 +20,30 @@ typedef struct mini_vector
 	float	y1;
 }	t_mini_vector;
 
-int	get_texture(t_game *g, t_bres ray, float step_x, float step_y)
+void	draw_line(t_game *g, t_img img)
 {
-	int			texture;
+	float		r;
+	t_bres		bres;
 	t_vector	vector;
 
-	vector = get_map_vector(g, g->player.move_x, g->player.move_y);
-	if (step_x < 0)
-		step_x = -step_x;
-	if (step_y < 0)
-		step_y = -step_y;
-	texture = 0;
-	if (g->map[(int)((vector.y + ray.end_y - step_y - ray.y) / TILE_SIZE)]
-		[(int)((vector.x + ray.end_x - ray.x) / TILE_SIZE)] != '1')
-		texture = PURPLE_DARK;
-	else if (g->map[(int)((vector.y + ray.end_y + step_y - ray.y) / TILE_SIZE)]
-		[(int)((vector.x + ray.end_x - ray.x) / TILE_SIZE)] != '1')
-		texture = PURPLE;
-	else if (g->map[(int)((vector.y + ray.end_y - ray.y) / TILE_SIZE)]
-		[(int)((vector.x + ray.end_x - step_x - ray.x) / TILE_SIZE)] != '1')
-		texture = RED;
-	else if (g->map[(int)((vector.y + ray.end_y - ray.y) / TILE_SIZE)]
-		[(int)((vector.x + ray.end_x + step_x - ray.x) / TILE_SIZE)] != '1')
-		texture = GREEN;
-	return (texture);
-}
-
-void	draw_walls(float r, float i, int ray_count, t_game *g, t_bres ray)
-{
-	float	step_x;
-	float	step_y;
-	float	wall_height;
-	float	distance;
-	int		texture;
-
-	step_x = (ray.x + (r + 0.8) * cos(g->player.angle + i)) - ray.end_x;
-	step_y = (ray.y + (r + 0.08) * sin(g->player.angle + i)) - ray.end_y;
-	texture = get_texture(g, ray, step_x, step_y);
-	ray.x = ray_count;
-	ray.end_x = ray_count;
-	distance = r * cos(i);
-	wall_height = 4500 / distance;
-	ray.y = WIN_HALF - wall_height;
-	ray.end_y = WIN_HALF + wall_height;
-	write_line_bres(g->bg, ray, texture);
+	ft_bzero(&bres, sizeof(t_bres));
+	vector = get_map_vector(g);
+	bres.x = floor(MINI_MAP_CENTER + TILE_SIZE / 2);
+	bres.y = floor(MINI_MAP_CENTER + TILE_SIZE / 2);
+	r = 0;
+	bres.end_x = round(bres.x + r * cos(g->player.angle));
+	bres.end_y = round(bres.y + r * sin(g->player.angle));
+	while (g->map[(int)(vector.y + bres.end_y - bres.y) / TILE_SIZE]
+		[(int)(vector.x + bres.end_x - bres.x) / TILE_SIZE] != '1' &&
+		sqrt(pow(bres.end_x - bres.x, 2) + pow(bres.end_y - bres.y, 2) < 300))
+	{
+		bres.end_x = bres.x + r * cos(g->player.angle);
+		bres.end_y = bres.y + r * sin(g->player.angle);
+		r++;
+	}
+	bres.end_x = round(bres.end_x);
+	bres.end_y = round(bres.end_y);
+	write_line_bres(img, bres, RED);
 }
 
 void	draw_fov(t_game *g, t_img img)
@@ -75,8 +55,8 @@ void	draw_fov(t_game *g, t_img img)
 	int			ray_count;
 
 	ray_count = 0;
-	i = -FOV_ANGLE;
-	vector = get_map_vector(g, g->player.move_x, g->player.move_y);
+	i = -HFOV_ANGLE;
+	vector = get_map_vector(g);
 	ft_bzero(&ray, sizeof(t_bres));
 	ray.x = MINI_MAP_CENTER + TILE_SIZE / 2;
 	ray.y = MINI_MAP_CENTER + TILE_SIZE / 2;
@@ -85,18 +65,17 @@ void	draw_fov(t_game *g, t_img img)
 		r = 0;
 		ray.end_x = ray.x + r * cos(g->player.angle + i);
 		ray.end_y = ray.y + r * sin(g->player.angle + i);
-		while (g->map[(vector.y + (int)ray.end_y - (int)ray.y) / TILE_SIZE]
-			[(vector.x + (int)ray.end_x - (int)ray.x) / TILE_SIZE] != '1')
+		while (g->map[(int)(vector.y + (int)ray.end_y - (int)ray.y) / TILE_SIZE]
+			[(int)(vector.x + (int)ray.end_x - (int)ray.x) / TILE_SIZE] != '1')
 		{
 			ray.end_x = ray.x + r * cos(g->player.angle + i);
 			ray.end_y = ray.y + r * sin(g->player.angle + i);
 			r += 0.1;
 		}
-		draw_walls(r, i, ray_count, g, ray);
 		ray.end_y = round(ray.end_y);
 		ray.end_x = round(ray.end_x);
 		write_line_bres(img, ray, YELLOW);
-		i += FOV_ANGLE * 2 / WIN_WIDTH;
+		i += FOV_ANGLE / WIN_WIDTH;
 		ray_count++;
 	}
 }
@@ -135,11 +114,11 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 {
 	t_mini_vector	mv;
 
-	mv.y = ((g->player.y * TILE_SIZE - MINI_MAP_CENTER) + g->player.move_y);
+	mv.y = (g->player.y * TILE_SIZE - MINI_MAP_CENTER);
 	mv.y1 = 0;
 	while (mv.y < MINI_MAP_HEIGHT * TILE_SIZE)
 	{
-		mv.x = ((g->player.x * TILE_SIZE - MINI_MAP_CENTER) + g->player.move_x);
+		mv.x = (g->player.x * TILE_SIZE - MINI_MAP_CENTER);
 		mv.x1 = 0;
 		while (mv.x < MINI_MAP_WIDTH * TILE_SIZE)
 		{
@@ -155,5 +134,6 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		mv.y1++;
 	}
 	draw_fov(g, mini_map);
+	draw_line(g, mini_map);
 	draw_player(mini_map);
 }
