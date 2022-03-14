@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/08 18:37:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/09 23:59:48 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 1
+# define PLAYER_SPEED 1.5
 # define PLAYER_ROTATE 0.04
 # define FOV_ANGLE 0.523599
 # define DEGREES_0 0
