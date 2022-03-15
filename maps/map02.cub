@@ -1,21 +1,8 @@
 NO ./textures/brick.xpm
-
-
 SO ./textures/blue.xpm
-
-
-
 EA ./textures/grey.xpm   
-
-
-
 WE ./textures/wood.xpm                
-
 C 84,201,255
-
-
-
-
 F 224,172,105
 
         111111 111111111111111111

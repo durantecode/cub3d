@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 16:53:25 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/16 13:19:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:14:23 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static char	**format_map(char **first_map, char ***map)
 
 	max_len = longest_row(first_map);
 	map_len = max_row(first_map);
+	printf("%d\n", map_len);
 	resized_map = malloc(sizeof(char *) * (map_len + 1));
 	if (!resized_map)
 		return (NULL);
@@ -120,5 +121,5 @@ void	get_map(char **info, t_data *data, int err)
 		}
 		i++;
 	}
-	format_map(info + 1, &data->map);
+	format_map(info, &data->map);
 }
