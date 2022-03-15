@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 14:26:31 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 14:33:49 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:16:45 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,26 @@ static int	game_status(t_game *g)
 	mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
 	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 20, 511);
 	return (0);
+}
+
+void	load_files(t_game *g, t_data *data)
+{
+	g->tex.no.img = mlx_xpm_file_to_image(g->ptr, data->no,
+			&g->tex.no.width, &g->tex.no.height);
+	g->tex.no.addr = mlx_get_data_addr(g->tex.no.img, &g->tex.no.bpp,
+			&g->tex.no.line_len, &g->tex.no.endian);
+	g->tex.so.img = mlx_xpm_file_to_image(g->ptr, data->so,
+			&g->tex.so.width, &g->tex.so.height);
+	g->tex.so.addr = mlx_get_data_addr(g->tex.so.img, &g->tex.so.bpp,
+			&g->tex.so.line_len, &g->tex.so.endian);
+	g->tex.ea.img = mlx_xpm_file_to_image(g->ptr, data->ea,
+			&g->tex.ea.width, &g->tex.ea.height);
+	g->tex.ea.addr = mlx_get_data_addr(g->tex.ea.img, &g->tex.ea.bpp,
+			&g->tex.ea.line_len, &g->tex.ea.endian);
+	g->tex.we.img = mlx_xpm_file_to_image(g->ptr, data->we,
+			&g->tex.we.width, &g->tex.we.height);
+	g->tex.we.addr = mlx_get_data_addr(g->tex.we.img, &g->tex.we.bpp,
+			&g->tex.we.line_len, &g->tex.we.endian);
 }
 
 static void	init_images(t_game *g)
@@ -49,9 +69,11 @@ static void	init_images(t_game *g)
 void	init_cube(t_data *data, t_game *g)
 {
 	printf("Map okay... Init cube\n");
-	g->map = matrix_dup(data->map);
-	free_data(data);
+	g->ptr = mlx_init();
 	g->win = mlx_new_window(g->ptr, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+	g->map = matrix_dup(data->map);
+	load_files(g, data);
+	free_data(data);
 	init_images(g);
 	mlx_loop_hook(g->ptr, game_status, g);
 	mlx_hook(g->win, 17, 0, close_game, g);

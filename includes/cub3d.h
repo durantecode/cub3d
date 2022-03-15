@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 18:01:13 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:50:15 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ int		check_data(t_data *data, t_game *g);
 void	get_map(char **info, t_data *data, int err);
 int		check_map_surrounding(char **map, t_game *g);
 
-int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
 
