@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 18:24:18 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:32:19 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ int	check_xpm_files(t_data *data)
 	int	fd;
 
 	fd = open(data->no, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	close(fd);
 	fd = open(data->so, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	close(fd);
 	fd = open(data->ea, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	close(fd);
 	fd = open(data->we, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (1);
 	close(fd);
 	return (0);
@@ -81,7 +81,7 @@ int	main(int argc, char **argv)
 			return (0);
 		if (!parse_data(info, &data) && !check_data(&data, &g))
 		{
-			if (!check_xpm_files(&data))
+			if (check_xpm_files(&data))
 				printf("Error\n%s\n", ERR_XPM);
 			else
 				init_cube(&data, &g);
