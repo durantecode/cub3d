@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/02/24 17:18:15 by ldurante         ###   ########.fr        #
+#    Updated: 2022/03/15 15:38:39 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,11 @@ CC = gcc
 RM = rm -f
 MAKE = make
 DEBUG = -g3 -fsanitize=address
-
+CFLAGS = -g3 -Wall -Werror -Wextra $(KEYCODES)
 UNAME = $(shell uname -s)
 
-# Properties for compile in MacOS
+# Properties for compiling in MacOS
 MLX_LINK = -lmlx -framework OpenGL -framework AppKit
-
-# Keycode for MacOs
 ESC = KEY_ESC=53
 W = KEY_W=13
 A = KEY_A=0
@@ -34,11 +32,9 @@ DOWN = KEY_DOWN=125
 LEFT = KEY_LEFT=123
 RIGHT = KEY_RIGHT=124
 
+# Propierties for compiling in Linux
 ifeq ($(UNAME), Linux)
-	# Propierties for compile in Linux
 	MLX_LINK = -lmlx -lXext -lX11 -lm
-
-	# Keycode for Linux
 	ESC = KEY_ESC=65307
 	W = KEY_W=119
 	A = KEY_A=97
@@ -49,6 +45,9 @@ ifeq ($(UNAME), Linux)
 	LEFT = KEY_LEFT=65361
 	RIGHT = KEY_RIGHT=65363
 endif
+
+# Define Keycodes depending on OS
+KEYCODES =  -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
 
 # COLORS #
 RED = \033[0;31m
@@ -67,19 +66,15 @@ SRCS =	srcs/main.c \
 		srcs/file_management/get_map.c \
 		srcs/file_management/check_map.c \
 		srcs/file_management/load_files.c \
-		srcs/utils/utils.c \
-		srcs/utils/utils2.c \
+		srcs/utils.c \
 		srcs/input.c \
 		srcs/player.c \
 		srcs/background.c \
+		srcs/cube.c \
+		srcs/raycast.c \
 		srcs/minimap.c \
 
 OBJS = $(SRCS:.c=.o)
-
-# Keycodes to compile with
-KEYCODES =  -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
-
-CFLAGS = -g3 -Wall -Werror -Wextra $(KEYCODES)
 
 # RULES #
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/08 18:37:59 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:34:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "keycodes.h"
 # include <mlx.h>
 # include <stdio.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include <math.h>
 
-/* MINIMAP DEFINES */
+/* WINDOWS DEFINES */
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
@@ -28,44 +29,30 @@
 # define MINI_MAP_WIDTH 189
 # define MINI_MAP_HEIGHT 189
 # define MINI_MAP_CENTER 90
-# define MINI_MAP_HALF 89
 
 /* CONSTANT DEFINES */
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 1
-# define PLAYER_ROTATE 0.04
-# define FOV_ANGLE 0.523599
+# define PLAYER_SPEED 0.18
+# define PLAYER_ROTATE 0.07
+# define FOV_ANGLE 1.0472
+# define HFOV_ANGLE 0.523599
 # define DEGREES_0 0
 # define DEGREES_90 1.5708
 # define DEGREES_180 3.14159
 # define DEGREES_270 4.71239
 # define DEGREES_360 6.28319
 
-/*COLOR DEFINE*/
+/* MINIMAP COLORS */
 
-# define PURPLE 6373251
 # define PURPLE_DARK 6366286
-# define GREY 8230298
+# define GREY 7771317
 # define RED 16531322
-# define GREEN 10865512
-# define YELLOW 16777058
+# define YELLOW 16777126
 # define TRANSPARENT 3358535222
 
-// #ifndef KEYCODES
-// # define KEYCODES
-
-// # define KEY_UP 126
-// # define KEY_DOWN 125
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-// # define KEY_W 13
-// # define KEY_S 1
-// # define KEY_A 0
-// # define KEY_D 2
-// # define KEY_ESC 53
-// #endif
+/* MAP VALID CHARACTERS */
 
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
@@ -86,6 +73,8 @@
 # define ERR_MAP_POS "there must be only one start position"
 # define ERR_MAP_NO_POS "there is no start position"
 
+/* STRUCTURES & FUNCTIONS */
+
 typedef struct s_data
 {
 	char	*no;
@@ -99,15 +88,15 @@ typedef struct s_data
 
 typedef struct s_vector
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 }	t_vector;
 
 typedef struct s_img
 {
 	void	*img;
 	int		width;
-	int		heigth;
+	int		height;
 	int		bpp;
 	char	*addr;
 	int		line_len;
@@ -124,7 +113,7 @@ typedef struct s_textures
 	int		ceiling;
 }	t_textures;
 
-typedef	struct s_bres
+typedef struct s_bres
 {
 	float	x;
 	float	y;
@@ -144,15 +133,12 @@ typedef struct s_keys
 
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 	float		angle;
-	float		move_x;
-	float		move_y;
-	float		step_vx;
-	float		step_vy;
-	float		step_hx;
-	float		step_hy;
+	float		step_x;
+	float		step_y;
+	int			mouse;
 	t_keys		key;
 }	t_player;
 
@@ -163,54 +149,38 @@ typedef struct s_game
 	int			size_x;
 	int			size_y;
 	char		**map;
-	int			mouse;
+	float		wall_height;
 	t_player	player;
 	t_img		mini_map;
 	t_img		bg;
 	t_textures	tex;
 }	t_game;
 
-char		**get_info(char **argv);
-int			parse_data(char **info, t_data *data);
-int			check_data(t_data *data, t_game *g);
-void		get_map(char **info, t_data *data, int err);
-int			check_map_surrounding(char **map, t_game *g);
+char	**get_info(char **argv);
+int		parse_data(char **info, t_data *data);
+int		check_data(t_data *data, t_game *g);
+void	get_map(char **info, t_data *data, int err);
+int		check_map_surrounding(char **map, t_game *g);
 
-int			load_files(t_game *g, t_data *data);
-int			check_file_extension(char *argv, char *ext, char *err);
-int			str_is_digit(char *str);
-t_vector	get_map_vector(t_game *g, float x, float y);
+int		load_files(t_game *g, t_data *data);
+int		check_file_extension(char *argv, char *ext, char *err);
+int		str_is_digit(char *str);
 
-void		draw_background(t_img bg, int ceiling, int floor);
-void		draw_mini_map(t_img mini_map, t_game *g);
+void	init_cube(t_data *data, t_game *g);
+void	raycast(t_game *g);
+void	draw_background(t_img bg, int ceiling, int floor);
+void	draw_mini_map(t_img mini_map, t_game *g);
 
-void		my_mlx_pixel_put(t_img *img, int x, int y, long texture);
-void		write_line_bres(t_img img, t_bres bres, int texture);
+void	my_mlx_pixel_put(t_img *img, int x, int y, long texture);
+int		my_mlx_pixel_get(t_img *data, int x, int y);
+void	draw_line(t_img img, t_bres bres, int texture);
 
-int			key_released(int key, t_game *g);
-int			key_pressed(int key, t_game *g);
-int			mouse_input(int x, int y, t_game *g);
-void		check_movement(t_game *g);
+void	check_movement(t_game *g);
+int		key_released(int key, t_game *g);
+int		key_pressed(int key, t_game *g);
+int		mouse_input(int x, int y, t_game *g);
 
-int			close_game(t_game *g);
+void	free_data(t_data *data);
+int		close_game(t_game *g);
 
 #endif
-
-/*
-	Cosas a tener en cuenta:
-
-	En el mapa, si hay 1 justo despues del color C no parsea esa lína,
-	debería dar un error o parsearla.
-
-
-	Luis echa un vistazo a esto:
-
-	Cuando dejamos el boton de mover el rayo pulsado un rato el rayo empieza a descentrarse,
-	no se si será algo problemático pero si podemos echarle un vistazo mejor :)
-
-	A tener en cuenta:
-
-	He puesto lo que pasabamos en grados directamente a radianes para trabajar en la misma unidad 
-	de medida.
-	Y el rayo ahora mismo se mueve solo de 90 grados en 90 grados.	
-*/
