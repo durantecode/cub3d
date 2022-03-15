@@ -6,7 +6,7 @@
 /*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:18:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/16 17:47:58 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:10:02 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,19 @@ static int	all_id_parsed(t_data *data)
 	return (0);
 }
 
+int	check_my_data(char *info, t_data *data)
+{
+	char	**aux;
+	int		err;
+
+	err = 0;
+	aux = ft_split(info, ' ');
+	if (matrix_len(aux) != 2 || parse_data_aux(data, &aux))
+		err = 1;
+	free_matrix(aux);
+	return (err);
+}
+
 int	parse_data(char **info, t_data *data)
 {
 	int		i;
@@ -61,14 +74,11 @@ int	parse_data(char **info, t_data *data)
 			break ;
 		if (info[i][0])
 		{
-			aux = ft_split(info[i], ' ');
-			if (((matrix_len(aux) != 2 && (++err)))
-				|| (parse_data_aux(data, &aux) && (++err)))
+			if (check_my_data(info[i], data))
 			{
-				free_matrix(aux);
+				err++;
 				break ;
 			}
-			free_matrix(aux);
 		}
 	}
 	get_map(info + i, data, err);

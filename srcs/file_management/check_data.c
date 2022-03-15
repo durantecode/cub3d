@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 20:55:00 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/17 23:15:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:23:58 by dpavon-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,18 @@ static int	check_floor_ceiling(char *str, int *g)
 	return (0);
 }
 
+void	map_errors(int map_status)
+{
+	if (map_status == 1)
+		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);
+	else if (map_status == 2)
+		printf("Error\n%s\n", ERR_MAP_SRND);
+	else if (map_status == 3)
+		printf("Error\n%s\n", ERR_MAP_POS);
+	else if (map_status == 4)
+		printf("Error\n%s\n", ERR_MAP_NO_POS);
+}
+
 int	check_data(t_data *data, t_game *g)
 {
 	int	map_status;
@@ -78,13 +90,6 @@ int	check_data(t_data *data, t_game *g)
 	g->size_x = ft_strlen(data->map[0]);
 	g->size_y = matrix_len(data->map);
 	map_status = check_map_surrounding(data->map, g);
-	if (map_status == 1)
-		printf("Error\n%s %s\n", ERR_MAP_CHAR, MAP_CHAR);
-	else if (map_status == 2)
-		printf("Error\n%s\n", ERR_MAP_SRND);
-	else if (map_status == 3)
-		printf("Error\n%s\n", ERR_MAP_POS);
-	else if (map_status == 4)
-		printf("Error\n%s\n", ERR_MAP_NO_POS);
+	map_errors(map_status);
 	return (map_status);
 }
