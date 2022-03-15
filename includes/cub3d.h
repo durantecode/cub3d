@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 02:13:35 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:34:50 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "keycodes.h"
 # include <mlx.h>
 # include <stdio.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include <math.h>
 
-/* MINIMAP DEFINES */
+/* WINDOWS DEFINES */
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
@@ -43,29 +44,15 @@
 # define DEGREES_270 4.71239
 # define DEGREES_360 6.28319
 
-/*COLOR DEFINE*/
+/* MINIMAP COLORS */
 
-# define PURPLE 6373251
 # define PURPLE_DARK 6366286
-# define GREY 8230298
+# define GREY 7771317
 # define RED 16531322
-# define GREEN 10865512
-# define YELLOW 16777058
+# define YELLOW 16777126
 # define TRANSPARENT 3358535222
 
-// #ifndef KEYCODES
-// # define KEYCODES
-
-// # define KEY_UP 126
-// # define KEY_DOWN 125
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-// # define KEY_W 13
-// # define KEY_S 1
-// # define KEY_A 0
-// # define KEY_D 2
-// # define KEY_ESC 53
-// #endif
+/* MAP VALID CHARACTERS */
 
 # define MAP_CHAR "10NSEW"
 # define MAP_POS "NSEW"
@@ -85,6 +72,8 @@
 # define ERR_MAP_SRND "map must be surrounded by walls"
 # define ERR_MAP_POS "there must be only one start position"
 # define ERR_MAP_NO_POS "there is no start position"
+
+/* STRUCTURES & FUNCTIONS */
 
 typedef struct s_data
 {
@@ -124,7 +113,7 @@ typedef struct s_textures
 	int		ceiling;
 }	t_textures;
 
-typedef	struct s_bres
+typedef struct s_bres
 {
 	float	x;
 	float	y;
@@ -149,6 +138,7 @@ typedef struct s_player
 	float		angle;
 	float		step_x;
 	float		step_y;
+	int			mouse;
 	t_keys		key;
 }	t_player;
 
@@ -159,7 +149,6 @@ typedef struct s_game
 	int			size_x;
 	int			size_y;
 	char		**map;
-	int			mouse;
 	float		wall_height;
 	t_player	player;
 	t_img		mini_map;
@@ -194,22 +183,3 @@ void		check_movement(t_game *g);
 int			close_game(t_game *g);
 
 #endif
-
-/*
-	Cosas a tener en cuenta:
-
-	En el mapa, si hay 1 justo despues del color C no parsea esa lína,
-	debería dar un error o parsearla.
-
-
-	Luis echa un vistazo a esto:
-
-	Cuando dejamos el boton de mover el rayo pulsado un rato el rayo empieza a descentrarse,
-	no se si será algo problemático pero si podemos echarle un vistazo mejor :)
-
-	A tener en cuenta:
-
-	He puesto lo que pasabamos en grados directamente a radianes para trabajar en la misma unidad 
-	de medida.
-	Y el rayo ahora mismo se mueve solo de 90 grados en 90 grados.	
-*/

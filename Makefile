@@ -6,7 +6,7 @@
 #    By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/08 23:59:04 by ldurante          #+#    #+#              #
-#    Updated: 2022/03/14 13:05:15 by ldurante         ###   ########.fr        #
+#    Updated: 2022/03/15 11:48:59 by ldurante         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ SRCS =	srcs/main.c \
 		srcs/input.c \
 		srcs/player.c \
 		srcs/background.c \
-		srcs/cube.c \
+		srcs/raycast.c \
 		srcs/minimap.c \
 
 OBJS = $(SRCS:.c=.o)

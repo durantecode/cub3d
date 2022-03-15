@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.c                                             :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:15:36 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 02:15:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 11:51:30 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	get_texture_color(t_game *g, t_img *img, t_vector ray,  int y)
+int	get_texture_color(t_game *g, t_img *img, t_vector ray, int y)
 {
 	int	color;
 	int	x;
@@ -50,7 +50,7 @@ t_img	get_texture_img(t_game *g, t_vector ray, float ray_angle)
 
 void	draw_walls(t_game *g, t_img texture, t_vector ray, int ray_count)
 {
-	int 	i;
+	int		i;
 	float	j;
 	float	step_y;
 	int		color;
@@ -74,12 +74,13 @@ void	draw_walls(t_game *g, t_img texture, t_vector ray, int ray_count)
 	}
 }
 
-void	distance_to_wall(float ray_angle, int ray_count, t_game *g, t_vector ray)
+void	dist_to_wall(float ray_angle, int ray_count, t_game *g, t_vector ray)
 {
 	float	distance;
 	t_img	texture_img;
 
-	distance = sqrt(pow(ray.x - g->player.x - 0.5, 2) + pow(ray.y - g->player.y - 0.5, 2));
+	distance = sqrt(pow(ray.x - g->player.x - 0.5, 2)
+			+ pow(ray.y - g->player.y - 0.5, 2));
 	distance = distance * cos(ray_angle - g->player.angle);
 	g->wall_height = 475 / distance;
 	texture_img = get_texture_img(g, ray, ray_angle);
@@ -108,7 +109,7 @@ void	draw_cube(t_game *g)
 			ray.x += ray_cos;
 			ray.y += ray_sin;
 		}
-		distance_to_wall(ray_angle, ray_count, g, ray);
+		dist_to_wall(ray_angle, ray_count, g, ray);
 		ray_angle += FOV_ANGLE / WIN_WIDTH;
 		ray_count++;
 	}

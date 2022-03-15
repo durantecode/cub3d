@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 10:55:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 02:06:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:38:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	mouse_input(int x, int y, t_game *g)
 {
 	if (x >= 0 && x <= WIN_WIDTH && y >= 0 && y <= WIN_HEIGHT)
 	{
-		if (x < g->mouse)
+		if (x < g->player.mouse)
 			g->player.angle -= PLAYER_ROTATE;
-		if (x > g->mouse)
+		if (x > g->player.mouse)
 			g->player.angle += PLAYER_ROTATE;
 	}
-	g->mouse = x;
+	g->player.mouse = x;
 	return (0);
 }
 
