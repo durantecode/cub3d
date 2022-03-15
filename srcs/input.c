@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 10:55:33 by ldurante          #+#    #+#             */
-/*   Updated: 2022/02/25 13:04:37 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:06:37 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,12 @@ int	mouse_input(int x, int y, t_game *g)
 {
 	if (x >= 0 && x <= WIN_WIDTH && y >= 0 && y <= WIN_HEIGHT)
 	{
-		return (0);
-		// if (g->mouse < g->player.x * TILE_SIZE)
-		// 	g->player.rotate += PLAYER_ROTATE;
-		// if (g->mouse > g->player.x * TILE_SIZE)
-		// 	g->player.rotate -= PLAYER_ROTATE;
-		// g->player.rotate += x/g->player.x * TILE_SIZE;
-		// printf("ROT: %f\n", g->player.rotate);
-		// printf("MOUSE X: %d\n", x);
-		// printf("MOUSE Y: %d\n", y);
+		if (x < g->mouse)
+			g->player.angle -= PLAYER_ROTATE;
+		if (x > g->mouse)
+			g->player.angle += PLAYER_ROTATE;
 	}
 	g->mouse = x;
-	(void)g;
 	return (0);
 }
 

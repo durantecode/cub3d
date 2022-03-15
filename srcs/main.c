@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/14 17:36:17 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 01:40:53 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ int	game_status(t_game *g)
 	draw_cube(g);
 	draw_mini_map(g->mini_map, g);
 	mlx_put_image_to_window(g->ptr, g->win, g->bg.img, 0, 0);
-	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 20, 20);
+	mlx_put_image_to_window(g->ptr, g->win, g->mini_map.img, 20, 511);
 	return (0);
 }
 
 void	init_images(t_game *g)
 {
 	g->bg.width = WIN_WIDTH;
-	g->bg.heigth = WIN_HEIGHT;
+	g->bg.height = WIN_HEIGHT;
 	g->bg.img = mlx_new_image(g->ptr, WIN_WIDTH, WIN_HEIGHT);
 	g->bg.addr = mlx_get_data_addr(g->bg.img, &g->bg.bpp,
 			&g->bg.line_len, &g->bg.endian);
 	g->mini_map.width = MINI_MAP_WIDTH;
-	g->mini_map.heigth = MINI_MAP_HEIGHT;
+	g->mini_map.height = MINI_MAP_HEIGHT;
 	g->mini_map.img = mlx_new_image(g->ptr, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
 	g->mini_map.addr = mlx_get_data_addr(g->mini_map.img, &g->mini_map.bpp,
 			&g->mini_map.line_len, &g->mini_map.endian);

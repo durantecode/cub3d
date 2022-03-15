@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/14 20:43:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:13:35 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@
 # define MINI_MAP_WIDTH 189
 # define MINI_MAP_HEIGHT 189
 # define MINI_MAP_CENTER 90
-# define MINI_MAP_HALF 89
 
 /* CONSTANT DEFINES */
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 0.09
-# define PLAYER_ROTATE 0.06
+# define PLAYER_SPEED 0.18
+# define PLAYER_ROTATE 0.07
 # define FOV_ANGLE 1.0472
 # define HFOV_ANGLE 0.523599
 # define DEGREES_0 0
@@ -108,7 +107,7 @@ typedef struct s_img
 {
 	void	*img;
 	int		width;
-	int		heigth;
+	int		height;
 	int		bpp;
 	char	*addr;
 	int		line_len;
@@ -161,6 +160,7 @@ typedef struct s_game
 	int			size_y;
 	char		**map;
 	int			mouse;
+	float		wall_height;
 	t_player	player;
 	t_img		mini_map;
 	t_img		bg;
@@ -183,6 +183,7 @@ void		draw_background(t_img bg, int ceiling, int floor);
 void		draw_mini_map(t_img mini_map, t_game *g);
 
 void		my_mlx_pixel_put(t_img *img, int x, int y, long texture);
+int			my_mlx_pixel_get(t_img *data, int x, int y);
 void		write_line_bres(t_img img, t_bres bres, int texture);
 
 int			key_released(int key, t_game *g);

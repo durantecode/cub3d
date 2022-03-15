@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:56:06 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/14 18:57:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 01:22:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,12 @@ t_vector	get_map_vector(t_game *g)
 	vector.x = (g->player.x * TILE_SIZE) + PLAYER_RADIUS;
 	vector.y = (g->player.y * TILE_SIZE) + PLAYER_RADIUS;
 	return (vector);
+}
+
+int	my_mlx_pixel_get(t_img *img, int x, int y)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	return (*(unsigned int *)dst);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/14 21:03:05 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:09:44 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	draw_fov(t_game *g, t_img img)
 	ft_bzero(&ray, sizeof(t_bres));
 	ray.x = MINI_MAP_CENTER + TILE_SIZE / 2;
 	ray.y = MINI_MAP_CENTER + TILE_SIZE / 2;
-	while (ray_count < WIN_WIDTH)
+	while (i < HFOV_ANGLE)
 	{
 		r = 0;
 		ray.end_x = ray.x + r * cos(g->player.angle + i);
@@ -134,6 +134,6 @@ void	draw_mini_map(t_img mini_map, t_game *g)
 		mv.y1++;
 	}
 	draw_fov(g, mini_map);
-	draw_line(g, mini_map);
+	// draw_line(g, mini_map);
 	draw_player(mini_map);
 }
