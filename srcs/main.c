@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 17:10:20 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:24:18 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,29 @@ int	close_game(t_game *g)
 	return (0);
 }
 
+int	check_xpm_files(t_data *data)
+{
+	int	fd;
+
+	fd = open(data->no, O_RDONLY);
+	if (!fd)
+		return (1);
+	close(fd);
+	fd = open(data->so, O_RDONLY);
+	if (!fd)
+		return (1);
+	close(fd);
+	fd = open(data->ea, O_RDONLY);
+	if (!fd)
+		return (1);
+	close(fd);
+	fd = open(data->we, O_RDONLY);
+	if (!fd)
+		return (1);
+	close(fd);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	char	**info;
@@ -51,7 +74,6 @@ int	main(int argc, char **argv)
 	atexit(leaks);
 	ft_bzero(&g, sizeof(t_game));
 	ft_bzero(&data, sizeof(t_data));
-	g.ptr = mlx_init();
 	if (argc == 2 && !check_file_extension(argv[1], ".cub", ERR_EXT_FILE))
 	{
 		info = get_info(argv);
@@ -59,7 +81,7 @@ int	main(int argc, char **argv)
 			return (0);
 		if (!parse_data(info, &data) && !check_data(&data, &g))
 		{
-			if (load_files(&g, &data))
+			if (!check_xpm_files(&data))
 				printf("Error\n%s\n", ERR_XPM);
 			else
 				init_cube(&data, &g);

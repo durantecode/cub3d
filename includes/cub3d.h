@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 14:34:24 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:13:40 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int		check_data(t_data *data, t_game *g);
 void	get_map(char **info, t_data *data, int err);
 int		check_map_surrounding(char **map, t_game *g);
 
-int		load_files(t_game *g, t_data *data);
+// int		load_files(t_game *g, t_data *data);
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
 
