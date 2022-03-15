@@ -6,11 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:20:13 by pavon             #+#    #+#             */
-/*   Updated: 2022/03/15 00:40:53 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:36:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, long texture)
 {
@@ -24,7 +24,15 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, long texture)
 	}
 }
 
-void	write_line_bres(t_img img, t_bres bres, int texture)
+int	my_mlx_pixel_get(t_img *img, int x, int y)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	return (*(unsigned int *)dst);
+}
+
+void	draw_line(t_img img, t_bres bres, int texture)
 {
 	float	step_x;
 	float	step_y;
@@ -76,9 +84,4 @@ int	str_is_digit(char *str)
 		i++;
 	}
 	return (1);
-}
-
-int	get_decimal_color(int r, int g, int b)
-{
-	return (0 << 24 | r << 16 | g << 8 | b);
 }

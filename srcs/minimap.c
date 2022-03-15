@@ -6,21 +6,13 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 14:52:40 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 13:32:29 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:11:33 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-typedef struct mini_vector
-{
-	float	x;
-	float	x1;
-	float	y;
-	float	y1;
-}	t_mini_vector;
-
-void	draw_fov(t_game *g, t_img img, t_bres ray)
+static void	draw_fov(t_game *g, t_img img, t_bres ray)
 {
 	float		i;
 	float		r;
@@ -44,12 +36,12 @@ void	draw_fov(t_game *g, t_img img, t_bres ray)
 		}
 		ray.end_y = round(ray.end_y);
 		ray.end_x = round(ray.end_x);
-		write_line_bres(img, ray, YELLOW);
+		draw_line(img, ray, YELLOW);
 		i += FOV_ANGLE / WIN_WIDTH;
 	}
 }
 
-void	draw_player(t_game *g, t_img minimap)
+static void	draw_player(t_game *g, t_img minimap)
 {
 	float	i;
 	float	r;
@@ -65,43 +57,43 @@ void	draw_player(t_game *g, t_img minimap)
 	{
 		ray.end_x = round(ray.x + r * cos(i));
 		ray.end_y = round(ray.y + r * sin(i));
-		write_line_bres(minimap, ray, 12386304);
+		draw_line(minimap, ray, 12386304);
 		i += 0.1;
 	}
 }
 
-void	draw_mini_map_aux(t_img minimap, t_game *g, t_mini_vector mv)
+static void	draw_mini_map_aux(t_img minimap, t_game *g, t_bres mv)
 {
 	if (g->map[(int)mv.y / TILE_SIZE][(int)mv.x / TILE_SIZE] == '1')
-		my_mlx_pixel_put(&minimap, mv.x1, mv.y1, PURPLE_DARK);
+		my_mlx_pixel_put(&minimap, mv.end_x, mv.end_y, PURPLE_DARK);
 	else if (g->map[(int)mv.y / TILE_SIZE][(int)mv.x / TILE_SIZE] == ' ')
-		my_mlx_pixel_put(&minimap, mv.x1, mv.y1, TRANSPARENT);
+		my_mlx_pixel_put(&minimap, mv.end_x, mv.end_y, TRANSPARENT);
 	else
-		my_mlx_pixel_put(&minimap, mv.x1, mv.y1, GREY);
+		my_mlx_pixel_put(&minimap, mv.end_x, mv.end_y, GREY);
 }
 
 void	draw_mini_map(t_img minimap, t_game *g)
 {
-	t_mini_vector	mv;
+	t_bres	mv;
 
 	mv.y = (g->player.y * TILE_SIZE - MINI_MAP_CENTER);
-	mv.y1 = 0;
+	mv.end_y = 0;
 	while (mv.y < MINI_MAP_HEIGHT * TILE_SIZE)
 	{
 		mv.x = (g->player.x * TILE_SIZE - MINI_MAP_CENTER);
-		mv.x1 = 0;
+		mv.end_x = 0;
 		while (mv.x < MINI_MAP_WIDTH * TILE_SIZE)
 		{
 			if (mv.y / TILE_SIZE < g->size_y && mv.x / TILE_SIZE < g->size_x
 				&& mv.y / TILE_SIZE >= 0 && mv.x / TILE_SIZE >= 0)
 				draw_mini_map_aux(minimap, g, mv);
 			else
-				my_mlx_pixel_put(&minimap, mv.x1, mv.y1, TRANSPARENT);
-			mv.x1++;
+				my_mlx_pixel_put(&minimap, mv.end_x, mv.end_y, TRANSPARENT);
+			mv.end_x++;
 			mv.x++;
 		}
 		mv.y++;
-		mv.y1++;
+		mv.end_y++;
 	}
 	draw_player(g, minimap);
 }

@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 13:34:50 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:34:24 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,30 +156,31 @@ typedef struct s_game
 	t_textures	tex;
 }	t_game;
 
-char		**get_info(char **argv);
-int			parse_data(char **info, t_data *data);
-int			check_data(t_data *data, t_game *g);
-void		get_map(char **info, t_data *data, int err);
-int			check_map_surrounding(char **map, t_game *g);
+char	**get_info(char **argv);
+int		parse_data(char **info, t_data *data);
+int		check_data(t_data *data, t_game *g);
+void	get_map(char **info, t_data *data, int err);
+int		check_map_surrounding(char **map, t_game *g);
 
-int			load_files(t_game *g, t_data *data);
-int			check_file_extension(char *argv, char *ext, char *err);
-int			str_is_digit(char *str);
-t_vector	get_map_vector(t_game *g);
+int		load_files(t_game *g, t_data *data);
+int		check_file_extension(char *argv, char *ext, char *err);
+int		str_is_digit(char *str);
 
-void		draw_cube(t_game *g);
-void		draw_background(t_img bg, int ceiling, int floor);
-void		draw_mini_map(t_img mini_map, t_game *g);
+void	init_cube(t_data *data, t_game *g);
+void	raycast(t_game *g);
+void	draw_background(t_img bg, int ceiling, int floor);
+void	draw_mini_map(t_img mini_map, t_game *g);
 
-void		my_mlx_pixel_put(t_img *img, int x, int y, long texture);
-int			my_mlx_pixel_get(t_img *data, int x, int y);
-void		write_line_bres(t_img img, t_bres bres, int texture);
+void	my_mlx_pixel_put(t_img *img, int x, int y, long texture);
+int		my_mlx_pixel_get(t_img *data, int x, int y);
+void	draw_line(t_img img, t_bres bres, int texture);
 
-int			key_released(int key, t_game *g);
-int			key_pressed(int key, t_game *g);
-int			mouse_input(int x, int y, t_game *g);
-void		check_movement(t_game *g);
+void	check_movement(t_game *g);
+int		key_released(int key, t_game *g);
+int		key_pressed(int key, t_game *g);
+int		mouse_input(int x, int y, t_game *g);
 
-int			close_game(t_game *g);
+void	free_data(t_data *data);
+int		close_game(t_game *g);
 
 #endif

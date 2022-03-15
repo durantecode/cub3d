@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:15:36 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 11:51:30 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:11:34 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	draw_walls(t_game *g, t_img texture, t_vector ray, int ray_count)
 		while (j < draw.y + step_y)
 			j++;
 		draw.end_y = j;
-		write_line_bres(g->bg, draw, color);
+		draw_line(g->bg, draw, color);
 		draw.y += step_y;
 		i++;
 	}
@@ -87,7 +87,7 @@ void	dist_to_wall(float ray_angle, int ray_count, t_game *g, t_vector ray)
 	draw_walls(g, texture_img, ray, ray_count);
 }
 
-void	draw_cube(t_game *g)
+void	raycast(t_game *g)
 {
 	int			ray_count;
 	float		ray_angle;
