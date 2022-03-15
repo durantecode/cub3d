@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpavon-g <dpavon-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 18:50:15 by dpavon-g         ###   ########.fr       */
+/*   Updated: 2022/03/15 19:05:04 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 # define TILE_SIZE 9
 # define PLAYER_RADIUS 4
-# define PLAYER_SPEED 0.18
+# define PLAYER_SPEED 0.14
 # define PLAYER_ROTATE 0.07
 # define FOV_ANGLE 1.0472
 # define HFOV_ANGLE 0.523599
@@ -161,6 +161,7 @@ int		parse_data(char **info, t_data *data);
 int		check_data(t_data *data, t_game *g);
 void	get_map(char **info, t_data *data, int err);
 int		check_map_surrounding(char **map, t_game *g);
+int		check_space_surrounding(char **map, int i, int j, t_game *g);
 
 int		check_file_extension(char *argv, char *ext, char *err);
 int		str_is_digit(char *str);
