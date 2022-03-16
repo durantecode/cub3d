@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/16 10:51:09 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/16 12:01:58 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,20 @@
 
 void	free_data(t_data *data)
 {
-	free(data->cei);
-	free(data->no);
-	free(data->we);
-	free(data->ea);
-	free(data->fl);
-	free(data->so);
-	free_matrix(data->map);
+	if (data->no)
+		free(data->no);
+	if (data->we)
+		free(data->we);
+	if (data->ea)
+		free(data->ea);
+	if (data->so)
+		free(data->so);
+	if (data->cei)
+		free(data->cei);
+	if (data->fl)
+		free(data->fl);
+	if (data->map)
+		free_matrix(data->map);
 }
 
 int	close_game(t_game *g)

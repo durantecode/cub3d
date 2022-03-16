@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pavon <pavon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 12:13:11 by pavon             #+#    #+#             */
-/*   Updated: 2022/02/11 16:29:54 by pavon            ###   ########.fr       */
+/*   Updated: 2022/03/16 11:59:56 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,51 @@ static char	**ft_realloc(char **info, char **line)
 	return (aux);
 }
 
-char	**get_info(char **argv)
+static char	**get_info_aux(int ret, char **line, int fd)
 {
-	int		fd;
 	char	**info;
-	char	*line;
 	char	**aux;
-	int		ret;
+	int		empty;
 
-	line = NULL;
 	info = NULL;
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		printf("Error\n%s\n", ERR_FILE);
-	ret = get_next_line(fd, &line);
+	empty = 0;
 	while (ret >= 0)
 	{
-		aux = ft_realloc(info, &line);
+		if (*line[0])
+			empty = 1;
+		aux = ft_realloc(info, line);
 		free_matrix(info);
 		info = matrix_dup(aux);
 		free_matrix(aux);
 		if (ret == 0)
 			break ;
-		ret = get_next_line(fd, &line);
+		ret = get_next_line(fd, line);
 	}
-	if (fd != -1)
+	if (empty)
+		return (info);
+	free_matrix(info);
+	return (NULL);
+}
+
+char	**get_info(char **argv)
+{
+	char	**info;
+	int		fd;
+	char	*line;
+	int		ret;
+
+	line = NULL;
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		printf("Error\n%s\n", ERR_FILE);
+	ret = get_next_line(fd, &line);
+	if (!ret)
+	{
+		printf("Error\n%s\n", ERR_MAP_EMPTY);
 		close(fd);
+		return (NULL);
+	}
+	info = get_info_aux(ret, &line, fd);
+	close(fd);
 	return (info);
 }

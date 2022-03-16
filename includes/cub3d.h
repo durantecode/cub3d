@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:56:54 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 19:05:04 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/16 11:22:08 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 # define ERR_MAP_SRND "map must be surrounded by walls"
 # define ERR_MAP_POS "there must be only one start position"
 # define ERR_MAP_NO_POS "there is no start position"
+# define ERR_MAP_EMPTY "map file is empty"
 
 /* STRUCTURES & FUNCTIONS */
 
