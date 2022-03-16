@@ -6,7 +6,7 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:15:36 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/15 14:11:34 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/16 02:07:15 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ t_img	get_texture_img(t_game *g, t_vector ray, float ray_angle)
 	else if (g->map[(int)(ray.y + step_y)][(int)ray.x] != '1')
 		texture_img = g->tex.so;
 	else if (g->map[(int)ray.y][(int)(ray.x - step_x)] != '1')
-		texture_img = g->tex.ea;
-	else if (g->map[(int)ray.y][(int)(ray.x + step_x)] != '1')
 		texture_img = g->tex.we;
+	else if (g->map[(int)ray.y][(int)(ray.x + step_x)] != '1')
+		texture_img = g->tex.ea;
 	return (texture_img);
 }
 
