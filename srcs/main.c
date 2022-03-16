@@ -6,16 +6,11 @@
 /*   By: ldurante <ldurante@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:02:49 by ldurante          #+#    #+#             */
-/*   Updated: 2022/03/16 02:20:00 by ldurante         ###   ########.fr       */
+/*   Updated: 2022/03/16 10:51:09 by ldurante         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	leaks(void)
-{
-	system("leaks -q cub3D");
-}
 
 void	free_data(t_data *data)
 {
@@ -71,7 +66,6 @@ int	main(int argc, char **argv)
 	t_data	data;
 	t_game	g;
 
-	atexit(leaks);
 	ft_bzero(&g, sizeof(t_game));
 	ft_bzero(&data, sizeof(t_data));
 	if (argc == 2 && !check_file_extension(argv[1], ".cub", ERR_EXT_FILE))
